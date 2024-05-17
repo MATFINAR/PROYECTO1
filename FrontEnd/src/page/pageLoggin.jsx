@@ -15,12 +15,14 @@ function Loggin() {
             <div className="registro-loggin">
                 <input type="email" className="email-loggin" placeholder="INGRESE SU EMAIL"/>
                 <input type="password" className="password-loggin" placeholder="INGRESE SU CONTRASEÑA"/>
-                <a href="http://localhost:3000/dashboard">
-                    <button className="singUp-loggin">INGRESAR</button>
+                <a href="http://localhost:3000/dashboard" className="singUp-loggin">
+                    <button>INGRESAR</button>
                 </a>
-                <button className="create-loggin">CREA UNA NUEVA CUENTA</button>
-                <a href="">
-                    <div className="help-loggin">¿OLVIDASTE TU CONTRASEÑA?</div>
+                <a href="" className="create-loggin">
+                    <button>CREA UNA NUEVA CUENTA</button>
+                </a>
+                <a href="" className="help-loggin">
+                    <div>¿OLVIDASTE TU CONTRASEÑA?</div>
                 </a>
             </div>
         </div>
