@@ -1,0 +1,26 @@
+.content-dashboard{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 15% 15% 70%;
+}
+
+    .header-dashboard{
+        width: 100%;
+        height: 100%;
+        grid-row: 1;
+    }
+        .logo1-dashboard{
+
+        }
+
+    .aside-dashboard{
+        width: 100%;
+        height: 100%;
+        grid-row: 2;
+    }
+    .main-dashboard{
+        width: 100%;
+        height: 100%;
+        grid-row: 3;
+    }

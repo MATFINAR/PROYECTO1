@@ -1,0 +1,11 @@
+*{
+    padding: 0px;
+    border: 0px;
+    box-sizing: border-box;
+}
+
+.root{
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+}
