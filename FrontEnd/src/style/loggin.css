@@ -1,6 +1,6 @@
 .content-loggin{
-    width: 100%;
-    height: 100VH;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -18,7 +18,6 @@
         align-items: center;
         flex-direction: column;
     }
-        
     .logo-loggin{
         width: 614px;
         height: 406px;
@@ -30,9 +29,13 @@
             font-size: 20px;
             font-weight: bold;
         }
+        .logging-loggin{
+            width: 100%;
+            height: 100%;
+        }
         .registro-loggin{
             width: 75%;
-            height: 35%;
+            height: 45%;
             display: flex;
             gap: 20px;
             justify-content: center;
@@ -41,7 +44,6 @@
             border: 2px solid black;
             border-radius: 5px;
             background-color: gray;
-
         }
             .email-loggin, .password-loggin{
                 width: 250px;

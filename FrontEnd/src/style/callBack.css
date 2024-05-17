@@ -14,11 +14,12 @@
   }
 
   .boton-callback{
+    width: 600px;
     font-family: 'Courier New', Courier, monospace;
     font-size: 50px;
     color: black;
     background-color: #c1cad6;
-
+    border-radius: 20px;
   }
 
   
