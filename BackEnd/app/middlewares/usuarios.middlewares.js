@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { config } from "dotenv";
-import cors from "cors"
+
 config();
 
 
@@ -16,7 +16,7 @@ export const tokenSign = (data) =>{ //Para crear token
 export const validarPermiso = (req, res, next) => {
   try {
     // Obtener el token del encabezado de autorización
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req.headers["x-access-token"];
 
     // Verificar si el token es válido
     if (!token || verifyToken(token) === null) {

@@ -1,6 +1,5 @@
 import "../style/loggin.css"
 
-
 function Loggin() {
   return(
     <>
@@ -15,12 +14,8 @@ function Loggin() {
             <div className="registro-loggin">
                 <input type="email" className="email-loggin" placeholder="INGRESE SU EMAIL"/>
                 <input type="password" className="password-loggin" placeholder="INGRESE SU CONTRASEÑA"/>
-                <a href="http://localhost:3000/dashboard" className="singUp-loggin">
-                    <button>INGRESAR</button>
-                </a>
-                <a href="" className="create-loggin">
-                    <button>CREA UNA NUEVA CUENTA</button>
-                </a>
+                <button className="singUp-loggin">INGRESAR</button>
+                    <button className="create-loggin">CREA UNA NUEVA CUENTA</button>
                 <a href="" className="help-loggin">
                     <div>¿OLVIDASTE TU CONTRASEÑA?</div>
                 </a>
@@ -31,4 +26,4 @@ function Loggin() {
     )
 };
 
-export default Loggin;
+// export default Loggin;

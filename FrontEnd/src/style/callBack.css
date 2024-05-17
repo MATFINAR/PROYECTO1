@@ -1,6 +1,6 @@
 .content-callback {
-    width: 100vw;
-    height: 100vh;
+    min-width: 100vw;
+    min-height: 100vh;
     position: relative;
     overflow: hidden;
     animation: burning 5s infinite alternate;
@@ -14,7 +14,7 @@
   }
 
   .boton-callback{
-    width: 600px;
+    min-width: 600px;
     font-family: 'Courier New', Courier, monospace;
     font-size: 50px;
     color: black;
