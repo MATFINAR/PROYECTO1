@@ -4,26 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 export const DashBoard = () => {
     const [currentComponent, setCurrentComponent] = useState(null);
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            navigate('/');
-        } else {
-            fetch('http://localhost:5000/dashboard', {
-                headers: {
-                    'x-access-token': token,
-                }
-            })
-            .then(response => {
-                if (!response.ok) {
-                    navigate('/');
-                }
-            })
-            .catch(() => navigate('/'));
-        }
-    }, [navigate]);
+    
     return(
         <div className="content-dashboard">
             <div className="header-dashboard">
