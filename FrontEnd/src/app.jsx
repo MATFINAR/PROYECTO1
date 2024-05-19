@@ -8,7 +8,7 @@ function App () {
     <Router>
       <Routes>
           <Route exact path='/' element={<Loggin/>}/>
-          <Route exact path='/dashboard' element={<DashBoard/>}/>
+          <Route exact path='/dash' element={<DashBoard/>}/>
           <Route exact path='*' element={<Page404/>}/>
         </Routes>
     </Router>

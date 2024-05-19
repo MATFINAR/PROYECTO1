@@ -1,0 +1,19 @@
+.targetas-lista-usuario{
+    min-width: calc(100vh - 60px);
+    min-height: calc(100vh - 60px);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 30px;
+}
+    .targeta{
+        min-width: 100%;
+        min-height: 100px;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+        background-color: gray;
+        color: white;
+        border-radius: 20px;
+    }

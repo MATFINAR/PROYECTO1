@@ -28,7 +28,7 @@ function Loggin() {
       
       if (data.token) {
         Cookies.set('token', data.token); // Guarda el token en una cookie
-        navigate('/dashboard'); // Redirige al dashboard
+        navigate('/dash'); // Redirige al dashboard
       } else {
         throw new Error('No token generated');
       }

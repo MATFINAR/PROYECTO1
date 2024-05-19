@@ -4,8 +4,10 @@
     position: relative;
     overflow: hidden;
     animation: burning 5s infinite alternate;
-  }
-  .page-callback {
+    flex: 1;
+    background-color: white;
+}
+    .page-callback {
     padding: 100px;
     display: flex;
     flex-direction: column;
