@@ -1,6 +1,6 @@
 import '../../style/listarUsuario.css';
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const ListarUsuario = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -25,9 +25,14 @@ const ListarUsuario = () => {
   }, []);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleOptionClick = (path) => {
-    navigate(path);
+    if (location.pathname === path) {
+      window.location.reload();
+    } else {
+      navigate(path);
+    }
   };
 
   const renderUsuarios = () => {

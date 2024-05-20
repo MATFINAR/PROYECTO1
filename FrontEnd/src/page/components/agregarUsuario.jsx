@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 function AgregarUsuario(){
@@ -13,9 +13,14 @@ function AgregarUsuario(){
   const [date, setDate] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const location = useLocation();
 
   const handleOptionClick = (path) => {
-    navigate(path);
+    if (location.pathname === path) {
+      window.location.reload();
+    } else {
+      navigate(path);
+    }
   };
 
   const handleSave = async () => {

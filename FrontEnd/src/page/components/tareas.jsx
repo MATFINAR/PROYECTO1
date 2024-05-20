@@ -1,8 +1,7 @@
-import "../style/dashBoard.css"
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-function DashBoard() {
+function Tareas() {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -37,4 +36,4 @@ function DashBoard() {
   );
 };
 
-export default DashBoard;
+export default Tareas;
