@@ -1,31 +1,34 @@
 import "../style/dashBoard.css"
-import React, { useState } from 'react';
-import ListarUsuarios from "./components/editarMainDash/listarUsuario.jsx";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export const DashBoard = () => {
-    const [currentComponent, setCurrentComponent] = useState(null);
-    const [estado, setEstado] = useState(null);
-    
-    return(
-        <div className="content-dashboard">
-            <div className="header-dashboard">
-                <div className="logo1-dashboard"></div>
-                <div className="ubicacion-dashboard">{estado}</div>
-                <div className="config-dashboard"></div>
-            </div>
-            <div className="aside-dashboard">
-                <div className="options-dashboard">
-                    <button>Calendario</button>
-                    <button onClick={()=> {setCurrentComponent(<ListarUsuarios/>); setEstado("Listar Usuario");}}>Lista de usuario</button>
+function DashBoard() {
+  const navigate = useNavigate();
 
-                    <button>Agregar Usuario</button>
-                    <button>Poryectos</button>
-                    <button>Tareas</button>
-                </div>
-            </div>
-            <div className="main-dashboard">
-                {currentComponent}
-            </div>
-        </div>    
-        )
-}
+  const handleOptionClick = (path) => {
+    navigate(path);
+  };
+
+  return (
+    <div className="content-dashboard">
+      <div className="header-dashboard">
+        <div className="logo1-dashboard"></div>
+        <div className="ubicacion-dashboard">Inicio</div>
+        <div className="config-dashboard"></div>
+      </div>
+      <div className="aside-dashboard">
+        <div className="options-dashboard">
+          <button onClick={() => handleOptionClick("/calendario")}>Calendario</button>
+          <button onClick={() => handleOptionClick("/listausuario")}>Lista de usuario</button>
+          <button onClick={() => handleOptionClick("/agregarusuario")}>Agregar Usuario</button>
+          <button onClick={() => handleOptionClick("/proyectos")}>Proyectos</button>
+          <button onClick={() => handleOptionClick("/tareas")}>Tareas</button>
+        </div>
+      </div>
+      <div className="main-dashboard">
+      </div>
+    </div>
+  );
+};
+
+export default DashBoard;

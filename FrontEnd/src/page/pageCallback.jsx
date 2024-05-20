@@ -7,8 +7,8 @@ export default function Page404() {
         <p>Lo siento, la página que estás buscando no se pudo encontrar.</p>
         <div className="button-callback">
           <a href="/">
-            <button className="boton-callback">Volver al inicio</button>
-            </a>
+              <button className="boton-callback">Volver al inicio</button>
+          </a>
         </div>
       </div>
     </div>
