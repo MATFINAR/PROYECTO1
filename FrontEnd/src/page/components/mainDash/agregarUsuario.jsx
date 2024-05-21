@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import Cookies from 'js-cookie';
 
 function AgregarUsuario(){
   const navigate = useNavigate();
@@ -66,41 +65,23 @@ function AgregarUsuario(){
 };
 
   return (
-    <div className="content-dashboard">
-      <div className="header-dashboard">
-        <div className="logo1-dashboard"></div>
-        <div className="ubicacion-dashboard">Agregar Usuario</div>
-        <div className="config-dashboard"></div>
+    <div className="formulario-agregar-usuario">
+      <div>
+        <input type="text" placeholder="Ingrese su user" value={user}onChange={(e) => setUser(e.target.value)}/>
+        <select value={rol}onChange={(e)=> setRol(e.target.value)}>
+          <option value="usuario">usuario</option>
+          <option value="administrados">Administrador</option>
+        </select>
+        <input type="email" placeholder="Ingrese su correo" value={email}onChange={(e) => setEmail(e.target.value)}/>
+        <input type="password" placeholder="Valide su contraseña" value={confirmPassword}onChange={(e) => setConfirmPassword(e.target.value)}/>
+        <input type="date" value={date}onChange={(e)=> setDate(e.target.value)}/>
       </div>
-      <div className="aside-dashboard">
-        <div className="options-dashboard">
-          <button onClick={() => handleOptionClick("/calendario")}>Calendario</button>
-          <button onClick={() => handleOptionClick("/listausuario")}>Lista de usuario</button>
-          <button onClick={() => handleOptionClick("/agregarusuario")}>Agregar Usuario</button>
-          <button onClick={() => handleOptionClick("/proyectos")}>Proyectos</button>
-          <button onClick={() => handleOptionClick("/tareas")}>Tareas</button>
-        </div>
+      <div>
+        <input type="text" placeholder="Ingrese su nombre" value={name}onChange={(e) => setName(e.target.value)}/>
+        <input type="password" placeholder="Ingrese su contraseña" value={password}onChange={(e) => setPassword(e.target.value)} />
+        <button onClick={handleSave}>Guardar</button>
       </div>
-      <div className="main-dashboard">
-        <div className="formulario-agregar-usuario">
-          <div>
-            <input type="text" placeholder="Ingrese su user" value={user}onChange={(e) => setUser(e.target.value)}/>
-            <select value={rol}onChange={(e)=> setRol(e.target.value)}>
-              <option value="usuario">usuario</option>
-              <option value="administrados">Administrador</option>
-            </select>
-            <input type="email" placeholder="Ingrese su correo" value={email}onChange={(e) => setEmail(e.target.value)}/>
-            <input type="password" placeholder="Valide su contraseña" value={confirmPassword}onChange={(e) => setConfirmPassword(e.target.value)}/>
-            <input type="date" value={date}onChange={(e)=> setDate(e.target.value)}/>
-          </div>
-          <div>
-            <input type="text" placeholder="Ingrese su nombre" value={name}onChange={(e) => setName(e.target.value)}/>
-            <input type="password" placeholder="Ingrese su contraseña" value={password}onChange={(e) => setPassword(e.target.value)} />
-            <button onClick={handleSave}>Guardar</button>
-          </div>
-          {error && <div className="error">{error}</div>}
-        </div>
-      </div>
+      {error && <div className="error">{error}</div>}
     </div>
   );
 };
