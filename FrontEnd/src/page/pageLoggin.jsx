@@ -4,37 +4,37 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
   function Loggin() {
-  const [email, setEmail] = useState('');
-      const [password, setPassword] = useState('');
-      const [error, setError] = useState('');
-      const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
 
       const handleLogin = async () => {
-          try {
-              const response = await fetch('http://localhost:666/api/login', {
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify({ email, password })
-              });
+        try {
+          const response = await fetch('http://localhost:666/api/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+          });
 
-              if (!response.ok) {
-                  throw new Error('Login failed');
-              }
-
-              const data = await response.json();
-              
-              if (data.token) {
-                  Cookies.set('token', data.token); // Guarda el token en una cookie
-                  navigate('/dash'); // Redirige al dashboard
-              } else {
-                  throw new Error('No token generated');
-              }
-          } catch (error) {
-              setError('Error: Credenciales incorrectas o problemas con el servidor.');
-              console.error('Error:', error);
+          if (!response.ok) {
+            throw new Error('Login failed');
           }
+
+          const data = await response.json();
+          
+          if (data.token) {
+            Cookies.set('token', data.token); // Guarda el token en una cookie
+            navigate('/dash'); // Redirige al dashboard
+          } else {
+            throw new Error('No token generated');
+          }
+        } catch (error) {
+          setError('Error: Credenciales incorrectas o problemas con el servidor.');
+          console.error('Error:', error);
+        }
       };
 
   return (

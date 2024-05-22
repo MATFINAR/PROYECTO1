@@ -12,14 +12,14 @@ export const isAuthenticated = () => {
 };
 
 export const ProtectedRoute = ({ children }) => {
-  return isAuthenticated() ? children : <Navigate to="/login" />;
+  return isAuthenticated() ? children : <Navigate to="/" />;
 };  
 
 function App() {
   return (
       <Router>
           <Routes>
-              <Route path="/login" element={<Loggin />} />
+              <Route path="/" element={<Loggin />} />
               <Route path="/dash/*" element={<ProtectedRoute><DashBoard /></ProtectedRoute>} />
               <Route path="*" element={<Page404/>} />
           </Routes>

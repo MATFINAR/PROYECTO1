@@ -1,89 +1,125 @@
-import React from "react";
-import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
-function AgregarUsuario(){
+function AgregarUsuario() {
   const navigate = useNavigate();
-  const [user, setUser] = useState('');
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const [rol, setRol] = useState('');
-  const [date, setDate] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [formData, setFormData] = useState({
+    user: '',
+    name: '',
+    password: '',
+    confirmPassword: '',
+    email: '',
+    rol: '',
+    date: ''
+  });
   const [error, setError] = useState('');
-  const location = useLocation();
 
-  const handleOptionClick = (path) => {
-    if (location.pathname === path) {
-      window.location.reload();
-    } else {
-      navigate(path);
-    }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
   };
 
   const handleSave = async () => {
+    const { user, name, password, confirmPassword, email, rol, date } = formData;
+
     if (password !== confirmPassword) {
-        setError('Las contraseñas no coinciden');
-        return;
+      setError('Las contraseñas no coinciden');
+      return;
+    }
+
+    const token = Cookies.get('token'); // Obtener el token de la cookie
+
+    if (!token) {
+      setError('No se encontró el token de autenticación. Por favor, inicie sesión de nuevo.');
+      return;
     }
 
     try {
-        const responseToken = await fetch('http://localhost:666/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password })
-        });
+      const response = await fetch('http://localhost:666/api/usuario', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ user, name, password, email, rol, date })
+      });
 
-        if (!responseToken.ok) {
-            throw new Error('Error al obtener el token');
-        }
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Error al guardar el usuario');
+      }
 
-        const { token } = await responseToken.json();
-
-        const response = await fetch('http://localhost:666/api/usuario', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({ user, name, password, email, rol, date })
-        });
-
-        if (!response.ok) {
-            throw new Error('Error al guardar el usuario');
-        }
-
-        // Manejo de la respuesta, por ejemplo, redirigir a la lista de usuarios
-        navigate('/listausuario');
+      navigate('/dash/listausuario');
     } catch (error) {
-        setError('Hubo un problema al guardar el usuario');
-        console.error('Error:', error);
+      setError(`Hubo un problema al guardar el usuario: ${error.message}`);
+      console.error('Error:', error);
     }
-};
+  };
 
   return (
     <div className="formulario-agregar-usuario">
       <div>
-        <input type="text" placeholder="Ingrese su user" value={user}onChange={(e) => setUser(e.target.value)}/>
-        <select value={rol}onChange={(e)=> setRol(e.target.value)}>
-          <option value="usuario">usuario</option>
-          <option value="administrados">Administrador</option>
+        <input
+          type="text"
+          placeholder="Ingrese su usuario"
+          name="user"
+          value={formData.user}
+          onChange={handleChange}
+        />
+        <select
+          name="rol"
+          value={formData.rol}
+          onChange={handleChange}
+        >
+          <option value="">Seleccione un rol</option>
+          <option value="usuario">Usuario</option>
+          <option value="administrador">Administrador</option>
         </select>
-        <input type="email" placeholder="Ingrese su correo" value={email}onChange={(e) => setEmail(e.target.value)}/>
-        <input type="password" placeholder="Valide su contraseña" value={confirmPassword}onChange={(e) => setConfirmPassword(e.target.value)}/>
-        <input type="date" value={date}onChange={(e)=> setDate(e.target.value)}/>
+        <input
+          type="email"
+          placeholder="Ingrese su correo"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+        />
+        <input
+          type="password"
+          placeholder="Valide su contraseña"
+          name="confirmPassword"
+          value={formData.confirmPassword}
+          onChange={handleChange}
+        />
+        <input
+          type="date"
+          name="date"
+          value={formData.date}
+          onChange={handleChange}
+        />
       </div>
       <div>
-        <input type="text" placeholder="Ingrese su nombre" value={name}onChange={(e) => setName(e.target.value)}/>
-        <input type="password" placeholder="Ingrese su contraseña" value={password}onChange={(e) => setPassword(e.target.value)} />
+        <input
+          type="text"
+          placeholder="Ingrese su nombre"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+        />
+        <input
+          type="password"
+          placeholder="Ingrese su contraseña"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+        />
         <button onClick={handleSave}>Guardar</button>
       </div>
       {error && <div className="error">{error}</div>}
     </div>
   );
-};
+}
 
 export default AgregarUsuario;

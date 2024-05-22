@@ -32,21 +32,16 @@ export const UserList = async (req, res) => {
 };
 export const postUser = async (req, res) => {
   const { user, name, password, email, rol } = req.body;
-  const date_create = new Date().toISOString().slice(0, 19).replace("T", " "); // Obtenemos la fecha actual en el formato deseado
-  console.log(req.body)
+  const date_create = new Date().toISOString().slice(0, 19).replace("T", " "); // Formato deseado
+  console.log(req.body);
   try {
     const resultado = await pool.query(
       "INSERT INTO usuarios (user, name, password, email, rol, date_create) VALUES (?, ?, ?, ?, ?, ?)",
       [user, name, password, email, rol, date_create]
     );
-
-   
-      res.json({ message: "Usuario creado exitosamente" });
-    
+    res.json({ message: "Usuario creado exitosamente" });
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: error.message, message: "Error al crear usuario" });
+    res.status(500).json({ error: error.message, message: "Error al crear usuario" });
   }
 };
 

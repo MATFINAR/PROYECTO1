@@ -3,7 +3,7 @@ import { UserList, deleteUser, getUser, loginUser, postUser, putUser } from "../
 import { validarPermiso } from "../middlewares/usuarios.middlewares.js";
 const routerUser = Router();
 
-routerUser.post("/login", loginUser)
+routerUser.post("/login", loginUser);
 
 routerUser.get("/usuario",UserList);
 routerUser.post("/usuario",validarPermiso,postUser);

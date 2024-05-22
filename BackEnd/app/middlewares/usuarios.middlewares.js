@@ -3,43 +3,41 @@ import { config } from "dotenv";
 
 config();
 
-
-export const tokenSign = (data) =>{ //Para crear token
+export const tokenSign = (data) => {
   return jwt.sign({
-      email : data.email,
-      password : data.password,
-  },process.env.JWT_SECRET,
-  {
-      expiresIn : process.env.JWT_TIMEEXPIRED
-  })
+    email: data.email,
+    password: data.password,
+  }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_TIMEEXPIRED
+  });
 }
+
 export const validarPermiso = (req, res, next) => {
   try {
-    // Obtener el token del encabezado de autorización
-    const token = req.headers["x-access-token"];
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
 
-    // Verificar si el token es válido
-    if (!token || verifyToken(token) === null) {
+    if (!token) {
       return res.status(403).json({
         error: "No tiene permiso para acceder",
         token: "Token inválido"
       });
     }
 
-    // Si el token es válido, pasar al siguiente middleware
-    next();
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+      if (err) {
+        return res.status(403).json({
+          error: "No tiene permiso para acceder",
+          token: "Token inválido"
+        });
+      }
+      req.user = user;
+      next();
+    });
   } catch (error) {
     return res.status(500).json({
       error: error.message,
       token: "Error al procesar el token"
     });
-  }
-};
-
-export const verifyToken = (token) => {
-  try {
-    return jwt.verify(token, process.env.JWT_SECRET);
-  } catch (error) {
-    return null;
   }
 };
