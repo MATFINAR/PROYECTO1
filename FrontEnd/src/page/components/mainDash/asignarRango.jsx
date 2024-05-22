@@ -1,10 +1,8 @@
-import "../../../style/agregarUsuario.css";
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import { FaSave } from "react-icons/fa";
 
-function AgregarUsuario() {
+function AsignarRango() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     user: '',
@@ -27,12 +25,6 @@ function AgregarUsuario() {
 
   const handleSave = async () => {
     const { user, name, password, confirmPassword, email, rol, date } = formData;
-
-    // Verificar si algún campo obligatorio está vacío
-    if (!user || !name || !password || !email) {
-      setError('Campos vacíos');
-      return;
-    }
 
     if (password !== confirmPassword) {
       setError('Las contraseñas no coinciden');
@@ -70,7 +62,7 @@ function AgregarUsuario() {
 
   return (
     <div className="formulario-agregar-usuario">
-      <div className="content-left">
+      <div>
         <input
           type="text"
           placeholder="Ingrese su usuario"
@@ -78,6 +70,15 @@ function AgregarUsuario() {
           value={formData.user}
           onChange={handleChange}
         />
+        <select
+          name="rol"
+          value={formData.rol}
+          onChange={handleChange}
+        >
+          <option value="">Seleccione un rol</option>
+          <option value="usuario">Usuario</option>
+          <option value="administrador">Administrador</option>
+        </select>
         <input
           type="email"
           placeholder="Ingrese su correo"
@@ -85,10 +86,21 @@ function AgregarUsuario() {
           value={formData.email}
           onChange={handleChange}
         />
-        <button className="guardar-agregar-usuario" onClick={handleSave}><FaSave />Guardar</button>
-        {error && <div className="error">{error}</div>}
+        <input
+          type="password"
+          placeholder="Valide su contraseña"
+          name="confirmPassword"
+          value={formData.confirmPassword}
+          onChange={handleChange}
+        />
+        <input
+          type="date"
+          name="date"
+          value={formData.date}
+          onChange={handleChange}
+        />
       </div>
-      <div className="content-right">
+      <div>
         <input
           type="text"
           placeholder="Ingrese su nombre"
@@ -103,16 +115,11 @@ function AgregarUsuario() {
           value={formData.password}
           onChange={handleChange}
         />
-        <input
-          type="password"
-          placeholder="Valide su contraseña"
-          name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-        />
+        <button onClick={handleSave}>Guardar</button>
       </div>
+      {error && <div className="error">{error}</div>}
     </div>
   );
 }
 
-export default AgregarUsuario;
+export default AsignarRango;

@@ -63,7 +63,6 @@ import Cookies from 'js-cookie';
           />
           <button className="singUp-loggin" onClick={handleLogin}>INGRESAR</button>
           {error && <div className="error-message">{error}</div>}
-          <button className="create-loggin">CREA UNA NUEVA CUENTA</button>
           <a href="" className="help-loggin">
             <div>¿OLVIDASTE TU CONTRASEÑA?</div>
           </a>
