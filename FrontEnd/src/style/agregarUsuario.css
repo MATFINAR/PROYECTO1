@@ -1,38 +1,45 @@
-.formulario-agregar-usuario{
+.content-create-acount{
     min-width: 100%;
     min-height: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    padding-top: 30%;
 }
-    .content-left{
-        grid-column: 1;
-    }
-    .content-right{
-        grid-column: 2;
-    }
-    .content-left, .content-right{
+    .formulario-agregar-usuario{
         min-width: 100%;
         min-height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
     }
-        input, .guardar-agregar-usuario{
-            width: 75%;
-            height: 50px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            padding: 10px;
-            font-size: 15px;
-            color: black;
+        .content-left{
+            grid-column: 1;
         }
-        .guardar-agregar-usuario{
-            font-size: 20px;
-            transition: background-color .2s, color .2s;
-            
+        .content-right{
+            grid-column: 2;
         }
-        .content-left > button:hover{
-            cursor: pointer;
-            background-color: black;
-            color: gold;
+        .content-left, .content-right{
+            min-width: 100%;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+            input, .guardar-agregar-usuario{
+                width: 75%;
+                height: 10%;
+                margin-bottom: 10%;
+                border-radius: 10px;
+                padding: 10px;
+                font-size: 100%;
+                color: black;
+            }
+            .guardar-agregar-usuario{
+                font-size: 100%;
+                padding: 2px;
+                transition: background-color .2s, color .2s;
+                
+            }
+            .content-left > button:hover{
+                cursor: pointer;
+                background-color: black;
+                color: gold;
+            }

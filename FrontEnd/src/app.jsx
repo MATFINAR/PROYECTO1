@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 import Page404 from './page/pageCallback';
 import Loggin from './page/pageLoggin';
 import DashBoard from './page/pageDashboard';
+import CreateAcount from './page/components/login/createAcount';
 
 
 export const isAuthenticated = () => {
@@ -20,6 +21,7 @@ function App() {
       <Router>
           <Routes>
               <Route path="/" element={<Loggin />} />
+              <Route path="/create-acount" element={<CreateAcount />} />
               <Route path="/dash/*" element={<ProtectedRoute><DashBoard /></ProtectedRoute>} />
               <Route path="*" element={<Page404/>} />
           </Routes>

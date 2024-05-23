@@ -36,6 +36,10 @@ import Cookies from 'js-cookie';
           console.error('Error:', error);
         }
       };
+      const handleOptionClick = (path) => {
+        navigate(path);
+      };
+    
 
   return (
     <div className="content-loggin">
@@ -62,6 +66,7 @@ import Cookies from 'js-cookie';
             onChange={(e) => setPassword(e.target.value)}
           />
           <button className="singUp-loggin" onClick={handleLogin}>INGRESAR</button>
+          <button className="create-acount-loggin" onClick={()=> handleOptionClick("/create-acount")}>CREAR CUENTA</button>
           {error && <div className="error-message">{error}</div>}
           <a href="" className="help-loggin">
             <div>¿OLVIDASTE TU CONTRASEÑA?</div>

@@ -1,10 +1,9 @@
 .content-loggin{
-    width: 100vw;
-    height: 100vh;
+    min-width: 100vw;
+    min-height: 100vh;
     display: grid;
     grid-template-columns: 1fr 1fr;
     background: linear-gradient(60deg, rgba(0,0,0,1) 20%, rgba(102,102,102,1) 50%, rgba(0,0,0,1) 90%);
-    flex: 1;
 }
     .content-info-loggin{
         color: gold;
@@ -39,10 +38,10 @@
             min-height: 100%;
         }
         .registro-loggin{
-            min-width: 50%;
-            min-height: 45%;
+            min-width: 60%;
+            min-height: 55%;
             display: flex;
-            gap: 10%;
+            gap: 7%;
             justify-content: center;
             align-items: center;
             flex-direction: column;
@@ -53,6 +52,7 @@
             .email-loggin, .password-loggin{
                 min-width: 75%;
                 min-height: 9%;
+                margin: 0px;
                 border-radius: 15px;
                 background-color: white;
                 display: flex;
@@ -60,17 +60,18 @@
                 color: black;
 
             }
-            .singUp-loggin, .create-loggin{
+            .singUp-loggin, .create-acount-loggin{
                 min-width: 75%;
                 min-height: 9%;
                 border-radius: 15px;
                 background-color: gold;
             }
+            
 .singUp-loggin:hover{
     background-color: white;
     cursor: pointer;
 }
-.create-loggin:hover{
+.create-acount-loggin:hover{
     background-color: white;
     cursor: pointer;
 }

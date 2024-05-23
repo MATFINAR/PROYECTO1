@@ -14,14 +14,14 @@ function Proyectos() {
   };
 
   return (
-    <div>
-      <div>
+    <div className='content-proyectos'>
+      <div className='botones-proyectos'>
         <button onClick={() => openModal("Buscar Proyectos")}>Buscar Proyectos</button>
         <button onClick={() => openModal("Crear Proyecto")}>Crear Proyecto</button>
         <button onClick={() => openModal("Actualizar Proyecto")}>Actualizar Proyecto</button>
         <button onClick={() => openModal("Eliminar Proyecto")}>Eliminar Proyecto</button>
       </div>
-      <div>
+      <div className='reforma-proyectos'>
         {modalVisible && (
           <div className="modal">
             <div className="modal-content">

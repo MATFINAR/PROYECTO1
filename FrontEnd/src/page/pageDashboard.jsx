@@ -12,6 +12,7 @@ function DashBoard() {
   const handleOptionClick = (path, title) => {
     if (location.pathname === path) {
       setForceRerender(!forceRerender); // Toggle the state to force a re-render
+      setActiveOption(title);
     } else {
       navigate(path);
       setActiveOption(title);
