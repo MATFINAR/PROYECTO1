@@ -6,11 +6,9 @@ import { putUser } from "../controllers/usuarios.controllers.js";
 const routerProjects = Router();
 
 routerProjects.get("/project/:id", validarPermiso, getProject);
-routerProjects.get("/projects", showProject);
-routerProjects.post("/projects", postProject);
-routerProjects.put("/projects/:id",  putUser);
-routerProjects.delete("/projects/:id",  delProject);
-
-
+routerProjects.get("/projects", validarPermiso, showProject);
+routerProjects.post("/projects", validarPermiso, postProject);
+routerProjects.put("/projects/:id",  validarPermiso, putUser);
+routerProjects.delete("/projects/:id",  validarPermiso, delProject);
 
 export default routerProjects;

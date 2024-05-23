@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import CrearUsuario from '../login/crearUsuario.jsx';
-import "../../../style/proyectos.css"
+import "../../../style/tareas.css"
 
-function Proyectos() {
+function Tareas() {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalContent, setModalContent] = useState(null);
 
@@ -18,15 +17,15 @@ function Proyectos() {
   return (
     <div className='content-tareas'>
       <div className='botones-tareas'>
-        <button onClick={() => openModal("Buscar Proyectos")}>Buscar Proyectos</button>
-        <button onClick={() => openModal("Crear Proyecto")}>Crear Proyecto</button>
-        <button onClick={() => openModal("Actualizar Proyecto")}>Actualizar Proyecto</button>
-        <button onClick={() => openModal("Eliminar Proyecto")}>Eliminar Proyecto</button>
+        <button onClick={() => openModal("Buscar Tareas")}>Buscar Tareas</button>
+        <button onClick={() => openModal("Crear Tareas")}>Crear Tareas</button>
+        <button onClick={() => openModal("Actualizar Tareas")}>Actualizar Tareas</button>
+        <button onClick={() => openModal("Eliminar Tareas")}>Eliminar Tareas</button>
       </div>
-      <div className='reforma-tareas'>
+      <div className='reforma-tarea'>
         {modalVisible && (
-          <div className="modal">
-            <div className="modal-content">
+          <div className="modal-tarea">
+            <div className="modal-content-tarea">
               <span className="close" onClick={closeModal}>&times;</span>
               {modalContent}
             </div>
@@ -37,4 +36,4 @@ function Proyectos() {
   );
 };
 
-export default Proyectos;
+export default Tareas;

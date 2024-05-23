@@ -13,8 +13,8 @@ function MainDash(){
                 <Route path="/calendario" element={<MostrarCalendario />} />
                 <Route path="/listausuario" element={<ListarUsuario />} />
                 <Route path="/asignarrol" element={<AsignarRango />} />
-                <Route path="/proyectos" element={<Proyectos/>} />
-                <Route path="/tareas" element={<Tareas/>} />
+                <Route path="/proyectos" element={<Proyectos />} />
+                <Route path="/tareas" element={<Tareas />} />
             </Routes>
         </div>
     );

@@ -20,7 +20,9 @@ export const postProject = async (req, res) => {
       [Nombre, Descripcion, FechaInicio, FechaFin, date_create]
     );
 
-    if (resultado.affectedRows > 0) {
+    console.log('Resultado:', resultado);  // Agrega esto para ver el resultado
+
+    if (resultado[0].affectedRows > 0) {
       res.json({ message: "Proyecto creado exitosamente" });
     } else {
       res.json({ message: "Error al crear proyecto" });
@@ -32,15 +34,13 @@ export const postProject = async (req, res) => {
 
 export const putProject = async (req, res) => {
   const { Nombre, Descripcion, FechaInicio, FechaFin } = req.body;
-  
-  const ID = req.params.id;
 
   try {
     await pool.query(
-      "UPDATE proyectos SET Nombre = ?, Descripcion = ?, FechaInicio = ?, FechaFin = ?, WHERE ID = ?",
-      [Nombre, Descripcion, FechaInicio, FechaFin,  ID]
+      "UPDATE proyectos SET Nombre = ?, Descripcion = ?, FechaInicio = ?, FechaFin = ?, WHERE Nombre = ?",
+      [Nombre, Descripcion, FechaInicio, FechaFin,  Nombre]
     );
-
+    
     res.json({ message: "Proyecto actualizado exitosamente" });
   } catch (error) {
     res.status(500).json({ error: error.message, message: "Error al actualizar proyecto" });
@@ -48,7 +48,7 @@ export const putProject = async (req, res) => {
 };
 
 export const delProject = async (req, res) => {
-  const ID = req.params.id;
+  const ID = req.body;
 
   try {
     await pool.query("DELETE FROM proyectos WHERE ID = ?", [ID]);
