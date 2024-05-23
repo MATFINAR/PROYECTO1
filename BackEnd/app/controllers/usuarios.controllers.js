@@ -66,6 +66,31 @@ export const putUser = async (req, res) => {
   }
 };
 
+export const putRolle = async (req, res) => {
+  const { email, rol } = req.body;
+
+  // Obtiene la fecha y hora actual
+  const date_create = getCurrentDateTime();
+
+  try {
+    const result = await pool.query(
+      "UPDATE usuarios SET rol = ?, date_create = ? WHERE email = ?",
+      [rol, date_create, email]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+
+    res.json({ message: "Usuario actualizado exitosamente" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: error.message, message: "Error al actualizar usuario" });
+  }
+};
+
+
 export const deleteUser = async (req, res) => {
   const { id } = req.params;
 

@@ -1,125 +1,80 @@
-import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import "../../../style/asignarRol.css"
+import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 
-function AsignarRango() {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    user: '',
-    name: '',
-    password: '',
-    confirmPassword: '',
-    email: '',
-    rol: '',
-    date: ''
-  });
-  const [error, setError] = useState('');
+const AsignarRango = () => {
+  const [formData, setFormData] = useState({ email: '', rol: '' });
+  const [message, setMessage] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
+    setFormData({ ...formData, [name]: value });
   };
 
-  const handleSave = async () => {
-    const { user, name, password, confirmPassword, email, rol, date } = formData;
-
-    if (password !== confirmPassword) {
-      setError('Las contraseñas no coinciden');
-      return;
-    }
-
-    const token = Cookies.get('token'); // Obtener el token de la cookie
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const token = Cookies.get('token');
     if (!token) {
-      setError('No se encontró el token de autenticación. Por favor, inicie sesión de nuevo.');
+      setMessage('Token no disponible');
+      console.error('Token no disponible');
       return;
     }
-
     try {
-      const response = await fetch('http://localhost:666/api/usuario', {
-        method: 'POST',
+      const response = await fetch('http://localhost:666/api/usuario/rol/', {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({ user, name, password, email, rol, date })
+        body: JSON.stringify({
+          email: formData.email,
+          rol: formData.rol,
+          id: null,
+          user: null,
+          name: null,
+          password: null
+        })
       });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Error al guardar el usuario');
+      const data = await response.json();
+      if (response.ok) {
+        setMessage(data.message);
+      } else {
+        setMessage(data.error || 'Error al actualizar el usuario');
       }
-
-      navigate('/dash/listausuario');
     } catch (error) {
-      setError(`Hubo un problema al guardar el usuario: ${error.message}`);
+      setMessage('Error al actualizar el usuario');
       console.error('Error:', error);
     }
   };
 
   return (
-    <div className="formulario-agregar-usuario">
-      <div>
-        <input
-          type="text"
-          placeholder="Ingrese su usuario"
-          name="user"
-          value={formData.user}
-          onChange={handleChange}
-        />
-        <select
-          name="rol"
-          value={formData.rol}
-          onChange={handleChange}
-        >
-          <option value="">Seleccione un rol</option>
-          <option value="usuario">Usuario</option>
-          <option value="administrador">Administrador</option>
-        </select>
-        <input
-          type="email"
-          placeholder="Ingrese su correo"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          placeholder="Valide su contraseña"
-          name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-        />
-        <input
-          type="date"
-          name="date"
-          value={formData.date}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <input
-          type="text"
-          placeholder="Ingrese su nombre"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          placeholder="Ingrese su contraseña"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-        />
-        <button onClick={handleSave}>Guardar</button>
-      </div>
-      {error && <div className="error">{error}</div>}
+    <div className="formulario-asignar-rol">
+      <form onSubmit={handleSubmit}>
+        <div className="asignar-rol">
+          <input
+            type="email"
+            placeholder="Ingrese su correo"
+            name="email"
+            className="email-rol"
+            value={formData.email}
+            onChange={handleChange}
+          />
+          <select
+            name="rol"
+            className="rol-rol"
+            value={formData.rol}
+            onChange={handleChange}
+          >
+            <option value="">Seleccione un rol</option>
+            <option value="usuario">Usuario</option>
+            <option value="administrador">Administrador</option>
+          </select>
+          <button className="guardar-rol" type="submit">Guardar</button>
+          {message && <p>{message}</p>}
+        </div>
+      </form>
     </div>
   );
-}
+};
 
 export default AsignarRango;

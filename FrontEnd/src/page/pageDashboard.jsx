@@ -7,7 +7,7 @@ function DashBoard() {
   const location = useLocation();
   const navigate = useNavigate();
   const [forceRerender, setForceRerender] = useState(false);
-  const [activeOption, setActiveOption] = useState("Inicio");
+  const [activeOption, setActiveOption] = useState("");
 
   const handleOptionClick = (path, title) => {
     if (location.pathname === path) {
@@ -29,7 +29,7 @@ function DashBoard() {
         <div className="options-dashboard">
           <button onClick={() => handleOptionClick("/dash/calendario", "calendario")}>Calendario</button>
           <button onClick={() => handleOptionClick("/dash/listausuario", "Lista usuario")}>Lista de usuario</button>
-          <button onClick={() => handleOptionClick("/dash/agregarusuario", "Agregar Usuario")}>Agregar Usuario</button>
+          <button onClick={() => handleOptionClick("/dash/asignarrol", "Asignar el rol")}>Asignar el rol</button>
           <button onClick={() => handleOptionClick("/dash/proyectos", "Proyectos")}>Proyectos</button>
           <button onClick={() => handleOptionClick("/dash/tareas", "Tareas")}>Tareas</button>
         </div>
