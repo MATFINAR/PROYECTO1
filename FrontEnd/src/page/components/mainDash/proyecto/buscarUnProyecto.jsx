@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 
-function ShowProjects() {
+function SearchProject() {
   const [projects, setProjects] = useState([]);
+  const [searchProject, setSearchProject] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -40,9 +41,54 @@ function ShowProjects() {
     fetchProjects();
   }, []);
 
-  
+  const handleInputChange = (event) => {
+    setSearchProject(event.target.value);
+  };
+
+  const buscarProyecto = async () => {
+    const token = Cookies.get('token');
+
+    if (!token) {
+      setError('No tiene permiso para acceder');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:666/api/project/${searchProject}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        const responseText = await response.text();
+        console.error(responseText);
+        throw new Error(responseText);
+      }
+
+      const data = await response.json();
+      setProjects([data]);
+      setError(null);
+    } catch (error) {
+      setError(`Error: ${error.message}`);
+      setProjects([]);
+    }
+  };
+
   return (
     <div>
+      <div>
+        <input 
+          type="text" 
+          value={searchProject} 
+          onChange={handleInputChange} 
+          placeholder="Nombre del proyecto"
+        />
+        <button onClick={buscarProyecto}>Buscar Proyecto</button>
+      </div>
+      
       {error ? (
         <div className="error-message">{error}</div>
       ) : (
@@ -66,8 +112,6 @@ function ShowProjects() {
                 <td>{new Date(project.FechaInicio).toLocaleDateString()}</td>
                 <td>{new Date(project.FechaFin).toLocaleDateString()}</td>
                 <td>{new Date(project.date_create).toLocaleDateString()}</td>
-                <td>
-                </td>
               </tr>
             ))}
           </tbody>
@@ -77,4 +121,4 @@ function ShowProjects() {
   );
 }
 
-export default ShowProjects;
+export default SearchProject;

@@ -1,5 +1,6 @@
 import '../../../style/listarUsuario.css';
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const ListarUsuario = () => {
   const [error, setError] = useState('');
@@ -8,12 +9,11 @@ const ListarUsuario = () => {
   useEffect(() => {
     const fetchUsuarios = async () => {
       try {
-        const response = await fetch('http://localhost:666/api/usuario/');
-        if (!response.ok) {
+        const response = await axios.get('http://localhost:666/api/usuario/');
+        if (!response.data) {
           throw new Error('Error al obtener los usuarios');
         }
-        const data = await response.json();
-        setUsuarios(data);
+        setUsuarios(response.data);
       } catch (error) {
         setError('Hubo un problema al obtener los usuarios');
         console.error('Error:', error);

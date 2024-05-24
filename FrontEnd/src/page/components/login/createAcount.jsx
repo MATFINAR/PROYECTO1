@@ -2,6 +2,7 @@ import "../../../style/agregarUsuario.css";
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { FaSave } from "react-icons/fa";
+import axios from 'axios';
 
 function CreateAcount() {
   const navigate = useNavigate();
@@ -46,31 +47,19 @@ function CreateAcount() {
     }
 
     try {
-      const response = await fetch('http://localhost:666/api/usuario', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ user, name, password, email, rol, date })
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        if (errorData.error) {
-          if (errorData.error.includes('usuario')) {
-            setError('Usuario ya existente');
-          } else if (errorData.error.includes('email')) {
-            setError('Correo ya existente');
-          } else {
-            setError(errorData.error || 'Error al guardar el usuario');
-          }
-        }
-        throw new Error(errorData.error || 'Error al guardar el usuario');
-      }
+      const response = await axios.post('http://localhost:666/api/usuario', { user, name, password, email, rol, date });
 
       navigate('/');
     } catch (error) {
-      if (!error.message.includes('Usuario ya existente') && !error.message.includes('Correo ya existente')) {
+      if (error.response && error.response.data.error) {
+        if (error.response.data.error.includes('usuario')) {
+          setError('Usuario ya existente');
+        } else if (error.response.data.error.includes('email')) {
+          setError('Correo ya existente');
+        } else {
+          setError(error.response.data.error || 'Error al guardar el usuario');
+        }
+      } else {
         setError(`Hubo un problema al guardar el usuario: ${error.message}`);
       }
       console.error('Error:', error);

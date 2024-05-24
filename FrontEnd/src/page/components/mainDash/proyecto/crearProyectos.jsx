@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function CreateProject() {
   const [Nombre, setNombre] = useState('');
@@ -20,27 +21,23 @@ function CreateProject() {
     }
 
     try {
-      const response = await fetch('http://localhost:666/api/projects', {
-        method: 'POST',
+      const response = await axios.post('http://localhost:666/api/projects', {
+        Nombre,
+        Descripcion,
+        FechaInicio,
+        FechaFin
+      }, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ Nombre, Descripcion, FechaInicio, FechaFin })
+        }
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        if (data.message === "Proyecto creado exitosamente") {
-          setSuccess(data.message);
-          setError('');
-        } else {
-          setError(data.message || 'Error al crear proyecto');
-          setSuccess('');
-        }
+      if (response.data.message === "Proyecto creado exitosamente") {
+        setSuccess(response.data.message);
+        setError('');
       } else {
-        setError(data.message || 'Error al crear proyecto');
+        setError(response.data.message || 'Error al crear proyecto');
         setSuccess('');
       }
     } catch (error) {

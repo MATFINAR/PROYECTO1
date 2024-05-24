@@ -2,51 +2,40 @@ import "../style/loggin.css"
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import axios from 'axios';
 
-  function Loggin() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const navigate = useNavigate();
+function Loggin() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-      const handleLogin = async () => {
-        try {
-          const response = await fetch('http://localhost:666/api/login', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, password })
-          });
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post('http://localhost:666/api/login', { email, password });
+      
+      if (!response.data.token) {
+        throw new Error('No token generated');
+      }
 
-          if (!response.ok) {
-            throw new Error('Login failed');
-          }
+      Cookies.set('token', response.data.token);
+      navigate('/dash');
+    } catch (error) {
+      setError('Error: Credenciales incorrectas o problemas con el servidor.');
+      console.error('Error:', error);
+    }
+  };
 
-          const data = await response.json();
-          
-          if (data.token) {
-            Cookies.set('token', data.token); // Guarda el token en una cookie
-            navigate('/dash'); // Redirige al dashboard
-          } else {
-            throw new Error('No token generated');
-          }
-        } catch (error) {
-          setError('Error: Credenciales incorrectas o problemas con el servidor.');
-          console.error('Error:', error);
-        }
-      };
-      const handleOptionClick = (path) => {
-        navigate(path);
-      };
-    
+  const handleOptionClick = (path) => {
+    navigate(path);
+  };
 
   return (
     <div className="content-loggin">
       <div className="content-info-loggin">
         <div className="logo-loggin"></div>
         <div className="info-loggin">
-        <span>"Del sueño a la realidad, un proyecto a la vez: Tu visión, nuestro impulso"</span>
+          <span>"Del sueño a la realidad, un proyecto a la vez: Tu visión, nuestro impulso"</span>
         </div>
       </div>
       <div className="logging-loggin">
@@ -77,4 +66,4 @@ import Cookies from 'js-cookie';
   );
 }
 
-  export default Loggin;
+export default Loggin;

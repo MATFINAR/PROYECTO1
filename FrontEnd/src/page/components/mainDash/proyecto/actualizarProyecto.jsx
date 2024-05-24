@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import axios from 'axios';
 
 const EditarProyecto = () => {
   const navigate = useNavigate();
@@ -17,20 +18,14 @@ const EditarProyecto = () => {
     const token = Cookies.get('token');
 
     try {
-      const response = await fetch(`http://localhost:666/api/projects/${proyecto.NombreAnterior}`, {
-        method: 'GET',
+      const response = await axios.get(`http://localhost:666/api/projects/${proyecto.NombreAnterior}`, {
         headers: {
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch project data');
-      }
-
-      const data = await response.json();
-      setProyecto({ ...data, NombreAnterior: data.Nombre });
+      setProyecto({ ...response.data, NombreAnterior: response.data.Nombre });
     } catch (error) {
       setError('Error fetching project data');
       console.error('Error:', error);
@@ -50,22 +45,15 @@ const EditarProyecto = () => {
     const token = Cookies.get('token');
 
     try {
-      const response = await fetch('http://localhost:666/api/projects', {
-        method: 'PUT',
+      const response = await axios.put('http://localhost:666/api/projects', proyecto, {
         headers: {
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(proyecto),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to update project');
-      }
-
-      const data = await response.json();
-      if (data.resultado === "Proyecto actualizado exitosamente") {
-        navigate('/dash'); // Redirige al dashboard
+      if (response.data.resultado === "Proyecto actualizado exitosamente") {
+        navigate('/dash/proyectos'); // Redirige al dashboard
       } else {
         setError('Error updating project');
       }
@@ -83,7 +71,6 @@ const EditarProyecto = () => {
           Nombre Anterior:
           <input type="text" name="NombreAnterior" value={proyecto.NombreAnterior} onChange={handleChange} required />
         </label>
-        <button type="button" onClick={handleBuscarProyecto}>Buscar Proyecto</button>
         <label>
           Nombre:
           <input type="text" name="Nombre" value={proyecto.Nombre} onChange={handleChange} required />

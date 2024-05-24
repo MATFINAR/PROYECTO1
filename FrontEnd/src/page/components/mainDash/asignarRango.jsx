@@ -1,6 +1,7 @@
 import "../../../style/asignarRol.css"
 import React, { useState } from 'react';
 import Cookies from 'js-cookie';
+import axios from 'axios';
 
 const AsignarRango = () => {
   const [formData, setFormData] = useState({ email: '', rol: '' });
@@ -20,26 +21,23 @@ const AsignarRango = () => {
       return;
     }
     try {
-      const response = await fetch('http://localhost:666/api/usuario/rol/', {
-        method: 'PUT',
+      const response = await axios.put('http://localhost:666/api/usuario/rol/', {
+        email: formData.email,
+        rol: formData.rol,
+        id: null,
+        user: null,
+        name: null,
+        password: null
+      }, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          rol: formData.rol,
-          id: null,
-          user: null,
-          name: null,
-          password: null
-        })
+        }
       });
-      const data = await response.json();
-      if (response.ok) {
-        setMessage(data.message);
+      if (response.data.message) {
+        setMessage(response.data.message);
       } else {
-        setMessage(data.error || 'Error al actualizar el usuario');
+        setMessage(response.data.error || 'Error al actualizar el usuario');
       }
     } catch (error) {
       setMessage('Error al actualizar el usuario');
