@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from 'axios';
@@ -18,7 +18,7 @@ const EditarProyecto = () => {
     const token = Cookies.get('token');
 
     try {
-      const response = await axios.get(`http://localhost:666/api/projects/${proyecto.NombreAnterior}`, {
+      const response = await axios.get(`http://localhost:666/api/project/${proyecto.NombreAnterior}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ const EditarProyecto = () => {
     const token = Cookies.get('token');
 
     try {
-      const response = await axios.put('http://localhost:666/api/projects', proyecto, {
+      const response = await axios.put('http://localhost:666/api/project', proyecto, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ const EditarProyecto = () => {
       });
 
       if (response.data.resultado === "Proyecto actualizado exitosamente") {
-        navigate('/dash/proyectos'); // Redirige al dashboard
+        window.location.reload(); // Recarga la página
       } else {
         setError('Error updating project');
       }
@@ -95,3 +95,4 @@ const EditarProyecto = () => {
 };
 
 export default EditarProyecto;
+
