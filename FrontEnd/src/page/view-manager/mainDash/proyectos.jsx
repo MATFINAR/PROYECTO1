@@ -1,4 +1,4 @@
-import "../../../style/proyectos.css"
+import "../style/proyectos.css";
 import React, { useState } from 'react';
 import ShowProjects from "./proyecto/mostrarProyectos";
 import CreateProject from "./proyecto/crearProyectos";

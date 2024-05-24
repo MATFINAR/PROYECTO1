@@ -1,4 +1,4 @@
-import "../../../style/asignarRol.css"
+import "../style/asignarRol.css";
 import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';

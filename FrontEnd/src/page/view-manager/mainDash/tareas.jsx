@@ -1,5 +1,5 @@
+import "../style/tareas.css";
 import React, { useState } from 'react';
-import "../../../style/tareas.css"
 
 function Tareas() {
   const [modalVisible, setModalVisible] = useState(false);

@@ -26,7 +26,7 @@
             min-width: 120px;
             min-height: 80px;
             grid-column: 1;
-            background-image: url(../asset/kuro1.png);
+            background-image: url(../../../asset/kuro1.png);
             background-size: contain;
             background-repeat: no-repeat;
         }

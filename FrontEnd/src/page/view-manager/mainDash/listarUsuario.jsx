@@ -1,4 +1,4 @@
-import '../../../style/listarUsuario.css';
+import '../style/listarUsuario.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 

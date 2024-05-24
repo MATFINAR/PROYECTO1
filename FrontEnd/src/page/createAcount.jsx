@@ -1,4 +1,4 @@
-import "../../../style/agregarUsuario.css";
+import "../style/agregarUsuario.css";
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { FaSave } from "react-icons/fa";

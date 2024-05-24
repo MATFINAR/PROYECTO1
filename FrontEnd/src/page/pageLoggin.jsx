@@ -19,7 +19,7 @@ function Loggin() {
       }
 
       Cookies.set('token', response.data.token);
-      navigate('/dash');
+      navigate('/dash-manager');
     } catch (error) {
       setError('Error: Credenciales incorrectas o problemas con el servidor.');
       console.error('Error:', error);

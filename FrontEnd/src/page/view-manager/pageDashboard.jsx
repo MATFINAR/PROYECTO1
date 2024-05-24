@@ -1,4 +1,4 @@
-import "../style/dashBoard.css";
+import "./style/dashBoard.css";
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
 import MainDash from "./mainDash";
@@ -28,11 +28,11 @@ function DashBoard() {
       </div>
       <div className="aside-dashboard">
         <div className="options-dashboard">
-          <button onClick={() => handleOptionClick("/dash/calendario", "calendario")}>Calendario</button>
-          <button onClick={() => handleOptionClick("/dash/listausuario", "Lista usuario")}>Lista de usuario</button>
-          <button onClick={() => handleOptionClick("/dash/asignarrol", "Asignar el rol")}>Asignar el rol</button>
-          <button onClick={() => handleOptionClick("/dash/proyectos", "Proyectos")}>Proyectos</button>
-          <button onClick={() => handleOptionClick("/dash/tareas", "Tareas")}>Tareas</button>
+          <button onClick={() => handleOptionClick("/dash-manager/calendario", "calendario")}>Calendario</button>
+          <button onClick={() => handleOptionClick("/dash-manager/listausuario", "Lista usuario")}>Lista de usuario</button>
+          <button onClick={() => handleOptionClick("/dash-manager/asignarrol", "Asignar el rol")}>Asignar el rol</button>
+          <button onClick={() => handleOptionClick("/dash-manager/proyectos", "Proyectos")}>Proyectos</button>
+          <button onClick={() => handleOptionClick("/dash-manager/tareas", "Tareas")}>Tareas</button>
         </div>
       </div>
       <div className="main-dashboard">
