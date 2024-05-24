@@ -7,7 +7,7 @@ const routerProjects = Router();
 routerProjects.get("/project/:Nombre", validarPermiso, getProject);
 routerProjects.get("/projects", validarPermiso, showProject);
 routerProjects.post("/projects", validarPermiso, postProject);
-routerProjects.put("/projects", validarPermiso, putProject);
-routerProjects.delete("/projects",  validarPermiso, delProject);
+routerProjects.put("/project", validarPermiso, putProject);
+routerProjects.delete("/project/:Nombre",  validarPermiso, delProject);
 
 export default routerProjects;

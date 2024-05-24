@@ -68,7 +68,7 @@ const EditarProyecto = () => {
       <h2>Editando Proyecto: {proyecto.NombreAnterior}</h2>
       <form onSubmit={handleSubmit}>
         <label>
-          Nombre Anterior:
+          Nombre del proyecto que desea actualizar:
           <input type="text" name="NombreAnterior" value={proyecto.NombreAnterior} onChange={handleChange} required />
         </label>
         <label>

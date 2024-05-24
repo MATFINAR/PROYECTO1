@@ -1,6 +1,6 @@
 import "../../../style/proyectos.css"
 import React, { useState } from 'react';
-import ShowProjects from "./proyecto/MostrarProyectos";
+import ShowProjects from "./proyecto/mostrarProyectos";
 import CreateProject from "./proyecto/crearProyectos";
 import UpdateProject from "./proyecto/actualizarProyecto";
 

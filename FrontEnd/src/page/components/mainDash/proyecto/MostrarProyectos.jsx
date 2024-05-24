@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { deleteProyect } from './eliminarUnProyecto'; // Importa la función deleteProyect
 
 const ShowProjects = () => {
   const [proyectos, setProyectos] = useState([]);
@@ -52,6 +53,19 @@ const ShowProjects = () => {
     buscarProyecto();
   };
 
+  const handleDelete = async (Nombre) => {
+    const confirmar = window.confirm('¿Estás seguro de que quieres eliminar este proyecto?');
+    if (confirmar) {
+      const resultado = await deleteProyect(Nombre);
+      console.log(resultado);
+      if (resultado.resultado === 'Proyecto eliminado exitosamente') {
+        mostrarProyectos();
+      } else {
+        console.error('Error al eliminar proyecto:', resultado.resultado);
+      }
+    }
+  };
+
   return (
     <div>
       <h1>Proyectos</h1>
@@ -83,7 +97,7 @@ const ShowProjects = () => {
               <td>{proyecto.Descripcion}</td>
               <td>{proyecto.FechaInicio}</td>
               <td>{proyecto.FechaFin}</td>
-              <th><button>Eliminar</button></th>
+              <th><button onClick={() => handleDelete(proyecto.Nombre)}>Eliminar</button></th>
             </tr>
           ))}
         </tbody>

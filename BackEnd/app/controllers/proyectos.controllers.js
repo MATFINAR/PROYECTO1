@@ -80,7 +80,7 @@ export const putProject = async (req, res) => {
 };
 
 export const delProject = async (req, res) => {
-  const Nombre = req.body.Nombre;
+  const Nombre = req.params.Nombre;
 
   try {
     
