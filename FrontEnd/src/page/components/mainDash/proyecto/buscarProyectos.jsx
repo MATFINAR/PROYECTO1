@@ -40,6 +40,7 @@ function ShowProjects() {
     fetchProjects();
   }, []);
 
+  
   return (
     <div>
       {error ? (
@@ -48,6 +49,7 @@ function ShowProjects() {
         <table>
           <thead>
             <tr>
+              <th>#</th>
               <th>Nombre</th>
               <th>Descripción</th>
               <th>Fecha Inicio</th>
@@ -64,6 +66,8 @@ function ShowProjects() {
                 <td>{new Date(project.FechaInicio).toLocaleDateString()}</td>
                 <td>{new Date(project.FechaFin).toLocaleDateString()}</td>
                 <td>{new Date(project.date_create).toLocaleDateString()}</td>
+                <td>
+                </td>
               </tr>
             ))}
           </tbody>

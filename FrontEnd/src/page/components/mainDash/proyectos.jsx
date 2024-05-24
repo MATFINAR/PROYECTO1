@@ -19,12 +19,11 @@ function Proyectos() {
   };
 
   return (
-    <div className='content-tareas'>
-      <div className='botones-tareas'>
+    <div className='content-proyecto'>
+      <div className='botones-proyecto'>
         <button onClick={() => openModal(<ShowProjects />)}>Buscar Proyectos</button>
         <button onClick={() => openModal(<CreateProject />)}>Crear Proyecto</button>
         <button onClick={() => openModal(<UpdateProject />)}>Actualizar Proyecto</button>
-        <button onClick={() => openModal("Eliminar Proyecto")}>Eliminar Proyecto</button>
       </div>
       <div className='reforma-proyecto'>
         {modalVisible && (

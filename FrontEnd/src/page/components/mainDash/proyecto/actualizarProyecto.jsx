@@ -1,121 +1,110 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
-function UpdateProject() {
-  const [projectName, setProjectName] = useState('');
-  const [Nombre, setNombre] = useState('');
-  const [Descripcion, setDescripcion] = useState('');
-  const [FechaInicio, setFechaInicio] = useState('');
-  const [FechaFin, setFechaFin] = useState('');
+const EditarProyecto = () => {
+  const navigate = useNavigate();
+  const [proyecto, setProyecto] = useState({
+    Nombre: '',
+    Descripcion: '',
+    FechaInicio: '',
+    FechaFin: '',
+    NombreAnterior: '',
+  });
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
 
-  const handleSearchProject = async () => {
+  const handleBuscarProyecto = async () => {
     const token = Cookies.get('token');
 
     try {
-      const response = await fetch(`http://localhost:666/api/projects?nombre=${projectName}`, {
+      const response = await fetch(`http://localhost:666/api/projects/${proyecto.NombreAnterior}`, {
         method: 'GET',
         headers: {
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
+        },
       });
 
       if (!response.ok) {
-        throw new Error('Error fetching project');
+        throw new Error('Failed to fetch project data');
       }
 
       const data = await response.json();
-      if (data.length === 0) {
-        throw new Error('Project not found');
-      }
-
-      const project = data[0]; // Tomamos el primer proyecto encontrado (si hay varios con el mismo nombre)
-      if (!Nombre) setNombre(project.Nombre);
-      if (!Descripcion) setDescripcion(project.Descripcion);
-      if (!FechaInicio) setFechaInicio(project.FechaInicio);
-      if (!FechaFin) setFechaFin(project.FechaFin);
-      setError('');
+      setProyecto({ ...data, NombreAnterior: data.Nombre });
     } catch (error) {
       setError('Error fetching project data');
       console.error('Error:', error);
     }
   };
 
-  const handleUpdateProject = async () => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setProyecto((prevProyecto) => ({
+      ...prevProyecto,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const token = Cookies.get('token');
-    
-    if (!token) {
-      setError('No tiene permiso para acceder');
-      return;
-    }
 
     try {
-      const response = await fetch(`http://localhost:666/api/projects/${projectName}`, {
+      const response = await fetch('http://localhost:666/api/projects', {
         method: 'PUT',
         headers: {
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({ Nombre, Descripcion, FechaInicio, FechaFin })
+        body: JSON.stringify(proyecto),
       });
 
-      const data = await response.json();
+      if (!response.ok) {
+        throw new Error('Failed to update project');
+      }
 
-      if (response.ok) {
-        setSuccess(data.message);
-        setError('');
+      const data = await response.json();
+      if (data.resultado === "Proyecto actualizado exitosamente") {
+        navigate('/dash'); // Redirige al dashboard
       } else {
-        setError(data.message || 'Error al actualizar proyecto');
-        setSuccess('');
+        setError('Error updating project');
       }
     } catch (error) {
-      setError('Error: No tiene permiso para acceder o problemas con el servidor.');
+      setError('Error updating project');
       console.error('Error:', error);
-      setSuccess('');
     }
   };
 
   return (
     <div>
-      <h1>Actualizar Proyecto</h1>
-      <input
-        type="text"
-        placeholder="Nombre del Proyecto a Actualizar"
-        value={projectName}
-        onChange={(e) => setProjectName(e.target.value)}
-        onBlur={handleSearchProject}
-      />
-      <input
-        type="text"
-        placeholder="Nombre"
-        value={Nombre}
-        onChange={(e) => setNombre(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Descripción"
-        value={Descripcion}
-        onChange={(e) => setDescripcion(e.target.value)}
-      />
-      <input
-        type="date"
-        placeholder="Fecha de Inicio"
-        value={FechaInicio}
-        onChange={(e) => setFechaInicio(e.target.value)}
-      />
-      <input
-        type="date"
-        placeholder="Fecha de Fin"
-        value={FechaFin}
-        onChange={(e) => setFechaFin(e.target.value)}
-      />
-      <button onClick={handleUpdateProject}>Actualizar Proyecto</button>
-      {error && <div className="error-message">{error}</div>}
-      {success && <div className="success-message">{success}</div>}
+      <h2>Editando Proyecto: {proyecto.NombreAnterior}</h2>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Nombre Anterior:
+          <input type="text" name="NombreAnterior" value={proyecto.NombreAnterior} onChange={handleChange} required />
+        </label>
+        <button type="button" onClick={handleBuscarProyecto}>Buscar Proyecto</button>
+        <label>
+          Nombre:
+          <input type="text" name="Nombre" value={proyecto.Nombre} onChange={handleChange} required />
+        </label>
+        <label>
+          Descripción:
+          <textarea name="Descripcion" value={proyecto.Descripcion} onChange={handleChange}></textarea>
+        </label>
+        <label>
+          Fecha de inicio:
+          <input type="date" name="FechaInicio" value={proyecto.FechaInicio} onChange={handleChange} />
+        </label>
+        <label>
+          Fecha de fin:
+          <input type="date" name="FechaFin" value={proyecto.FechaFin} onChange={handleChange} />
+        </label>
+        <button type="submit">Guardar Cambios</button>
+      </form>
+      {error && <p>{error}</p>}
     </div>
   );
-}
+};
 
-export default UpdateProject;
+export default EditarProyecto;
