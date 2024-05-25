@@ -21,7 +21,7 @@ function CreateProject() {
     }
 
     try {
-      const response = await axios.post('http://localhost:666/api/projects', {
+      const response = await axios.post('http://localhost:666/api/project', {
         Nombre,
         Descripcion,
         FechaInicio,

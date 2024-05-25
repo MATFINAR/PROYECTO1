@@ -46,27 +46,28 @@ export const postProject = async (req, res) => {
 };
 
 export const putProject = async (req, res) => {
-  const info = req.body;
+  const { NombreAnterior, Nombre, Descripcion, FechaInicio, FechaFin } = req.body;
 
   try {
-
+    // Verificar si el nuevo nombre del proyecto ya existe (excepto el proyecto actual)
     const existingProject = await pool.query(
-      `SELECT ID FROM proyectos WHERE Nombre = ? AND ID != ?`,
-      [info.Nombre, info.ID]
+      `SELECT ID FROM proyectos WHERE Nombre = ? AND Nombre != ?`,
+      [Nombre, NombreAnterior]
     );
 
     if (existingProject[0].length > 0) {
       return res.status(400).json({ resultado: "El nombre del proyecto ya existe" });
     }
 
+    // Actualizar el proyecto usando el nombre antiguo
     const resultado = await pool.query(
       `UPDATE proyectos SET 
       Nombre = ?, 
       Descripcion = ?, 
       FechaInicio = ?, 
       FechaFin = ? 
-      WHERE ID = ?`,
-      [info.Nombre, info.Descripcion, info.FechaInicio, info.FechaFin, info.ID]
+      WHERE Nombre = ?`,
+      [Nombre, Descripcion, FechaInicio, FechaFin, NombreAnterior]
     );
 
     if (resultado[0].affectedRows > 0) {

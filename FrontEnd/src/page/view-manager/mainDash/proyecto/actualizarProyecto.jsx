@@ -25,10 +25,17 @@ const EditarProyecto = () => {
         },
       });
 
-      setProyecto({ ...response.data, NombreAnterior: response.data.Nombre });
+      if (response.data.length > 0) {
+        setProyecto({
+          ...response.data[0],
+          NombreAnterior: response.data[0].Nombre,
+        });
+      } else {
+        setError('Proyecto no encontrado');
+      }
     } catch (error) {
       setError('Error fetching project data');
-      console.error('Error:', error);
+      console.error('Error fetching project data:', error);
     }
   };
 
@@ -45,6 +52,20 @@ const EditarProyecto = () => {
     const token = Cookies.get('token');
 
     try {
+      // Verificar si el nombre del proyecto ya existe
+      const verifyResponse = await axios.get(`http://localhost:666/api/project/${proyecto.Nombre}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (verifyResponse.data.length > 0 && verifyResponse.data[0].Nombre !== proyecto.NombreAnterior) {
+        setError('El nombre del proyecto ya existe');
+        return;
+      }
+
+      // Actualizar el proyecto
       const response = await axios.put('http://localhost:666/api/project', proyecto, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -53,13 +74,13 @@ const EditarProyecto = () => {
       });
 
       if (response.data.resultado === "Proyecto actualizado exitosamente") {
-        window.location.reload(); // Recarga la página
+        navigate('/proyectos'); // Navegar a la página de proyectos
       } else {
-        setError('Error updating project');
+        setError('Error updating project: ' + response.data.resultado);
       }
     } catch (error) {
       setError('Error updating project');
-      console.error('Error:', error);
+      console.error('Error updating project:', error);
     }
   };
 
@@ -69,23 +90,50 @@ const EditarProyecto = () => {
       <form onSubmit={handleSubmit}>
         <label>
           Nombre del proyecto que desea actualizar:
-          <input type="text" name="NombreAnterior" value={proyecto.NombreAnterior} onChange={handleChange} required />
+          <input
+            type="text"
+            name="NombreAnterior"
+            value={proyecto.NombreAnterior}
+            onChange={handleChange}
+            required
+          />
         </label>
+        <button type="button" onClick={handleBuscarProyecto}>Buscar Proyecto</button>
         <label>
           Nombre:
-          <input type="text" name="Nombre" value={proyecto.Nombre} onChange={handleChange} required />
+          <input
+            type="text"
+            name="Nombre"
+            value={proyecto.Nombre}
+            onChange={handleChange}
+            required
+          />
         </label>
         <label>
           Descripción:
-          <textarea name="Descripcion" value={proyecto.Descripcion} onChange={handleChange}></textarea>
+          <textarea
+            name="Descripcion"
+            value={proyecto.Descripcion}
+            onChange={handleChange}
+          ></textarea>
         </label>
         <label>
           Fecha de inicio:
-          <input type="date" name="FechaInicio" value={proyecto.FechaInicio} onChange={handleChange} />
+          <input
+            type="date"
+            name="FechaInicio"
+            value={proyecto.FechaInicio}
+            onChange={handleChange}
+          />
         </label>
         <label>
           Fecha de fin:
-          <input type="date" name="FechaFin" value={proyecto.FechaFin} onChange={handleChange} />
+          <input
+            type="date"
+            name="FechaFin"
+            value={proyecto.FechaFin}
+            onChange={handleChange}
+          />
         </label>
         <button type="submit">Guardar Cambios</button>
       </form>
