@@ -13,6 +13,12 @@ const CreateTask = () => {
   const [success, setSuccess] = useState('');
 
   const handleCreateTask = async () => {
+
+    if(!Nombre.trim()){
+      setError("El nombre de la tarea no puede estar vacío")
+      return;
+    }
+    
     const token = Cookies.get('token');
     
     if (!token) {

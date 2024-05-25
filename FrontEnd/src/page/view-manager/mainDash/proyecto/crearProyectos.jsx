@@ -13,6 +13,11 @@ function CreateProject() {
   const navigate = useNavigate();
 
   const handleCreateProject = async () => {
+    if (!Nombre.trim()) {
+      setError('El nombre del proyecto no puede estar vacío');
+      return;
+    }
+
     const token = Cookies.get('token');
     
     if (!token) {
