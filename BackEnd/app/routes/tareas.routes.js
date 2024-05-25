@@ -1,14 +1,12 @@
 import { Router } from "express";
 import { validarPermiso } from "../middlewares/usuarios.middlewares.js";
-import { createTask, deleteTask, getAllTasks, getTaskById, updateTask } from "../controllers/tareas.controllers.js";
+import { delTask, getTask, postTask, putTask, showTasks } from "../controllers/tareas.controllers.js";
 const routerTareas = Router();
 
-routerTareas.get("/tarea/:id", validarPermiso, getTaskById);
-routerTareas.get("/tareas",validarPermiso,getAllTasks );
-routerTareas.post("/tareas",validarPermiso, createTask);
-routerTareas.put("/tareas", validarPermiso, updateTask);
-routerTareas.delete("/tareas", validarPermiso, deleteTask);
-
-
+routerTareas.get("/task/:Nombre", validarPermiso, getTask);
+routerTareas.get("/tasks", showTasks );
+routerTareas.post("/task", validarPermiso, postTask);
+routerTareas.put("/task", putTask);
+routerTareas.delete("/task/:Nombre", validarPermiso, delTask);
 
 export default routerTareas;

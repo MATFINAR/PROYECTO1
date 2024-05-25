@@ -49,6 +49,7 @@ export const putProject = async (req, res) => {
   const info = req.body;
 
   try {
+
     const existingProject = await pool.query(
       `SELECT ID FROM proyectos WHERE Nombre = ? AND ID != ?`,
       [info.Nombre, info.ID]
@@ -58,15 +59,14 @@ export const putProject = async (req, res) => {
       return res.status(400).json({ resultado: "El nombre del proyecto ya existe" });
     }
 
-    // Actualiza el proyecto
     const resultado = await pool.query(
       `UPDATE proyectos SET 
       Nombre = ?, 
       Descripcion = ?, 
       FechaInicio = ?, 
       FechaFin = ? 
-      WHERE Nombre = ?`,
-      [info.Nombre, info.Descripcion, info.FechaInicio, info.FechaFin, info.NombreAnterior]
+      WHERE ID = ?`,
+      [info.Nombre, info.Descripcion, info.FechaInicio, info.FechaFin, info.ID]
     );
 
     if (resultado[0].affectedRows > 0) {
@@ -75,7 +75,7 @@ export const putProject = async (req, res) => {
       res.json({ resultado: "Proyecto no actualizado exitosamente" });
     }
   } catch (error) {
-    res.status(500).json({ "error": error, resultado: "Error al actualizar proyecto" });
+    res.status(500).json({ error: error.message, resultado: "Error al actualizar proyecto" });
   }
 };
 

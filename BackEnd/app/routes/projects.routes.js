@@ -1,5 +1,4 @@
 import { Router } from "express";
-
 import { validarPermiso } from "../middlewares/usuarios.middlewares.js";
 import { delProject, getProject, postProject, putProject, showProject } from "../controllers/proyectos.controllers.js";
 const routerProjects = Router();

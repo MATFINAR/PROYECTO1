@@ -95,4 +95,3 @@ const EditarProyecto = () => {
 };
 
 export default EditarProyecto;
-

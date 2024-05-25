@@ -1,74 +1,99 @@
 import { pool } from "../config/bd-mysql.js";
 import { getCurrentDateTime } from '../util/dateHelper.js';
 
-// Obtener todas las tareas
-export const getAllTasks = async (req, res) => {
+export const showTasks = async (req, res) => {
+  
   try {
-    const result = await pool.query("SELECT * FROM tareas");
-    res.json(result[0]);
+    
+    const resultado = await pool.query("SELECT * FROM tareas");
+    res.json( resultado[0] );
+
   } catch (error) {
-    res.status(500).json({ error: error.message, message: "Error en la consulta GET de tareas" });
+    res.status(500).json({ "error": error, resultado: "Error en la consulta Get de tareas" });
   }
 };
 
-// Obtener una tarea por su ID
-export const getTaskById = async (req, res) => {
-  const ID = req.params.id;
+export const getTask = async (req, res) => {
+  const { Nombre } = req.params;
 
   try {
-    const result = await pool.query('SELECT * FROM tareas WHERE ID = ?', [ID]);
-    res.json(result[0]);
+    const resultado = await pool.query('SELECT * FROM tareas WHERE Nombre = ?', [Nombre]);
+    res.json(resultado[0]);
   } catch (error) {
-    res.status(500).json({ error: error.message, message: "Error en la consulta GET de tarea por ID" });
+    res.status(500).json({ error: error.message, resultado: 'Error en la consulta Get de tarea' });
   }
 };
 
-// Crear una nueva tarea
-export const createTask = async (req, res) => {
+export const postTask = async (req, res) => {
   const { ID_Proyecto, Nombre, Descripcion, FechaInicio, FechaFin, Estado } = req.body;
   const date_create = getCurrentDateTime();
 
   try {
-    const result = await pool.query(
+    const resultado = await pool.query(
       "INSERT INTO tareas (ID_Proyecto, Nombre, Descripcion, FechaInicio, FechaFin, Estado, date_create) VALUES (?, ?, ?, ?, ?, ?, ?)",
       [ID_Proyecto, Nombre, Descripcion, FechaInicio, FechaFin, Estado, date_create]
     );
 
-    if (result.affectedRows > 0) {
-      res.json({ message: "Tarea creada exitosamente" });
+    if (resultado[0].affectedRows > 0) {
+      res.json({ message: "Tarea creado exitosamente" });
     } else {
-      res.json({ message: "Error al crear tarea" });
+      res.json({ message: "Tarea no creado" });
     }
+
   } catch (error) {
-    res.status(500).json({ error: error.message, message: "Error al crear tarea" });
+    res.status(500).json({ "error": error, resultado: "Error al crear tarea" });
   }
 };
 
-// Actualizar una tarea existente
-export const updateTask = async (req, res) => {
-  const { ID, ID_Proyecto, Nombre, Descripcion, FechaInicio, FechaFin, Estado } = req.body;
-  const date_create = getCurrentDateTime();
+export const putTask = async (req, res) => {
+  const info = req.body;
 
   try {
-    await pool.query(
-      "UPDATE tareas SET ID_Proyecto = ?, Nombre = ?, Descripcion = ?, FechaInicio = ?, FechaFin = ?, Estado = ?, date_create = ? WHERE ID = ?",
-      [ID_Proyecto, Nombre, Descripcion, FechaInicio, FechaFin, Estado, date_create, ID]
+
+    const existingProject = await pool.query(
+      `SELECT ID FROM tareas WHERE Nombre = ? AND ID != ?`,
+      [info.Nombre, info.ID]
     );
 
-    res.json({ message: "Tarea actualizada exitosamente" });
+    if (existingProject[0].length > 0) {
+      return res.status(400).json({ resultado: "El nombre del proyecto ya existe" });
+    }
+
+    const resultado = await pool.query(
+      `UPDATE tareas SET 
+      ID_Proyecto = ?,
+      Nombre = ?, 
+      Descripcion = ?, 
+      FechaInicio = ?, 
+      FechaFin = ?,
+      Estado = ?
+      WHERE ID = ?`,
+      [info.ID_Proyecto, info.Nombre, info.Descripcion, info.FechaInicio, info.FechaFin, info.Estado, info.ID]
+    );
+
+    if (resultado[0].affectedRows > 0) {
+      res.json({ resultado: "Tarea actualizado exitosamente" });
+    } else {
+      res.json({ resultado: "Tarea no actualizado exitosamente" });
+    }
   } catch (error) {
-    res.status(500).json({ error: error.message, message: "Error al actualizar tarea" });
+    res.status(500).json({ error: error.message, resultado: "Error al actualizar tarea" });
   }
 };
 
-// Eliminar una tarea
-export const deleteTask = async (req, res) => {
-  const ID = req.body.ID;
+export const delTask = async (req, res) => {
+  const Nombre = req.params.Nombre;
 
   try {
-    await pool.query("DELETE FROM tareas WHERE ID = ?", [ID]);
-    res.json({ message: "Tarea eliminada exitosamente" });
-  } catch (error) {
-    res.status(500).json({ error: error.message, message: "Error al eliminar tarea" });
+    
+    const resultado=await pool.query("DELETE FROM tareas WHERE Nombre = ?", [Nombre]);
+    
+    if (resultado[0].affectedRows > 0) {
+      res.json({ resultado: "Tarea eliminado exitosamente" });
+    } else {
+      res.json({ resultado: "Tarea no eliminado" });
+    
+    }  } catch (error) {
+    res.status(500).json({ "error": error , resultado: "Error al eliminar tarea" });
   }
 };

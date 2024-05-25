@@ -1,5 +1,9 @@
 import "../style/tareas.css";
 import React, { useState } from 'react';
+import ShowTasks from "./tarea/mostrarTareas";
+import CreateTask from "./tarea/crearTareas";
+import EditarTarea from "./tarea/actualizarTarea";
+
 
 function Tareas() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -15,19 +19,18 @@ function Tareas() {
   };
 
   return (
-    <div className='content-tareas'>
-      <div className='botones-tareas'>
-        <button onClick={() => openModal("Buscar Tareas")}>Buscar Tareas</button>
-        <button onClick={() => openModal("Crear Tareas")}>Crear Tareas</button>
-        <button onClick={() => openModal("Actualizar Tareas")}>Actualizar Tareas</button>
-        <button onClick={() => openModal("Eliminar Tareas")}>Eliminar Tareas</button>
+    <div className='content-tarea'>
+      <div className='botones-tarea'>
+        <button onClick={() => openModal(<CreateTask />)}>Crear Tarea</button>
+        <button onClick={() => openModal(<EditarTarea />)}>Actualizar Tarea</button>
       </div>
       <div className='reforma-tarea'>
+        <ShowTasks />
         {modalVisible && (
           <div className="modal-tarea">
             <div className="modal-content-tarea">
               <span className="close" onClick={closeModal}>&times;</span>
-              {modalContent}
+              {modalContent }
             </div>
           </div>
         )}
