@@ -71,12 +71,12 @@ const ShowTasks = () => {
       <h1>Tareas</h1>
       <form onSubmit={handleSubmit}>
         <input
-          type="text"
+          type='text'
           value={busqueda}
           onChange={handleChange}
-          placeholder="Buscar tarea..."
+          placeholder='Buscar tarea...'
         />
-        <button type="submit">Buscar Tarea</button>
+        <button type='submit'>Buscar Tarea</button>
       </form>
       <table>
         <thead>

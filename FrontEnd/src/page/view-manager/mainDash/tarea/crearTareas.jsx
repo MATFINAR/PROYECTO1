@@ -35,9 +35,10 @@ const CreateTask = () => {
         }
       });
 
-      if (response.data.message === "Tarea creada exitosamente") {
-        setSuccess(response.data.message);
+      if (response.data.resultado === 'Tarea creada exitosamente') {
+        setSuccess(response.data.resultado);
         setError('');
+        window.location.reload();
         // Restablecer los campos del formulario después de una creación exitosa
         setID_Proyecto('');
         setNombre('');
@@ -46,7 +47,7 @@ const CreateTask = () => {
         setFechaFin('');
         setEstado('Pendiente');
       } else {
-        setError(response.data.message || 'Error al crear tarea');
+        setError(response.data.resultado || 'Error al crear tarea');
         setSuccess('');
       }
     } catch (error) {
@@ -60,32 +61,32 @@ const CreateTask = () => {
     <div>
       <h1>Crear Tarea</h1>
       <input
-        type="text"
-        placeholder="ID Proyecto"
+        type='text'
+        placeholder='ID Proyecto'
         value={ID_Proyecto}
         onChange={(e) => setID_Proyecto(e.target.value)}
       />
       <input
-        type="text"
-        placeholder="Nombre"
+        type='text'
+        placeholder='Nombre'
         value={Nombre}
         onChange={(e) => setNombre(e.target.value)}
       />
       <input
-        type="text"
-        placeholder="Descripción"
+        type='text'
+        placeholder='Descripción'
         value={Descripcion}
         onChange={(e) => setDescripcion(e.target.value)}
       />    
       <input
-        type="date"
-        placeholder="Fecha de Inicio"
+        type='date'
+        placeholder='Fecha de Inicio'
         value={FechaInicio}
         onChange={(e) => setFechaInicio(e.target.value)}
       />
       <input
-        type="date"
-        placeholder="Fecha de Fin"
+        type='date'
+        placeholder='Fecha de Fin'
         value={FechaFin}
         onChange={(e) => setFechaFin(e.target.value)}
       />
@@ -94,13 +95,13 @@ const CreateTask = () => {
         value={Estado}
         onChange={(e) => setEstado(e.target.value)}
       >
-        <option value="Pendiente">Pendiente</option>
-        <option value="En curso">En curso</option>
-        <option value="Completada">Completada</option>
+        <option value='Pendiente'>Pendiente</option>
+        <option value='En curso'>En curso</option>
+        <option value='Completada'>Completada</option>
       </select>
       <button onClick={handleCreateTask}>Crear Tarea</button>
-      {error && <div className="error-message">{error}</div>}
-      {success && <div className="success-message">{success}</div>}
+      {error && <div className='error-message'>{error}</div>}
+      {success && <div className='success-message'>{success}</div>}
     </div>
   );
 }

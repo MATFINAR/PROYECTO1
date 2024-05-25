@@ -33,11 +33,12 @@ function CreateProject() {
         }
       });
 
-      if (response.data.message === "Proyecto creado exitosamente") {
-        setSuccess(response.data.message);
+      if (response.data.resultado === "Proyecto creado exitosamente") {
+        setSuccess(response.data.resultado);
         setError('');
+        window.location.reload();
       } else {
-        setError(response.data.message || 'Error al crear proyecto');
+        setError(response.data.resultado || 'Error al crear proyecto');
         setSuccess('');
       }
     } catch (error) {

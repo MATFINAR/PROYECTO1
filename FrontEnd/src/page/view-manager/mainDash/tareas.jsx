@@ -2,7 +2,7 @@ import "../style/tareas.css";
 import React, { useState } from 'react';
 import ShowTasks from "./tarea/mostrarTareas";
 import CreateTask from "./tarea/crearTareas";
-import EditarTarea from "./tarea/actualizarTarea";
+import UpdateTask from "./tarea/actualizarTarea";
 
 
 function Tareas() {
@@ -22,7 +22,7 @@ function Tareas() {
     <div className='content-tarea'>
       <div className='botones-tarea'>
         <button onClick={() => openModal(<CreateTask />)}>Crear Tarea</button>
-        <button onClick={() => openModal(<EditarTarea />)}>Actualizar Tarea</button>
+        <button onClick={() => openModal(<UpdateTask />)}>Actualizar Tarea</button>
       </div>
       <div className='reforma-tarea'>
         <ShowTasks />

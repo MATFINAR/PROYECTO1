@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 
-const EditarProyecto = () => {
+const UpdateProject = () => {
   const navigate = useNavigate();
   const [proyecto, setProyecto] = useState({
     Nombre: '',
@@ -74,7 +74,7 @@ const EditarProyecto = () => {
       });
 
       if (response.data.resultado === "Proyecto actualizado exitosamente") {
-        navigate('/proyectos'); // Navegar a la página de proyectos
+        window.location.reload(); // Navegar a la página de proyectos
       } else {
         setError('Error updating project: ' + response.data.resultado);
       }
@@ -142,4 +142,4 @@ const EditarProyecto = () => {
   );
 };
 
-export default EditarProyecto;
+export default UpdateProject;

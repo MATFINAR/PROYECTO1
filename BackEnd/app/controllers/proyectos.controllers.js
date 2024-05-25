@@ -20,7 +20,7 @@ export const getProject = async (req, res) => {
     const resultado = await pool.query('SELECT * FROM proyectos WHERE Nombre = ?', [Nombre]);
     res.json(resultado[0]);
   } catch (error) {
-    res.status(500).json({ error: error.message, resultado: 'Error en la consulta Get de proyecto' });
+    res.status(500).json({ error: error.resultado, resultado: 'Error en la consulta Get de proyecto' });
   }
 };
 
@@ -35,9 +35,9 @@ export const postProject = async (req, res) => {
     );
 
     if (resultado[0].affectedRows > 0) {
-      res.json({ message: "Proyecto creado exitosamente" });
+      res.json({ resultado: "Proyecto creado exitosamente" });
     } else {
-      res.json({ message: "Proyecto no creado" });
+      res.json({ resultado: "Proyecto no creado" });
     }
 
   } catch (error) {
@@ -76,7 +76,7 @@ export const putProject = async (req, res) => {
       res.json({ resultado: "Proyecto no actualizado exitosamente" });
     }
   } catch (error) {
-    res.status(500).json({ error: error.message, resultado: "Error al actualizar proyecto" });
+    res.status(500).json({ error: error.resultado, resultado: "Error al actualizar proyecto" });
   }
 };
 
@@ -96,4 +96,3 @@ export const delProject = async (req, res) => {
     res.status(500).json({ "error": error , resultado: "Error al eliminar proyecto" });
   }
 };
-
