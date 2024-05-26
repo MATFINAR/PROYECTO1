@@ -24,20 +24,16 @@ const AsignarRango = () => {
       const response = await axios.put('http://localhost:666/api/usuario/rol/', {
         email: formData.email,
         rol: formData.rol,
-        id: null,
-        user: null,
-        name: null,
-        password: null
       }, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         }
       });
-      if (response.data.message) {
-        setMessage(response.data.message);
+      if (response.data.mensaje) {
+        setMessage(response.data.mensaje);
       } else {
-        setMessage(response.data.error || 'Error al actualizar el usuario');
+        setMessage('Error al actualizar el usuario');
       }
     } catch (error) {
       setMessage('Error al actualizar el usuario');
@@ -63,7 +59,7 @@ const AsignarRango = () => {
             value={formData.rol}
             onChange={handleChange}
           >
-            <option value="">Seleccione un rol</option>
+            <option>Seleccione un rol</option>
             <option value="usuario">Usuario</option>
             <option value="administrador">Administrador</option>
           </select>

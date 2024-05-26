@@ -3,126 +3,149 @@ import { tokenSign } from "../middlewares/usuarios.middlewares.js";
 import { getCurrentDateTime } from "../util/dateHelper.js ";
 
 export const getUser = async (req, res) => {
-  let id = req.params.id;
+
+  let id = req.body.id;
+
   try {
-    const resultado = await pool.query("SELECT * FROM usuarios WHERE id = ?", [
-      id,
-    ]);
+
+    const resultado = await pool.query("SELECT * FROM usuarios WHERE id = ?", [id]);
     res.json(resultado[0]);
+
   } catch (error) {
     res.json({
-      error: error,
-      message: "Error en la consulta Get",
+      "error": error,
+      "type": "Get",
     });
-  }
+  };
 };
+
 export const UserList = async (req, res) => {
+  
   try {
     
-
-    // Realiza la consulta a la base de datos
     const resultado = await pool.query("select * from usuarios");
-
-    // Devuelve los resultados y establece una cookie de respuesta si es necesario
-
-    res.json(resultado[0]); // Devuelve los resultados al cliente
+    res.json(resultado[0]);
+  
   } catch (error) {
-    res.status(500).json({ error: error, message: "Error en la consulta Get" });
-  }
+    res.json({
+      "error": error,
+      "type": "Get",
+    });
+  };
 };
+
 export const postUser = async (req, res) => {
+  
   const { user, name, password, email, rol } = req.body;
-  const date_create = new Date().toISOString().slice(0, 19).replace("T", " "); // Formato deseado
-  console.log(req.body);
+  const date_create = getCurrentDateTime();
+
   try {
+
     const resultado = await pool.query(
       "INSERT INTO usuarios (user, name, password, email, rol, date_create) VALUES (?, ?, ?, ?, ?, ?)",
       [user, name, password, email, rol, date_create]
     );
-    res.json({ message: "Usuario creado exitosamente" });
+    
+    if (resultado[0].affectedRows > 0) {
+      res.json({ resultado: "Usuario creado exitosamente" });
+    } else {
+      res.json({ resultado: "Usuario no creado" });
+    };
+
   } catch (error) {
-    res.status(500).json({ error: error.message, message: "Error al crear usuario" });
-  }
+    res.json({
+      "error": error,
+      "type": "Post",
+    });
+  };
 };
 
-
 export const putUser = async (req, res) => {
+  
   const { id, user, name, password, email, rol } = req.body;
-
-  // Obtiene la fecha y hora actual
   const date_create = getCurrentDateTime();
 
   try {
-    await pool.query(
+    
+    const resultado = await pool.query(
       "UPDATE usuarios SET user = ?, name = ?, password = ?, email = ?, rol = ?, date_create = ? WHERE id = ?",
       [user, name, password, email, rol, date_create, id]
     );
 
-    res.json({ message: "Usuario actualizado exitosamente" });
+    if (resultado[0].affectedRows > 0) {
+      res.json({ resultado: "Usuario actualizado exitosamente" });
+    } else {
+      res.json({ resultado: "Usuario no actualizado" });
+    };
+
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: error.message, message: "Error al actualizar usuario" });
-  }
+    res.json({
+      "error": error,
+      "type": "Put",
+    });
+  };
 };
 
 export const putRolle = async (req, res) => {
   const { email, rol } = req.body;
-
-  // Obtiene la fecha y hora actual
   const date_create = getCurrentDateTime();
 
   try {
-    const result = await pool.query(
+    const resultado = await pool.query(
       "UPDATE usuarios SET rol = ?, date_create = ? WHERE email = ?",
       [rol, date_create, email]
     );
 
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
+    if (resultado[0].affectedRows === 0) {
+      res.json({ mensaje: "Usuario no encontrado" });
+    } else {
+      res.json({ mensaje: "Usuario actualizado exitosamente" });
     }
 
-    res.json({ message: "Usuario actualizado exitosamente" });
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: error.message, message: "Error al actualizar usuario" });
+    res.json({
+      "error": error,
+      "type": "Put",
+    });
   }
 };
 
-
 export const deleteUser = async (req, res) => {
-  const { id } = req.params;
+  const id = req.params.id;
 
   try {
-    await pool.query("DELETE FROM usuarios WHERE id =?", [id]);
+    const resultado = await pool.query("DELETE FROM usuarios WHERE id =?", [id]);
+    
+    if (resultado[0].affectedRows > 0) {
+      res.json({ resultado: "Usuario eliminado exitosamente" });
+    } else {
+      res.json({ resultado: "Usuario no eliminado" });
+    };
 
-    res.json({ message: "Usuario eliminado exitosamente" });
   } catch (error) {
-    res
-     .status(500)
-     .json({ error: error.message, message: "Error al eliminar usuario" });
+    res.json({ 
+      "error": error, 
+      "type": "delete" });
   }
 };
 
 export const loginUser = async(req, res)=>{
-    
-  let email = req.body.email;
-  let password = req.body.password;
+  const email = req.body.email;
+  const password = req.body.password;
 
   try {
-      let resultado = await pool.query(`
-      select email from usuarios
-      where email = '${email}' and password = '${password}'
+      const resultado = await pool.query(`
+      SELECT email FROM usuarios
+      WHERE email = '${email}' AND password = '${password}'
       `);
 
-      if (resultado[0]==""){
+      if (resultado.length === 0){
           res.json({
               respuesta:"user o password incorrecto",
               estado:false
           });
       }else{
-          let token = tokenSign({
+          const token = tokenSign({
               email:email,
               password:password
           });
@@ -134,11 +157,9 @@ export const loginUser = async(req, res)=>{
           });
       }
   } catch (error) {
-      res.json({
-        respuesta:"Error en el login",
-        type:error,
-        
-      })
-        console.log(error)
-  }
-}
+    res.json({
+      error: error.message || 'Error en el login',
+      resultado: "Error en el login",
+    });
+  };
+};

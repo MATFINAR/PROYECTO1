@@ -7,14 +7,20 @@ function DashBoard() {
   const location = useLocation();
   const navigate = useNavigate();
   const [forceRerender, setForceRerender] = useState(false);
-  const [activeOption, setActiveOption] = useState(localStorage.getItem('activeOption') || "");
+  const [activeOption, setActiveOption] = useState("");
 
   useEffect(() => {
-    const storedOption = localStorage.getItem('activeOption');
-    if (storedOption) {
-      setActiveOption(storedOption);
-    }
-  }, []);
+    const pathToTitleMap = {
+      "/dash-manager/calendario": "Calendario",
+      "/dash-manager/listausuario": "Lista usuario",
+      "/dash-manager/asignarrol": "Asignar el rol",
+      "/dash-manager/proyectos": "Proyectos",
+      "/dash-manager/tareas": "Tareas",
+    };
+    const currentTitle = pathToTitleMap[location.pathname] || "Inicio";
+    setActiveOption(currentTitle);
+    localStorage.setItem('activeOption', currentTitle);
+  }, [location.pathname]);
 
   const handleOptionClick = (path, title) => {
     if (location.pathname === path) {
@@ -22,8 +28,6 @@ function DashBoard() {
     } else {
       navigate(path);
     }
-    setActiveOption(title);
-    localStorage.setItem('activeOption', title);
   };
 
   return (

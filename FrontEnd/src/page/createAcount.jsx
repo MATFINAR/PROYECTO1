@@ -2,7 +2,6 @@ import "../style/agregarUsuario.css";
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { FaSave } from "react-icons/fa";
-import axios from 'axios';
 
 function CreateAcount() {
   const navigate = useNavigate();
@@ -11,9 +10,7 @@ function CreateAcount() {
     name: '',
     password: '',
     confirmPassword: '',
-    email: '',
-    rol: '',
-    date: ''
+    email: ''
   });
   const [error, setError] = useState('');
 
@@ -26,7 +23,7 @@ function CreateAcount() {
   };
 
   const handleSave = async () => {
-    const { user, name, password, confirmPassword, email, rol, date } = formData;
+    const { user, name, password, confirmPassword, email } = formData;
 
     // Verificar si algún campo obligatorio está vacío
     if (!user || !name || !password || !email) {
@@ -47,21 +44,28 @@ function CreateAcount() {
     }
 
     try {
-      const response = await axios.post('http://localhost:666/api/usuario', { user, name, password, email, rol, date });
+      const response = await fetch('http://localhost:666/api/usuario', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ user, name, password, email })
+      });
 
-      navigate('/');
-    } catch (error) {
-      if (error.response && error.response.data.error) {
-        if (error.response.data.error.includes('usuario')) {
-          setError('Usuario ya existente');
-        } else if (error.response.data.error.includes('email')) {
-          setError('Correo ya existente');
-        } else {
-          setError(error.response.data.error || 'Error al guardar el usuario');
-        }
-      } else {
-        setError(`Hubo un problema al guardar el usuario: ${error.message}`);
+      if (!response.ok) {
+        const errorData = await response.json();
+        setError(errorData.error || 'Error al guardar el usuario');
+        return;
       }
+
+      const data = await response.json();
+      if (data.resultado === 'Usuario creado exitosamente') {
+        navigate('/');
+      } else {
+        setError('Error al guardar el usuario');
+      }
+    } catch (error) {
+      setError(`Hubo un problema al guardar el usuario: ${error.message}`);
       console.error('Error:', error);
     }
   };

@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 
 const UpdateProject = () => {
-  const navigate = useNavigate();
   const [proyecto, setProyecto] = useState({
     Nombre: '',
     Descripcion: '',

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function CreateProject() {
@@ -10,7 +9,6 @@ function CreateProject() {
   const [FechaFin, setFechaFin] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const navigate = useNavigate();
 
   const handleCreateProject = async () => {
     if (!Nombre.trim()) {

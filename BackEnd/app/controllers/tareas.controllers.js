@@ -20,7 +20,9 @@ export const getTask = async (req, res) => {
     const resultado = await pool.query('SELECT * FROM tareas WHERE Nombre = ?', [Nombre]);
     res.json(resultado[0]);
   } catch (error) {
-    res.status(500).json({ error: error.resultado, resultado: 'Error en la consulta Get de tarea' });
+    res.json({ 
+      "error": error, 
+      "type": 'Get' });
   }
 };
 
@@ -95,6 +97,8 @@ export const delTask = async (req, res) => {
       res.json({ resultado: 'Tarea no eliminado' });
     
     }  } catch (error) {
-    res.status(500).json({ 'error': error , resultado: 'Error al eliminar tarea' });
+    res.status(500).json({ 
+      'error': error , 
+      resultado: 'Error al eliminar tarea' });
   }
 };
