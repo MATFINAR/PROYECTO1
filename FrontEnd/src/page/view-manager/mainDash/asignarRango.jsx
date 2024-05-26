@@ -62,6 +62,7 @@ const AsignarRango = () => {
             <option>Seleccione un rol</option>
             <option value="usuario">Usuario</option>
             <option value="administrador">Administrador</option>
+            <option value="manager">manager</option>
           </select>
           <button className="guardar-rol" type="submit">Guardar</button>
           {message && <p>{message}</p>}

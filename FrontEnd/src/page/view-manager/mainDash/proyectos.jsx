@@ -4,39 +4,55 @@ import ShowProjects from "./proyecto/mostrarProyectos";
 import CreateProject from "./proyecto/crearProyectos";
 import UpdateProject from "./proyecto/actualizarProyecto";
 
-
 function Proyectos() {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalContent, setModalContent] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const openModal = (content) => {
     setModalContent(content);
     setModalVisible(true);
+    setIsSidebarOpen(false); // Cierra el menú
   };
 
   const closeModal = () => {
     setModalVisible(false);
   };
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <div className='content-proyecto'>
-      <div className='botones-proyecto'>
-        <button onClick={() => openModal(<CreateProject />)}>Crear Proyecto</button>
-        <button onClick={() => openModal(<UpdateProject />)}>Actualizar Proyecto</button>
+      <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+        <div className="sidebar-buttons">
+          <button className="toggle-button" onClick={toggleSidebar}>
+            &#9776;
+          </button>
+          {isSidebarOpen && (
+            <>
+              <button onClick={() => openModal(<CreateProject />)}>Crear Proyecto</button>
+              <button onClick={() => openModal(<UpdateProject />)}>Actualizar Proyecto</button>
+            </>
+          )}
+        </div>
       </div>
-      <div className='reforma-proyecto'>
-        <ShowProjects />
+      <div className='main-content'>
+        <div className='show-projects'>
+          <ShowProjects />
+        </div>
         {modalVisible && (
           <div className="modal-proyecto">
             <div className="modal-content-proyecto">
               <span className="close" onClick={closeModal}>&times;</span>
-              {modalContent }
+              {modalContent}
             </div>
           </div>
         )}
       </div>
     </div>
   );
-};
+}
 
 export default Proyectos;
