@@ -6,11 +6,11 @@ const routerUser = Router();
 routerUser.post("/login", loginUser);
 
 routerUser.get("/usuarios", validarPermiso, UserList);
-routerUser.get("/usuario", getUser)
-routerUser.post("/usuario",postUser);
+routerUser.get("/usuario", validarPermiso, getUser);
+routerUser.post("/usuario", postUser);
 routerUser.put("/usuario", validarPermiso, putUser);
 routerUser.put("/usuario/rol", validarPermiso,putRolle);
-routerUser.delete("/usuario/:id", validarPermiso, deleteUser);
+routerUser.delete("/usuario/:usuario_id", validarPermiso, deleteUser);
 
 
 export default routerUser;

@@ -1,4 +1,4 @@
-import "../style/agregarUsuario.css";
+import "../style/createAcount.css";
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { FaSave } from "react-icons/fa";
@@ -6,11 +6,10 @@ import { FaSave } from "react-icons/fa";
 function CreateAcount() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    user: '',
-    name: '',
-    password: '',
-    confirmPassword: '',
-    email: ''
+    nombre: '',
+    email: '',
+    contraseña: '',
+    confirmPassword: ''
   });
   const [error, setError] = useState('');
 
@@ -23,10 +22,10 @@ function CreateAcount() {
   };
 
   const handleSave = async () => {
-    const { user, name, password, confirmPassword, email } = formData;
+    const { nombre, email, contraseña, confirmPassword } = formData;
 
     // Verificar si algún campo obligatorio está vacío
-    if (!user || !name || !password || !email) {
+    if (!nombre || !email || !contraseña) {
       setError('Campos vacíos');
       return;
     }
@@ -38,7 +37,7 @@ function CreateAcount() {
       return;
     }
 
-    if (password !== confirmPassword) {
+    if (contraseña !== confirmPassword) {
       setError('Las contraseñas no coinciden');
       return;
     }
@@ -49,7 +48,7 @@ function CreateAcount() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ user, name, password, email })
+        body: JSON.stringify({ nombre, email, contraseña })
       });
 
       if (!response.ok) {
@@ -71,59 +70,57 @@ function CreateAcount() {
   };
 
   return (
-    <div className="content-loggin">
-      <div className="content-info-loggin">
-        <div className="logo-loggin"></div>
-        <div className="info-loggin">
-          <span>"Del sueño a la realidad, un proyecto a la vez: Tu visión, nuestro impulso"</span>
-        </div>
+<div className="content-loggin">
+  <div className="content-info-loggin">
+    <div className="logo-loggin"></div>
+    <div className="info-loggin">
+      <span>"Del sueño a la realidad, un proyecto a la vez: Tu visión, nuestro impulso"</span>
+    </div>
+  </div>
+  <div className="content-create-acount">
+    <div className="formulario-agregar-usuario">
+      <div className="content-left">
+        <input
+          type="text"
+          placeholder="Ingrese su nombre"
+          name="nombre"
+          value={formData.nombre}
+          onChange={handleChange}
+          className="input-agregar-usuario"
+        />
+        <input
+          type="email"
+          placeholder="Ingrese su correo"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          className="input-agregar-usuario"
+        />
+        <button className="guardar-agregar-usuario" onClick={handleSave}><FaSave />Guardar</button>
+        {error && <div className="error-message">{error}</div>}
       </div>
-      <div className="content-create-acount">
-        <div className="formulario-agregar-usuario">
-          <div className="content-left">
-            <input
-              type="text"
-              placeholder="Ingrese su usuario"
-              name="user"
-              value={formData.user}
-              onChange={handleChange}
-            />
-            <input
-              type="email"
-              placeholder="Ingrese su correo"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-            />
-            <button className="guardar-agregar-usuario" onClick={handleSave}><FaSave />Guardar</button>
-            {error && <div className="error">{error}</div>}
-          </div>
-          <div className="content-right">
-            <input
-              type="text"
-              placeholder="Ingrese su nombre"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-            />
-            <input
-              type="password"
-              placeholder="Ingrese su contraseña"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-            />
-            <input
-              type="password"
-              placeholder="Valide su contraseña"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
+      <div className="content-right">
+        <input
+          type="password"
+          placeholder="Ingrese su contraseña"
+          name="contraseña"
+          value={formData.contraseña}
+          onChange={handleChange}
+          className="input-agregar-usuario"
+        />
+        <input
+          type="password"
+          placeholder="Valide su contraseña"
+          name="confirmPassword"
+          value={formData.confirmPassword}
+          onChange={handleChange}
+          className="input-agregar-usuario"
+        />
       </div>
     </div>
+  </div>
+</div>
+
   );
 }
 

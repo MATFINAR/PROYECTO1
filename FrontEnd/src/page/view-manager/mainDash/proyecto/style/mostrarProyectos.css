@@ -1,0 +1,89 @@
+.search-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  padding: 10px;
+  border: 1px solid #333;
+  border-radius: 5px;
+  margin-right: 10px;
+  width: 300px;
+  color: white;
+  background-color: #333;
+}
+
+.search-input::placeholder {
+  color: #ffd700; /* Dorado para el texto de placeholder */
+}
+
+.search-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ffd700; /* Dorado para el fondo del botón */
+  color: black;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.search-button:hover {
+  background-color: darkgoldenrod; /* Dorado más oscuro al hacer hover */
+  color: white;
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px; /* Espacio entre las tarjetas */
+  padding: 20px;
+}
+
+.card {
+  background-color: #1a1a1a; /* Fondo oscuro */
+  color: white;
+  border-radius: 10px;
+  padding: 20px;
+  width: calc(50% - 20px); /* Dos tarjetas por fila, restando el espacio del gap */
+  box-sizing: border-box;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para profundidad */
+  text-align: center;
+}
+
+.card-title {
+  color: #ffd700; /* Color dorado para los títulos */
+  margin-bottom: 10px;
+  font-size: 1.5rem; /* Tamaño de fuente más pequeño */
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.card-description, .card-info {
+  margin: 5px 0;
+  font-size: 0.7rem; /* Tamaño de fuente más pequeño */
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.delete-button {
+  background-color: #ffd700; /* Fondo dorado */
+  color: black;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+.delete-button:hover {
+  background-color: darkgoldenrod;
+  color: black;
+  transform: scale(1.05); /* Efecto de agrandamiento al hover */
+}
+
+@media (max-width: 1050px) {
+  .card {
+    width: 100%; /* Una tarjeta por fila en pantallas pequeñas */
+  }
+}

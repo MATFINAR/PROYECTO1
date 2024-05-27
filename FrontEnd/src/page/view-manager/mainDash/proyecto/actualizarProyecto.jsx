@@ -1,14 +1,16 @@
+import "./style/actualizarProyecto.css"
 import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 
 const UpdateProject = () => {
   const [proyecto, setProyecto] = useState({
-    Nombre: '',
-    Descripcion: '',
-    FechaInicio: '',
-    FechaFin: '',
-    NombreAnterior: '',
+    nombreAnterior: '',
+    nombre: '',
+    descripcion: '',
+    estado: '',
+    prioridad: '',
+    manager_id: '',
   });
   const [error, setError] = useState('');
 
@@ -16,7 +18,7 @@ const UpdateProject = () => {
     const token = Cookies.get('token');
 
     try {
-      const response = await axios.get(`http://localhost:666/api/project/${proyecto.NombreAnterior}`, {
+      const response = await axios.get(`http://localhost:666/api/proyecto/${proyecto.nombreAnterior}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -26,7 +28,7 @@ const UpdateProject = () => {
       if (response.data.length > 0) {
         setProyecto({
           ...response.data[0],
-          NombreAnterior: response.data[0].Nombre,
+          nombreAnterior: response.data[0].nombre,
         });
       } else {
         setError('Proyecto no encontrado');
@@ -51,20 +53,20 @@ const UpdateProject = () => {
 
     try {
       // Verificar si el nombre del proyecto ya existe
-      const verifyResponse = await axios.get(`http://localhost:666/api/project/${proyecto.Nombre}`, {
-        headers: {
+      const verifyResponse = await axios.get(`http://localhost:666/api/proyecto/${proyecto.nombre}`, {
+        headers: {  
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
       });
 
-      if (verifyResponse.data.length > 0 && verifyResponse.data[0].Nombre !== proyecto.NombreAnterior) {
+      if (verifyResponse.data.length > 0 && verifyResponse.data[0].nombre !== proyecto.nombreAnterior) {
         setError('El nombre del proyecto ya existe');
         return;
       }
 
       // Actualizar el proyecto
-      const response = await axios.put('http://localhost:666/api/project', proyecto, {
+      const response = await axios.put('http://localhost:666/api/proyecto', proyecto, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -82,62 +84,90 @@ const UpdateProject = () => {
     }
   };
 
-  return (
-    <div>
-      <h2>Editando Proyecto: {proyecto.NombreAnterior}</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Nombre del proyecto que desea actualizar:
-          <input
-            type="text"
-            name="NombreAnterior"
-            value={proyecto.NombreAnterior}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <button type="button" onClick={handleBuscarProyecto}>Buscar Proyecto</button>
-        <label>
-          Nombre:
-          <input
-            type="text"
-            name="Nombre"
-            value={proyecto.Nombre}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <label>
-          Descripción:
-          <textarea
-            name="Descripcion"
-            value={proyecto.Descripcion}
-            onChange={handleChange}
-          ></textarea>
-        </label>
-        <label>
-          Fecha de inicio:
-          <input
-            type="date"
-            name="FechaInicio"
-            value={proyecto.FechaInicio}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Fecha de fin:
-          <input
-            type="date"
-            name="FechaFin"
-            value={proyecto.FechaFin}
-            onChange={handleChange}
-          />
-        </label>
-        <button type="submit">Guardar Cambios</button>
-      </form>
-      {error && <p>{error}</p>}
-    </div>
-  );
+    return (
+      <div className="container-actualizar-tarea">
+        <h2 className="heading-actualizar-tarea">Editando Proyecto: {proyecto.nombreAnterior}</h2>
+        <form className="form-actualizar-tarea" onSubmit={handleSubmit}>
+          <div className="form-group-actualizar-tarea">
+            <label className="label-actualizar-tarea">Nombre del proyecto que desea actualizar:</label>
+            <input
+              type="text"
+              name="nombreAnterior"
+              value={proyecto.nombreAnterior}
+              onChange={handleChange}
+              required
+              className="input-actualizar-tarea"
+            />
+            <button type="button" onClick={handleBuscarProyecto} className="button-actualizar-tarea">Buscar Proyecto</button>
+          </div>
+          <div className="form-group-actualizar-tarea">
+            <label className="label-actualizar-tarea">Nombre:</label>
+            <input
+              type="text"
+              name="nombre"
+              value={proyecto.nombre}
+              onChange={handleChange}
+              required
+              className="input-actualizar-tarea"
+            />
+          </div>
+          <div className="form-group-actualizar-tarea">
+            <label className="label-actualizar-tarea">Descripción:</label>
+            <textarea
+              name="descripcion"
+              value={proyecto.descripcion}
+              onChange={handleChange}
+              className="textarea-actualizar-tarea"
+            ></textarea>
+          </div>
+          <div className="form-group-actualizar-tarea">
+            <label className="label-actualizar-tarea">Estado:</label>
+            <select
+              name="estado"
+              value={proyecto.estado}
+              onChange={handleChange}
+              required
+              className="select-actualizar-tarea"
+            >
+              <option value="">Seleccionar estado</option>
+              <option value="Sin comenzar">Sin comenzar</option>
+              <option value="En proceso">En proceso</option>
+              <option value="Completo">Completo</option>
+            </select>
+          </div>
+          <div className="form-group-actualizar-tarea">
+            <label className="label-actualizar-tarea">Prioridad:</label>
+            <select
+              name="prioridad"
+              value={proyecto.prioridad}
+              onChange={handleChange}
+              required
+              className="select-actualizar-tarea"
+            >
+              <option value="">Seleccionar prioridad</option>
+              <option value="No importa">No importa</option>
+              <option value="Importancia baja">Importancia baja</option>
+              <option value="Importancia media">Importancia media</option>
+              <option value="Importancia alta">Importancia alta</option>
+            </select>
+          </div>
+          <div className="form-group-actualizar-tarea">
+            <label className="label-actualizar-tarea">Manager ID:</label>
+            <input
+              type="text"
+              name="manager_id"
+              value={proyecto.manager_id}
+              onChange={handleChange}
+              required
+              className="input-actualizar-tarea"
+            />
+          </div>
+          <button type="submit" className="button-actualizar-tarea">Guardar Cambios</button>
+        </form>
+        {error && <p className="error-actualizar-tarea">{error}</p>}
+      </div>
+    );
+    
 };
 
 export default UpdateProject;

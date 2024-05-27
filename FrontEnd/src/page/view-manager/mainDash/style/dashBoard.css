@@ -1,0 +1,101 @@
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+  }
+  
+  body, html {
+    height: 100%;
+  }
+  
+  .content-dashboard {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: rgb(15, 15, 15);
+  }
+  
+  .header-dashboard {
+    width: 100%;
+    height: 15vh; /* Ajusta la altura del encabezado */
+    display: grid;
+    grid-template-columns: 15% 70% 15%;
+    border: 2px solid gold;
+    margin-top: 2vh;
+    border-radius: 30px;
+    border-top: 0;
+  }
+  
+  .logo1-dashboard {
+    width: 12vw; /* Ajusta el tamaño del logo */
+    height: 8vh;
+    grid-column: 1;
+    background-image: url(../../../../asset/kuro1.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  
+  .ubicacion-dashboard {
+    width: 100%;
+    height: 100%;
+    grid-column: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: gold;
+    font-size: 3vw;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+  
+  .config-dashboard {
+    width: 12vw;
+    height: 8vh;
+    color: gold;
+    grid-column: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .aside-dashboard {
+    width: 100%;
+    height: 10vh; /* Ajusta la altura de la barra lateral */
+    margin-top: 2vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .options-dashboard {
+    width: 80%;
+    height: 100%; /* Ajusta la altura de las opciones */
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1vw;
+  }
+  
+  .options-dashboard > button {
+    height: 6vh;
+    color: black;
+    background-color: white;
+    border-radius: 1vw;
+    padding: 1vh 2vw;
+    font-size: 1.5vw;
+    transition: background-color 0.5s, color 0.5s, transform 1s;
+  }
+  
+  .options-dashboard > button:hover {
+    background-color: black;
+    color: gold;
+    transform: scale(1.1);
+  }
+  
+  .main-dashboard {
+    flex: 1;
+    overflow-y: auto;
+    padding: 3vw;
+    overflow-x: hidden; /* Evitar desplazamiento lateral */
+    background-color: rgb(15, 15, 15);
+  }
+  

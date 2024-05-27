@@ -5,8 +5,8 @@ export const showProject = async (req, res) => {
   
   try {
     
-    const resultado = await pool.query("SELECT * FROM proyectos");
-    res.json( resultado[0] );
+    const resultado = await pool.query("SELECT * FROM Proyectos");
+    res.json(resultado[0]);
 
   } catch (error) {
     res.status(500).json({ "error": error, resultado: "Error en la consulta Get de proyectos" });
@@ -14,24 +14,25 @@ export const showProject = async (req, res) => {
 };
 
 export const getProject = async (req, res) => {
-  const { Nombre } = req.params;
+  const { nombre } = req.params;
 
   try {
-    const resultado = await pool.query('SELECT * FROM proyectos WHERE Nombre = ?', [Nombre]);
+    const resultado = await pool.query('SELECT * FROM Proyectos WHERE nombre = ?', [nombre]);
     res.json(resultado[0]);
   } catch (error) {
-    res.status(500).json({ error: error.resultado, resultado: 'Error en la consulta Get de proyecto' });
+    res.status(500).json({ "error": error.resultado, resultado: 'Error en la consulta Get de proyecto' });
   }
 };
 
 export const postProject = async (req, res) => {
-  const { Nombre, Descripcion, FechaInicio, FechaFin } = req.body;
-  const date_create = getCurrentDateTime();
+  const { nombre, descripcion, estado, prioridad, manager_id } = req.body;
+  const fecha_creacion = getCurrentDateTime();
+  const fecha_actualizacion = getCurrentDateTime();
 
   try {
     const resultado = await pool.query(
-      "INSERT INTO proyectos (Nombre, Descripcion, FechaInicio, FechaFin, date_create) VALUES (?, ?, ?, ?, ?)",
-      [Nombre, Descripcion, FechaInicio, FechaFin, date_create]
+      "INSERT INTO Proyectos (nombre, descripcion, estado, prioridad, fecha_creacion, fecha_actualizacion, manager_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      [nombre, descripcion, estado, prioridad, fecha_creacion, fecha_actualizacion, manager_id]
     );
 
     if (resultado[0].affectedRows > 0) {
@@ -46,13 +47,13 @@ export const postProject = async (req, res) => {
 };
 
 export const putProject = async (req, res) => {
-  const { NombreAnterior, Nombre, Descripcion, FechaInicio, FechaFin } = req.body;
+  const { nombreAnterior, nombre, descripcion, estado, prioridad, manager_id } = req.body;
 
   try {
     // Verificar si el nuevo nombre del proyecto ya existe (excepto el proyecto actual)
     const existingProject = await pool.query(
-      `SELECT ID FROM proyectos WHERE Nombre = ? AND Nombre != ?`,
-      [Nombre, NombreAnterior]
+      `SELECT proyecto_id FROM Proyectos WHERE nombre = ? AND nombre != ?`,
+      [nombre, nombreAnterior]
     );
 
     if (existingProject[0].length > 0) {
@@ -61,13 +62,15 @@ export const putProject = async (req, res) => {
 
     // Actualizar el proyecto usando el nombre antiguo
     const resultado = await pool.query(
-      `UPDATE proyectos SET 
-      Nombre = ?, 
-      Descripcion = ?, 
-      FechaInicio = ?, 
-      FechaFin = ? 
-      WHERE Nombre = ?`,
-      [Nombre, Descripcion, FechaInicio, FechaFin, NombreAnterior]
+      `UPDATE Proyectos SET 
+      nombre = ?, 
+      descripcion = ?, 
+      estado = ?, 
+      prioridad = ?, 
+      manager_id = ?,
+      fecha_actualizacion = ?
+      WHERE nombre = ?`,
+      [nombre, descripcion, estado, prioridad, manager_id, getCurrentDateTime(), nombreAnterior]
     );
 
     if (resultado[0].affectedRows > 0) {
@@ -81,11 +84,11 @@ export const putProject = async (req, res) => {
 };
 
 export const delProject = async (req, res) => {
-  const Nombre = req.params.Nombre;
+  const nombre = req.params.nombre;
 
   try {
     
-    const resultado=await pool.query("DELETE FROM proyectos WHERE Nombre = ?", [Nombre]);
+    const resultado=await pool.query("DELETE FROM Proyectos WHERE nombre = ?", [nombre]);
     
     if (resultado[0].affectedRows > 0) {
       res.json({ resultado: "Proyecto eliminado exitosamente" });

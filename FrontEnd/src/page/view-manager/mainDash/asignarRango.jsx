@@ -1,4 +1,4 @@
-import "../style/asignarRol.css";
+import "./style/asignarRol.css";
 import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
@@ -62,7 +62,7 @@ const AsignarRango = () => {
             <option>Seleccione un rol</option>
             <option value="usuario">Usuario</option>
             <option value="administrador">Administrador</option>
-            <option value="manager">manager</option>
+            <option value="manager">Manager</option>
           </select>
           <button className="guardar-rol" type="submit">Guardar</button>
           {message && <p>{message}</p>}

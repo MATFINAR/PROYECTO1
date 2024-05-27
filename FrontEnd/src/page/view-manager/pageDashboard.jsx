@@ -1,4 +1,4 @@
-import "./style/dashBoard.css";
+import "./mainDash/style/dashBoard.css";
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
 import MainDash from "./mainDash";

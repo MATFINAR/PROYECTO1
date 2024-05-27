@@ -4,13 +4,12 @@ import axios from 'axios';
 
 const UpdateTask = () => {
   const [tarea, setTarea] = useState({
-    NombreAnterior: '',
-    ID_Proyecto: '',
-    Nombre: '',
-    Descripcion: '',
-    FechaInicio: '',
-    FechaFin: '',
-    Estado: '',
+    nombreAntiguo: '',
+    nombre: '',
+    descripcion: '',
+    estado: '',
+    fecha_limite: '',
+    proyecto_id: ''
   });
   const [error, setError] = useState('');
 
@@ -18,7 +17,7 @@ const UpdateTask = () => {
     const token = Cookies.get('token');
 
     try {
-      const response = await axios.get(`http://localhost:666/api/task/${tarea.NombreAnterior}`, {
+      const response = await axios.get(`http://localhost:666/api/task/${tarea.nombreAntiguo}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -28,7 +27,7 @@ const UpdateTask = () => {
       if (response.data.length > 0) {
         setTarea({
           ...response.data[0],
-          NombreAnterior: response.data[0].Nombre,
+          nombreAntiguo: response.data[0].nombre,
         });
       } else {
         setError('Tarea no encontrada');
@@ -53,14 +52,14 @@ const UpdateTask = () => {
 
     try {
       // Verificar si el nombre de la tarea ya existe
-      const verifyResponse = await axios.get(`http://localhost:666/api/task/${tarea.Nombre}`, {
+      const verifyResponse = await axios.get(`http://localhost:666/api/task/${tarea.nombre}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
       });
 
-      if (verifyResponse.data.length > 0 && verifyResponse.data[0].Nombre !== tarea.NombreAnterior) {
+      if (verifyResponse.data.length > 0 && verifyResponse.data[0].nombre !== tarea.nombreAntiguo) {
         setError('El nombre de la tarea ya existe');
         return;
       }
@@ -86,81 +85,55 @@ const UpdateTask = () => {
 
   return (
     <div>
-      <h2>Editando Tarea: {tarea.NombreAnterior}</h2>
+      <h1>Actualizar Tarea</h1>
+      <input
+        type='text'
+        placeholder='Nombre de la tarea'
+        value={tarea.nombreAntiguo}
+        name='nombreAntiguo'
+        onChange={handleChange}
+      />
+      <button onClick={handleBuscarTarea}>Buscar Tarea</button>
       <form onSubmit={handleSubmit}>
-        <label>
-          Nombre anterior de la tarea:
-          <input
-            type='text'
-            name='NombreAnterior'
-            value={tarea.NombreAnterior}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <button type='button' onClick={handleBuscarTarea}>Buscar Tarea</button>
-        <label>
-          ID del Proyecto:
-          <input
-            type='text'
-            name='ID_Proyecto'
-            value={tarea.ID_Proyecto}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <label>
-          Nombre:
-          <input
-            type='text'
-            name='Nombre'
-            value={tarea.Nombre}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <label>
-          Descripción:
-          <textarea
-            name='Descripcion'
-            value={tarea.Descripcion}
-            onChange={handleChange}
-          ></textarea>
-        </label>
-        <label>
-          Fecha de inicio:
-          <input
-            type='date'
-            name='FechaInicio'
-            value={tarea.FechaInicio}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Fecha de fin:
-          <input
-            type='date'
-            name='FechaFin'
-            value={tarea.FechaFin}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Estado:
-          <select 
-            name='Estado'
-            value={tarea.Estado}
-            onChange={handleChange}
-          >
-            <option value=''></option>
-            <option value='Pendiente'>Pendiente</option>
-            <option value='En curso'>En curso</option>
-            <option value='Completada'>Completada</option>
-          </select>
-        </label>
-        <button type='submit'>Guardar Cambios</button>
+        <input
+          type='text'
+          placeholder='Nombre'
+          value={tarea.nombre}
+          name='nombre'
+          onChange={handleChange}
+        />
+        <input
+          type='text'
+          placeholder='Descripcion'
+          value={tarea.descripcion}
+          name='descripcion'
+          onChange={handleChange}
+        />
+        <select
+          value={tarea.estado}
+          name='estado'
+          onChange={handleChange}
+        >
+          <option value='Sin completar'>Sin completar</option>
+          <option value='Completa'>Completa</option>
+        </select>
+        <input
+          type='date'
+          placeholder='Fecha Limite'
+          value={tarea.fecha_limite}
+          name='fecha_limite'
+          onChange={handleChange}
+        />
+        <input
+          type='text'
+          placeholder='Proyecto ID'
+          value={tarea.proyecto_id}
+          name='proyecto_id'
+          onChange={handleChange}
+        />
+        <button type='submit'>Actualizar Tarea</button>
       </form>
-      {error && <p>{error}</p>}
+      {error && <div className='error-message'>{error}</div>}
     </div>
   );
 };

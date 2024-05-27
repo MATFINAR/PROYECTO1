@@ -1,3 +1,4 @@
+import "./style/mostrarProyectos.css"
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -14,7 +15,7 @@ const ShowProjects = () => {
   const mostrarProyectos = async () => {
     try {
       const token = Cookies.get('token');
-      const response = await axios.get('http://localhost:666/api/projects', {
+      const response = await axios.get('http://localhost:666/api/proyectos', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -33,7 +34,7 @@ const ShowProjects = () => {
       }
 
       const token = Cookies.get('token');
-      const response = await axios.get(`http://localhost:666/api/project/${busqueda}`, {
+      const response = await axios.get(`http://localhost:666/api/proyecto/${busqueda}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -53,10 +54,10 @@ const ShowProjects = () => {
     buscarProyecto();
   };
 
-  const handleDelete = async (Nombre) => {
+  const handleDelete = async (nombre) => {
     const confirmar = window.confirm('¿Estás seguro de que quieres eliminar este proyecto?');
     if (confirmar) {
-      const resultado = await deleteProyect(Nombre);
+      const resultado = await deleteProyect(nombre);
       console.log(resultado);
       if (resultado.resultado === 'Proyecto eliminado exitosamente') {
         mostrarProyectos();
@@ -68,40 +69,32 @@ const ShowProjects = () => {
 
   return (
     <div>
-      <h1>Proyectos</h1>
-      <form onSubmit={handleSubmit}>
+      <form className="search-form" onSubmit={handleSubmit}>
         <input
           type="text"
           value={busqueda}
           onChange={handleChange}
-          placeholder="Buscar proyecto..."
+          placeholder="Buscar tarea..."
+          className="search-input"
         />
-        <button type="submit">Buscar Proyecto</button>
+        <button type="submit" className="search-button">Buscar</button>
       </form>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Fecha de Inicio</th>
-            <th>Fecha Final</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {proyectos.map((proyecto, index) => (
-            <tr key={proyecto.id}>
-              <th>{index + 1}</th>
-              <td>{proyecto.Nombre}</td>
-              <td>{proyecto.Descripcion}</td>
-              <td>{proyecto.FechaInicio}</td>
-              <td>{proyecto.FechaFin}</td>
-              <th><button onClick={() => handleDelete(proyecto.Nombre)}>Eliminar</button></th>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+
+      <div className="cards-container">
+        {proyectos.map((proyecto, index) => (
+          <div key={proyecto.id} className="card">
+            <h3 className="card-title">{proyecto.nombre}</h3>
+            <p className="card-description">{proyecto.descripcion}</p>
+            <p className="card-info">Estado: {proyecto.estado}</p>
+            <p className="card-info">Prioridad: {proyecto.prioridad}</p>
+            <p className="card-info">Manager: {proyecto.manager_id}</p>
+            <p className="card-info">Fecha de actualización: {proyecto.fecha_actualizacion}</p>
+            <button className="delete-button" onClick={() => handleDelete(proyecto.nombre)}>
+              Eliminar
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

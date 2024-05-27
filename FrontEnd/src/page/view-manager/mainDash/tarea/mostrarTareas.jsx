@@ -53,10 +53,10 @@ const ShowTasks = () => {
     buscarTarea();
   };
 
-  const handleDelete = async (Nombre) => {
+  const handleDelete = async (nombre) => {
     const confirmar = window.confirm('¿Estás seguro de que quieres eliminar esta tarea?');
     if (confirmar) {
-      const resultado = await deleteTask(Nombre);
+      const resultado = await deleteTask(nombre);
       console.log(resultado);
       if (resultado.resultado === 'Tarea eliminada exitosamente') {
         mostrarTareas();
@@ -68,42 +68,30 @@ const ShowTasks = () => {
 
   return (
     <div>
-      <h1>Tareas</h1>
       <form onSubmit={handleSubmit}>
         <input
-          type='text'
+          type="text"
           value={busqueda}
           onChange={handleChange}
-          placeholder='Buscar tarea...'
+          placeholder="Buscar tarea..."
         />
-        <button type='submit'>Buscar Tarea</button>
+        <button type="submit">Buscar</button>
       </form>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Fecha de Inicio</th>
-            <th>Fecha Final</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tareas.map((tarea, index) => (
-            <tr key={tarea.id}>
-              <th>{index + 1}</th>
-              <td>{tarea.Nombre}</td>
-              <td>{tarea.Descripcion}</td>
-              <td>{tarea.FechaInicio}</td>
-              <td>{tarea.FechaFin}</td>
-              <th>{tarea.Estado}</th>
-              <th><button onClick={() => handleDelete(tarea.Nombre)}>Eliminar</button></th>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+
+      <div className="cards-container">
+        {tareas.map((tarea, index) => (
+          <div key={tarea.id} className="card">
+            <h3>{tarea.nombre}</h3>
+            <p>{tarea.descripcion}</p>
+            <p>Estado: {tarea.estado}</p>
+            <p>Fecha limite: {tarea.fecha_limite}</p>
+            <p>A que proyecto pertenece: {tarea.proyecto_id}</p>
+            <button onClick={() => handleDelete(tarea.nombre)}>
+              Eliminar
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

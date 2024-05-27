@@ -1,10 +1,10 @@
 import axios from 'axios';
 import Cookies from "js-cookie"
 
-export const deleteProyect = async (Nombre) => {
+export const deleteProyect = async (nombre) => {
   try {
     const token = Cookies.get('token');
-    const response = await axios.delete(`http://localhost:666/api/project/${Nombre}`, {
+    const response = await axios.delete(`http://localhost:666/api/proyecto/${nombre}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

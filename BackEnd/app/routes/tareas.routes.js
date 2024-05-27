@@ -4,9 +4,9 @@ import { delTask, getTask, postTask, putTask, showTasks } from "../controllers/t
 const routerTareas = Router();
 
 routerTareas.get("/tasks", validarPermiso, showTasks );
-routerTareas.get("/task/:Nombre", validarPermiso, getTask);
+routerTareas.get("/task/:nombre", validarPermiso, getTask);
 routerTareas.post("/task", validarPermiso, postTask);
 routerTareas.put("/task", validarPermiso, putTask);
-routerTareas.delete("/task/:Nombre", validarPermiso, delTask);
+routerTareas.delete("/task/:nombre", validarPermiso, delTask);
 
 export default routerTareas;

@@ -1,4 +1,4 @@
-import "../style/proyectos.css";
+import "./style/proyectos.css";
 import React, { useState } from 'react';
 import ShowProjects from "./proyecto/mostrarProyectos";
 import CreateProject from "./proyecto/crearProyectos";
@@ -24,7 +24,7 @@ function Proyectos() {
   };
 
   return (
-    <div className='content-proyecto'>
+    <div className="content-proyecto">
       <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-buttons">
           <button className="toggle-button" onClick={toggleSidebar}>
@@ -32,20 +32,20 @@ function Proyectos() {
           </button>
           {isSidebarOpen && (
             <>
-              <button onClick={() => openModal(<CreateProject />)}>Crear Proyecto</button>
-              <button onClick={() => openModal(<UpdateProject />)}>Actualizar Proyecto</button>
+              <button className="create-project-button" onClick={() => openModal(<CreateProject />)}>Crear Proyecto</button>
+              <button className="update-project-button" onClick={() => openModal(<UpdateProject />)}>Actualizar Proyecto</button>
             </>
           )}
         </div>
       </div>
-      <div className='main-content'>
-        <div className='show-projects'>
+      <div className="main-content">
+        <div className="show-projects">
           <ShowProjects />
         </div>
         {modalVisible && (
           <div className="modal-proyecto">
             <div className="modal-content-proyecto">
-              <span className="close" onClick={closeModal}>&times;</span>
+              <span className="close-button" onClick={closeModal}>&times;</span>
               {modalContent}
             </div>
           </div>
@@ -53,6 +53,6 @@ function Proyectos() {
       </div>
     </div>
   );
-}
+};
 
 export default Proyectos;
