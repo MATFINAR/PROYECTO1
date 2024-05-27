@@ -1,61 +1,62 @@
-.container {
-    background-color: #0f0f0f;
-    color: gold;
-    padding: 20px;
-    border-radius: 5px;
-  }
-  
-  /* Estilos para los títulos */
-  h1 {
-    color: gold;
-    margin-bottom: 20px;
-  }
-  
-  /* Estilos para los contenedores de los inputs y select */
-  .input-container {
-    margin-bottom: 10px;
-  }
-  
-  /* Estilos para los inputs y select */
-  input[type='text'],
-  input[type='date'],
-  select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid gold;
-    border-radius: 5px;
-    background-color: #0f0f0f;
-    color: gold;
-  }
-  
-  /* Estilos para los botones */
-  button {
-    padding: 10px 20px;
-    background-color: gold;
-    color: #0f0f0f;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  
-  button:hover {
-    background-color: #ffd700; /* Color dorado más claro al hacer hover */
-  }
-  
-  /* Estilos para los mensajes de error y éxito */
-  .error-message,
-  .success-message {
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
-  }
-  
-  .error-message {
-    background-color: #c00; /* Color rojo para errores */
-  }
-  
-  .success-message {
-    background-color: #0c0; /* Color verde para éxito */
-  }
-  
+.container-tarea {
+  background-color: #0f0f0f;
+  color: gold;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+/* Estilos para los títulos */
+.title-tarea {
+  color: gold;
+  margin-bottom: 20px;
+}
+
+/* Estilos para los contenedores de los inputs y select */
+.input-container-tarea {
+  margin-bottom: 10px;
+}
+
+/* Estilos para los inputs y select */
+.input-nombre-tarea,
+.input-descripcion-tarea,
+.select-estado-tarea,
+.input-fecha-limite-tarea,
+.input-proyecto-id-tarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid gold;
+  border-radius: 5px;
+  background-color: #0f0f0f;
+  color: gold;
+}
+
+/* Estilos para los botones */
+.button-crear-tarea {
+  padding: 10px 20px;
+  background-color: gold;
+  color: #0f0f0f;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.button-crear-tarea:hover {
+  background-color: #ffd700; /* Color dorado más claro al hacer hover */
+}
+
+/* Estilos para los mensajes de error y éxito */
+.error-message,
+.success-message {
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.error-message {
+  background-color: #c00; /* Color rojo para errores */
+}
+
+.success-message {
+  background-color: #0c0; /* Color verde para éxito */
+}
