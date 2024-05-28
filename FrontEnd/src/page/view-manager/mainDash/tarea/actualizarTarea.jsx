@@ -1,3 +1,4 @@
+import "./style/actualizarTarea.css"
 import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
@@ -84,57 +85,77 @@ const UpdateTask = () => {
   };
 
   return (
-    <div>
-      <h1>Actualizar Tarea</h1>
+    <div className="container-actualizar-tarea">
+  <h1 className="heading-actualizar-tarea">Actualizar Tarea</h1>
+  <input
+    type='text'
+    placeholder='Nombre de la tarea'
+    value={tarea.nombreAntiguo}
+    name='nombreAntiguo'
+    onChange={handleChange}
+    className="input-actualizar-tarea"
+  />
+  <button onClick={handleBuscarTarea} className="button-actualizar-tarea">Buscar Tarea</button>
+  <form onSubmit={handleSubmit}>
+    <div className="form-group-actualizar-tarea">
+      <label className="label-actualizar-tarea">Nombre:</label>
       <input
         type='text'
-        placeholder='Nombre de la tarea'
-        value={tarea.nombreAntiguo}
-        name='nombreAntiguo'
+        placeholder='Nuevo nombre de la tarea'
+        value={tarea.nombre}
+        name='nombre'
         onChange={handleChange}
+        className="input-actualizar-tarea"
       />
-      <button onClick={handleBuscarTarea}>Buscar Tarea</button>
-      <form onSubmit={handleSubmit}>
-        <input
-          type='text'
-          placeholder='Nombre'
-          value={tarea.nombre}
-          name='nombre'
-          onChange={handleChange}
-        />
-        <input
-          type='text'
-          placeholder='Descripcion'
-          value={tarea.descripcion}
-          name='descripcion'
-          onChange={handleChange}
-        />
-        <select
-          value={tarea.estado}
-          name='estado'
-          onChange={handleChange}
-        >
-          <option value='Sin completar'>Sin completar</option>
-          <option value='Completa'>Completa</option>
-        </select>
-        <input
-          type='date'
-          placeholder='Fecha Limite'
-          value={tarea.fecha_limite}
-          name='fecha_limite'
-          onChange={handleChange}
-        />
-        <input
-          type='text'
-          placeholder='Proyecto ID'
-          value={tarea.proyecto_id}
-          name='proyecto_id'
-          onChange={handleChange}
-        />
-        <button type='submit'>Actualizar Tarea</button>
-      </form>
-      {error && <div className='error-message'>{error}</div>}
     </div>
+    <div className="form-group-actualizar-tarea">
+      <label className="label-actualizar-tarea">Descripción:</label>
+      <textarea
+        placeholder='Nueva descripción de la tarea'
+        value={tarea.descripcion}
+        name='descripcion'
+        onChange={handleChange}
+        className="textarea-actualizar-tarea"
+      ></textarea>
+    </div>
+    <div className="form-group-actualizar-tarea">
+      <label className="label-actualizar-tarea">Estado:</label>
+      <select
+        value={tarea.estado}
+        name='estado'
+        onChange={handleChange}
+        className="select-actualizar-tarea"
+      >
+        <option value='Sin completar'>Sin completar</option>
+        <option value='Completa'>Completa</option>
+      </select>
+    </div>
+    <div className="form-group-actualizar-tarea">
+      <label className="label-actualizar-tarea">Fecha Limite:</label>
+      <input
+        type='date'
+        placeholder='Nueva fecha límite de la tarea'
+        value={tarea.fecha_limite}
+        name='fecha_limite'
+        onChange={handleChange}
+        className="input-actualizar-tarea"
+      />
+    </div>
+    <div className="form-group-actualizar-tarea">
+      <label className="label-actualizar-tarea">ID Proyecto:</label>
+      <input
+        type='text'
+        placeholder='Nuevo ID de proyecto de la tarea'
+        value={tarea.proyecto_id}
+        name='proyecto_id'
+        onChange={handleChange}
+        className="input-actualizar-tarea"
+      />
+    </div>
+    <button type='submit' className="button-actualizar-tarea">Actualizar Tarea</button>
+  </form>
+  {error && <div className='error-actualizar-tarea'>{error}</div>}
+</div>
   );
 };
 

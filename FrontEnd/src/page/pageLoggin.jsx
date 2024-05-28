@@ -57,7 +57,6 @@ function Loggin() {
         <button className="singUp-loggin" onClick={handleLogin}>INGRESAR</button>
         <button className="create-acount-loggin" onClick={() => handleOptionClick("/create-acount")}>CREAR CUENTA</button>
         {error && <div className="error-message">{error}</div>}
-        <a href="#" className="help-loggin">¿OLVIDASTE TU CONTRASEÑA?</a>
       </div>
     </div>
   </div>

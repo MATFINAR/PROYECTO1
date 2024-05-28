@@ -6,9 +6,9 @@ config();
 export const tokenSign = (data) => {
   return jwt.sign({
     email: data.email,
-    password: data.password,
+    usuario_id: data.usuario_id // Agregar usuario_id al payload
   }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_TIMEEXPIRED
+    expiresIn: process.env.JWT_TIMEEXPIRED,
   });
 }
 

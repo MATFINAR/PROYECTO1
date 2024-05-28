@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { deleteTask } from './eliminarUnTarea'; 
+import { deleteTask } from './eliminarUnTarea';
 
 const ShowTasks = () => {
   const [tareas, setTareas] = useState([]);
   const [busqueda, setBusqueda] = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     mostrarTareas();
@@ -22,6 +23,7 @@ const ShowTasks = () => {
       setTareas(response.data);
     } catch (error) {
       console.error('Error al obtener tareas:', error);
+      setError('Error al obtener tareas');
     }
   };
 
@@ -41,6 +43,7 @@ const ShowTasks = () => {
       setTareas(response.data);
     } catch (error) {
       console.error('Error al buscar tarea:', error);
+      setError('Error al buscar tarea');
     }
   };
 
@@ -62,36 +65,39 @@ const ShowTasks = () => {
         mostrarTareas();
       } else {
         console.error('Error al eliminar tarea:', resultado.resultado);
+        setError('Error al eliminar tarea');
       }
     }
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form className="search-form" onSubmit={handleSubmit}>
         <input
           type="text"
           value={busqueda}
           onChange={handleChange}
           placeholder="Buscar tarea..."
+          className="search-input"
         />
-        <button type="submit">Buscar</button>
+        <button type="submit" className="search-button">Buscar</button>
       </form>
 
       <div className="cards-container">
         {tareas.map((tarea, index) => (
           <div key={tarea.id} className="card">
-            <h3>{tarea.nombre}</h3>
-            <p>{tarea.descripcion}</p>
-            <p>Estado: {tarea.estado}</p>
-            <p>Fecha limite: {tarea.fecha_limite}</p>
-            <p>A que proyecto pertenece: {tarea.proyecto_id}</p>
-            <button onClick={() => handleDelete(tarea.nombre)}>
+            <h3 className="card-title">{tarea.nombre}</h3>
+            <p className="card-description">{tarea.descripcion}</p>
+            <p className="card-info">Estado: {tarea.estado}</p>
+            <p className="card-info">Fecha limite: {tarea.fecha_limite}</p>
+            <p className="card-info">Proyecto ID: {tarea.proyecto_id}</p>
+            <button className="delete-button" onClick={() => handleDelete(tarea.nombre)}>
               Eliminar
             </button>
           </div>
         ))}
       </div>
+      {error && <p className="error-actualizar-tarea">{error}</p>}
     </div>
   );
 };

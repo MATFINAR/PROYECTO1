@@ -9,6 +9,7 @@ const ListarUsuario = () => {
   const [showMenu, setShowMenu] = useState({});
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [usuarioToDelete, setUsuarioToDelete] = useState(null);
+  const loggedInUserId = Cookies.get('usuario_id'); // Assuming usuario_id is stored in a cookie
 
   useEffect(() => {
     const fetchUsuarios = async () => {
@@ -30,10 +31,13 @@ const ListarUsuario = () => {
           throw new Error('Error al obtener los usuarios');
         }
 
-        setUsuarios(response.data);
+        // Filtrar la lista de usuarios para que no incluya al usuario que inició sesión
+        const filteredUsuarios = response.data.filter(usuario => usuario.usuario_id !== parseInt(loggedInUserId));
+        setUsuarios(filteredUsuarios);
+
         // Inicializar el estado showMenu para cada usuario
         const initialShowMenuState = {};
-        response.data.forEach(usuario => {
+        filteredUsuarios.forEach(usuario => {
           initialShowMenuState[usuario.usuario_id] = false;
         });
         setShowMenu(initialShowMenuState);
@@ -44,7 +48,7 @@ const ListarUsuario = () => {
     };
 
     fetchUsuarios();
-  }, []);
+  }, [loggedInUserId]);
 
   const toggleMenu = (usuario_id) => {
     setShowMenu((prev) => {

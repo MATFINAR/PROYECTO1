@@ -14,6 +14,22 @@ export const getUser = async (req, res) => {
   }
 };
 
+export const getExistUser = async (req, res) => {
+  const email = req.query.email;
+
+  try {
+    const [respuesta] = await pool.query('SELECT COUNT(*) AS count FROM usuarios WHERE email = ?', [email]);
+
+    if (respuesta[0].count > 0) {
+      res.json({ exists: true });
+    } else {
+      res.json({ exists: false });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 // Listar todos los usuarios
 export const UserList = async (req, res) => {
   try {
@@ -86,6 +102,22 @@ export const putRolle = async (req, res) => {
   }
 };
 
+export const deleteMyUser = async (req, res) => {
+  const { email } = req.user;
+
+  try {
+    const [resultado] = await pool.query("DELETE FROM Usuarios WHERE email = ?", [email]);
+
+    if (resultado.affectedRows > 0) {
+      res.json({ resultado: "Usuario eliminado exitosamente" });
+    } else {
+      res.json({ resultado: "Usuario no eliminado" });
+    }
+  } catch (error) {
+    res.json({ error: error.message, type: "Delete" });
+  }
+};
+
 // Eliminar un usuario por ID
 export const deleteUser = async (req, res) => {
   const { usuario_id } = req.params;
@@ -112,12 +144,12 @@ export const loginUser = async (req, res) => {
     const usuario = resultado[0];
 
     if (!usuario) {
-      res.json({ respuesta: "Usuario o contraseña incorrecto", estado: false });
+      res.status(401).json({ respuesta: "Usuario o contraseña incorrecto", estado: false });
     } else {
       const token = tokenSign({ email, usuario_id: usuario.usuario_id });
-      res.json({ respuesta: "Login correcto", estado: true, token });
+      res.json({ respuesta: "Login correcto", estado: true, token, usuario_id: usuario.usuario_id });
     }
   } catch (error) {
-    res.json({ error: error.message || 'Error en el login', resultado: "Error en el login" });
+    res.status(500).json({ error: error.message || 'Error en el login', resultado: "Error en el login" });
   }
 };

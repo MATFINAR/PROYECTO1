@@ -1,0 +1,54 @@
+.container-actualizar-tarea {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #ffd700; /* dorado */
+    color: #000; /* negro */
+  }
+  
+  .heading-actualizar-tarea {
+    color: #000; /* negro */
+    margin-bottom: 15px;
+  }
+  
+  .input-actualizar-tarea,
+  .textarea-actualizar-tarea,
+  .select-actualizar-tarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #000; /* negro */
+    background-color: #fff; /* blanco */
+    color: #000; /* negro */
+  }
+  
+  .input-actualizar-tarea:focus,
+  .textarea-actualizar-tarea:focus,
+  .select-actualizar-tarea:focus {
+    outline: none;
+    border-color: #333; /* gris oscuro */
+  }
+  
+  .button-actualizar-tarea {
+    width: 100%;
+    padding: 8px 16px;
+    background-color: #000; /* negro */
+    color: #ffd700; /* dorado */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .button-actualizar-tarea:hover {
+    background-color: #333; /* un tono más oscuro de negro */
+  }
+  
+  .error-actualizar-tarea {
+    margin-top: 10px;
+    color: #dc3545; /* rojo */
+    text-align: center;
+  }
