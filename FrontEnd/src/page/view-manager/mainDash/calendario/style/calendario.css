@@ -1,0 +1,59 @@
+/* Calendario.css */
+.calendar-container {
+    padding: 20px;
+    background-color: #000;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #fff;
+  }
+  
+  .calendar-header {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #ffd700; /* Dorado */
+  }
+  
+  .rbc-toolbar {
+    background-color: #000;
+    border-bottom: 1px solid #ffd700; /* Dorado */
+  }
+  
+  .rbc-toolbar button {
+    color: #ffd700; /* Dorado */
+    border: 1px solid #ffd700; /* Dorado */
+    background-color: #000;
+  }
+  
+  .rbc-toolbar button:hover {
+    background-color: #ffd700; /* Dorado */
+    color: #000;
+  }
+  
+  .rbc-event {
+    background-color: #ffd700; /* Dorado */
+    border: none;
+    color: #000;
+  }
+  
+  .rbc-event:hover {
+    background-color: #daa520; /* Dorado oscuro */
+  }
+  
+  .rbc-month-view, .rbc-time-view, .rbc-agenda-view {
+    background-color: #000;
+    color: #fff;
+  }
+  
+  .rbc-day-bg {
+    background-color: #111;
+  }
+  
+  .rbc-today {
+    background-color: #333 !important;
+  }
+  
+  .rbc-selected-cell {
+    background-color: #444 !important;
+  }
+  

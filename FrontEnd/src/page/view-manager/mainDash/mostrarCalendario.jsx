@@ -1,9 +1,10 @@
 import React from 'react';
+import Calendario from './calendario/calendario';
 
 function MostrarCalendario() {
 
   return (
-    <div>Mostrar calendario</div>
+    <Calendario/>
   );
 };
 
