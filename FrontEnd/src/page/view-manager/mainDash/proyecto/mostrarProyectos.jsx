@@ -40,6 +40,7 @@ const ShowProjects = () => {
         },
       });
       setProyectos(response.data);
+    
     } catch (error) {
       console.error('Error al buscar proyecto:', error);
     }
@@ -81,7 +82,7 @@ const ShowProjects = () => {
       </form>
 
       <div className="cards-container">
-        {proyectos.map((proyecto, index) => (
+        {proyectos.map((proyecto) => (
           <div key={proyecto.id} className="card">
             <h3 className="card-title">{proyecto.nombre}</h3>
             <p className="card-description">{proyecto.descripcion}</p>

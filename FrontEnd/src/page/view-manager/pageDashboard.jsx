@@ -53,21 +53,21 @@ function DashBoard() {
         Cookies.remove('token');
         navigate('/');
       }
-    }, 200000); // Verificar cada 2 horas
+    }, 200000); 
 
     return () => clearInterval(interval);
   }, [navigate]);
 
   const handleOptionClick = (path, title) => {
     if (location.pathname === path) {
-      setForceRerender(!forceRerender); // Toggle the state to force a re-render
+      setForceRerender(!forceRerender); 
     } else {
       navigate(path);
     }
   };
 
   const toggleConfigMenu = () => {
-    setShowConfigMenu(!showConfigMenu); // Toggle the visibility of the config menu
+    setShowConfigMenu(!showConfigMenu); 
   };
 
   const handleLogout = () => {

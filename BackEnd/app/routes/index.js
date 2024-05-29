@@ -6,7 +6,7 @@ import cookieParser from 'cookie-parser';
  * !Importaciones de las rutas de los Usuarios
  */
 import routerUser from './usuarios.routes.js';
-import routerProjects from './projects.routes.js';
+import routerProjects from './proyectos.routes.js';
 import routerTareas from './tareas.routes.js';
 import routerAsignaciones from './asignaciones.routes.js';
 import routerToken from './token.routes.js';

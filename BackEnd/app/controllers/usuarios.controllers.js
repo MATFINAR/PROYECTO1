@@ -2,12 +2,21 @@ import { pool } from "../config/bd-mysql.js";
 import { tokenSign } from "../middlewares/usuarios.middlewares.js";
 import { getCurrentDateTime } from "../util/dateHelper.js";
 
+// Listar todos los usuarios
+export const UserList = async (req, res) => {
+  try {
+    const resultado = await pool.query("SELECT * FROM Usuarios");
+    res.json(resultado[0]);
+  } catch (error) {
+    res.json({ error: error.message, type: "Get" });
+  }
+};
 // Obtener un usuario por ID
 export const getUser = async (req, res) => {
-  const { id } = req.body;
+  const { nombre } = req.params;
 
   try {
-    const [resultado] = await pool.query("SELECT * FROM Usuarios WHERE usuario_id = ?", [id]);
+    const resultado = await pool.query(`SELECT * FROM Usuarios WHERE nombre = ?`, [nombre]);
     res.json(resultado[0]);
   } catch (error) {
     res.json({ error: error.message, type: "Get" });
@@ -30,25 +39,16 @@ export const getExistUser = async (req, res) => {
   }
 };
 
-// Listar todos los usuarios
-export const UserList = async (req, res) => {
-  try {
-    const [resultado] = await pool.query("SELECT * FROM Usuarios");
-    res.json(resultado);
-  } catch (error) {
-    res.json({ error: error.message, type: "Get" });
-  }
-};
 
 // Registrar un nuevo usuario
 export const postUser = async (req, res) => {
-  const { nombre, email, contraseña } = req.body;
+  const { nombre, email, contrasena } = req.body;
   const rol = "usuario"
 
   try {
     const [resultado] = await pool.query(
-      "INSERT INTO Usuarios (nombre, email, contraseña, rol) VALUES (?, ?, ?, ?)",
-      [nombre, email, contraseña, rol]
+      "INSERT INTO Usuarios (nombre, email, contrasena, rol) VALUES (?, ?, ?, ?)",
+      [nombre, email, contrasena, rol]
     );
 
     if (resultado.affectedRows > 0) {
@@ -63,13 +63,13 @@ export const postUser = async (req, res) => {
 
 // Actualizar un usuario existente
 export const putUser = async (req, res) => {
-  const { usuario_id, nombre, email, contraseña, rol_id } = req.body;
+  const { usuario_id, nombre, email, contrasena, rol_id } = req.body;
   const date_create = getCurrentDateTime();
 
   try {
     const [resultado] = await pool.query(
-      "UPDATE Usuarios SET nombre = ?, email = ?, contraseña = ?, rol_id = ? WHERE usuario_id = ?",
-      [nombre, email, contraseña, rol_id, usuario_id]
+      "UPDATE Usuarios SET nombre = ?, email = ?, contrasena = ?, rol_id = ? WHERE usuario_id = ?",
+      [nombre, email, contrasena, rol_id, usuario_id]
     );
 
     if (resultado.affectedRows > 0) {
@@ -137,14 +137,14 @@ export const deleteUser = async (req, res) => {
 
 // Iniciar sesión
 export const loginUser = async (req, res) => {
-  const { email, contraseña } = req.body;
+  const { email, contrasena } = req.body;
 
   try {
-    const [resultado] = await pool.query("SELECT * FROM Usuarios WHERE email = ? AND contraseña = ?", [email, contraseña]);
+    const [resultado] = await pool.query("SELECT * FROM Usuarios WHERE email = ? AND contrasena = ?", [email, contrasena]);
     const usuario = resultado[0];
 
     if (!usuario) {
-      res.status(401).json({ respuesta: "Usuario o contraseña incorrecto", estado: false });
+      res.status(401).json({ respuesta: "Usuario o contrasena incorrecto", estado: false });
     } else {
       const token = tokenSign({ email, usuario_id: usuario.usuario_id });
       res.json({ respuesta: "Login correcto", estado: true, token, usuario_id: usuario.usuario_id });

@@ -37,7 +37,7 @@ function Tareas() {
           </>
         )}
       </div>
-    </div>
+    </div>  
     <div className='main-content'>
       <div className='show-tareas'>
         <ShowTasks />

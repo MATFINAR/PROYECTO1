@@ -6,7 +6,7 @@ const routerUser = Router();
 routerUser.post("/login", loginUser);
 
 routerUser.get("/usuarios", validarPermiso, UserList);
-routerUser.get("/usuario", validarPermiso, getUser);
+routerUser.get("/usuario/:nombre", validarPermiso, getUser);
 routerUser.get("/usuario/existe", validarPermiso, getExistUser)
 routerUser.post("/usuario", postUser);
 routerUser.put("/usuario", validarPermiso, putUser);
