@@ -34,6 +34,13 @@
   color: white;
 }
 
+.error-message {
+  color: #ff0000; /* Red error text */
+  margin: 20px auto; /* Center the message horizontally */
+  text-align: center;
+}
+
+
 .cards-container {
   display: flex;
   flex-wrap: wrap;

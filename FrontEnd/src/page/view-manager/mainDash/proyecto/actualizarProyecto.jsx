@@ -34,8 +34,8 @@ const UpdateProject = () => {
         setError('Proyecto no encontrado');
       }
     } catch (error) {
-      setError('Error fetching project data');
-      console.error('Error fetching project data:', error);
+      setError('Error al obtener datos del proyecto');
+      console.error('Error al obtener datos del proyecto:', error);
     }
   };
 
@@ -76,98 +76,97 @@ const UpdateProject = () => {
       if (response.data.resultado === "Proyecto actualizado exitosamente") {
         window.location.reload(); // Navegar a la página de proyectos
       } else {
-        setError('Error updating project: ' + response.data.resultado);
+        setError('Error al actualizar proyecto: ' + response.data.resultado);
       }
     } catch (error) {
-      setError('Error updating project');
-      console.error('Error updating project:', error);
+      setError('Error al actualizar proyecto');
+      console.error('Error al actualizar proyecto:', error);
     }
   };
 
-    return (
-      <div className="container-actualizar-tarea">
-        <h2 className="heading-actualizar-tarea">Editando Proyecto: {proyecto.nombreAnterior}</h2>
-        <form className="form-actualizar-tarea" onSubmit={handleSubmit}>
-          <div className="form-group-actualizar-tarea">
-            <label className="label-actualizar-tarea">Nombre del proyecto que desea actualizar:</label>
-            <input
-              type="text"
-              name="nombreAnterior"
-              value={proyecto.nombreAnterior}
-              onChange={handleChange}
-              required
-              className="input-actualizar-tarea"
-            />
-            <button type="button" onClick={handleBuscarProyecto} className="button-actualizar-tarea">Buscar Proyecto</button>
-          </div>
-          <div className="form-group-actualizar-tarea">
-            <label className="label-actualizar-tarea">Nombre:</label>
-            <input
-              type="text"
-              name="nombre"
-              value={proyecto.nombre}
-              onChange={handleChange}
-              required
-              className="input-actualizar-tarea"
-            />
-          </div>
-          <div className="form-group-actualizar-tarea">
-            <label className="label-actualizar-tarea">Descripción:</label>
-            <textarea
-              name="descripcion"
-              value={proyecto.descripcion}
-              onChange={handleChange}
-              className="textarea-actualizar-tarea"
-            ></textarea>
-          </div>
-          <div className="form-group-actualizar-tarea">
-            <label className="label-actualizar-tarea">Estado:</label>
-            <select
-              name="estado"
-              value={proyecto.estado}
-              onChange={handleChange}
-              required
-              className="select-actualizar-tarea"
-            >
-              <option value="">Seleccionar estado</option>
-              <option value="Sin comenzar">Sin comenzar</option>
-              <option value="En proceso">En proceso</option>
-              <option value="Completo">Completo</option>
-            </select>
-          </div>
-          <div className="form-group-actualizar-tarea">
-            <label className="label-actualizar-tarea">Prioridad:</label>
-            <select
-              name="prioridad"
-              value={proyecto.prioridad}
-              onChange={handleChange}
-              required
-              className="select-actualizar-tarea"
-            >
-              <option value="">Seleccionar prioridad</option>
-              <option value="No importa">No importa</option>
-              <option value="Importancia baja">Importancia baja</option>
-              <option value="Importancia media">Importancia media</option>
-              <option value="Importancia alta">Importancia alta</option>
-            </select>
-          </div>
-          <div className="form-group-actualizar-tarea">
-            <label className="label-actualizar-tarea">Manager ID:</label>
-            <input
-              type="text"
-              name="manager_id"
-              value={proyecto.manager_id}
-              onChange={handleChange}
-              required
-              className="input-actualizar-tarea"
-            />
-          </div>
-          <button type="submit" className="button-actualizar-tarea">Guardar Cambios</button>
-        </form>
-        {error && <p className="error-actualizar-tarea">{error}</p>}
-      </div>
-    );
-    
+  return (
+    <div className="container-actualizar-proyecto">
+      <h2 className="heading-actualizar-proyecto">Editando Proyecto: {proyecto.nombreAnterior}</h2>
+      <form className="form-actualizar-proyecto" onSubmit={handleSubmit}>
+        <div className="form-group-actualizar-proyecto">
+          <label className="label-actualizar-proyecto">Nombre del proyecto que desea actualizar:</label>
+          <input
+            type="text"
+            name="nombreAnterior"
+            value={proyecto.nombreAnterior}
+            onChange={handleChange}
+            required
+            className="input-actualizar-proyecto"
+          />
+          <button type="button" onClick={handleBuscarProyecto} className="button-actualizar-proyecto">Buscar Proyecto</button>
+        </div>
+        <div className="form-group-actualizar-proyecto">
+          <label className="label-actualizar-proyecto">Nombre:</label>
+          <input
+            type="text"
+            name="nombre"
+            value={proyecto.nombre}
+            onChange={handleChange}
+            required
+            className="input-actualizar-proyecto"
+          />
+        </div>
+        <div className="form-group-actualizar-proyecto">
+          <label className="label-actualizar-proyecto">Descripción:</label>
+          <texproyecto
+            name="descripcion"
+            value={proyecto.descripcion}
+            onChange={handleChange}
+            className="texproyecto-actualizar-proyecto"
+          ></texproyecto>
+        </div>
+        <div className="form-group-actualizar-proyecto">
+          <label className="label-actualizar-proyecto">Estado:</label>
+          <select
+            name="estado"
+            value={proyecto.estado}
+            onChange={handleChange}
+            required
+            className="select-actualizar-proyecto"
+          >
+            <option value="">Seleccionar estado</option>
+            <option value="Sin comenzar">Sin comenzar</option>
+            <option value="En proceso">En proceso</option>
+            <option value="Completo">Completo</option>
+          </select>
+        </div>
+        <div className="form-group-actualizar-proyecto">
+          <label className="label-actualizar-proyecto">Prioridad:</label>
+          <select
+            name="prioridad"
+            value={proyecto.prioridad}
+            onChange={handleChange}
+            required
+            className="select-actualizar-proyecto"
+          >
+            <option value="">Seleccionar prioridad</option>
+            <option value="No importa">No importa</option>
+            <option value="Importancia baja">Importancia baja</option>
+            <option value="Importancia media">Importancia media</option>
+            <option value="Importancia alta">Importancia alta</option>
+          </select>
+        </div>
+        <div className="form-group-actualizar-proyecto">
+          <label className="label-actualizar-proyecto">Manager ID:</label>
+          <input
+            type="text"
+            name="manager_id"
+            value={proyecto.manager_id}
+            onChange={handleChange}
+            required
+            className="input-actualizar-proyecto"
+          />
+        </div>
+        <button type="submit" className="button-actualizar-proyecto">Guardar Cambios</button>
+      </form>
+      {error && <p className="error-actualizar-proyecto">{error}</p>}
+    </div>
+  );
 };
 
 export default UpdateProject;

@@ -83,32 +83,6 @@ export const putProject = async (req, res) => {
   }
 };
 
-export const putManager = async (req, res) => {
-  const { usuario_id } = req.params;
-  const newManager_id = null;
-
-  try {
-    // Buscar el id_manager asociado al usuario_id
-    const [managerData] = await pool.query('SELECT id_manager FROM Proyectos WHERE usuario_id = ?', [usuario_id]);
-    const id_manager = managerData[0]?.id_manager;
-
-    if (!id_manager) {
-      return res.status(404).json({ resultado: "Manager no encontrado" });
-    }
-
-    // Actualizar el id_manager a null
-    const [resultado] = await pool.query('UPDATE Proyectos SET manager_id = ? WHERE manager_id = ?', [newManager_id, id_manager]);
-
-    if (resultado.affectedRows > 0) {
-      res.json({ resultado: "Manager borrado exitosamente" });
-    } else {
-      res.json({ resultado: "Manager no borrado" });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message, resultado: "Error al borrar el manager" });
-  }
-};
-
 export const delProject = async (req, res) => {
   const nombre = req.params.nombre;
 

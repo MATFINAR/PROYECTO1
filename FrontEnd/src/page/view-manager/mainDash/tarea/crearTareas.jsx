@@ -13,9 +13,8 @@ const CreateTask = () => {
   const [success, setSuccess] = useState('');
 
   const handleCreateTask = async () => {
-
-    if (!nombre.trim()) {
-      setError("El nombre de la tarea no puede estar vacío")
+    if (!nombre.trim() || !descripcion.trim() || !fecha_limite.trim() || !proyecto_id.trim()) {
+      setError("Todos los campos son obligatorios");
       return;
     }
 
@@ -62,59 +61,59 @@ const CreateTask = () => {
   };
 
   return (
-<div className='container-tarea'>
-  <h1 className='title-tarea'>Crear Tarea</h1>
-  <div className="input-container-tarea">
-    <input
-      type='text'
-      placeholder='Nombre'
-      value={nombre}
-      onChange={(e) => setNombre(e.target.value)}
-      className='input-nombre-tarea'
-    />
-  </div>
-  <div className="input-container-tarea">
-    <input
-      type='text'
-      placeholder='Descripción'
-      value={descripcion}
-      onChange={(e) => setDescripcion(e.target.value)}
-      className='input-descripcion-tarea'
-    />
-  </div>
-  <div className="input-container-tarea">
-    <select
-      value={estado}
-      onChange={(e) => setEstado(e.target.value)}
-      className='select-estado-tarea'
-    >
-      <option value='Sin completar'>Sin completar</option>
-      <option value='Completa'>Completada</option>
-    </select>
-  </div>
-  <div className="input-container-tarea">
-    <span className='label-fecha-limite-tarea'>Fecha limite:</span>
-    <input
-      type='date'
-      placeholder='Fecha de Limite'
-      value={fecha_limite}
-      onChange={(e) => setFecha_limite(e.target.value)}
-      className='input-fecha-limite-tarea'
-    />
-  </div>
-  <div className="input-container-tarea">
-    <input
-      type='text'
-      placeholder='ID Proyecto'
-      value={proyecto_id}
-      onChange={(e) => setProyecto_id(e.target.value)}
-      className='input-proyecto-id-tarea'
-    />
-  </div>
-  <button onClick={handleCreateTask} className='button-crear-tarea'>Crear Tarea</button>
-  {error && <div className='error-message'>{error}</div>}
-  {success && <div className='success-message'>{success}</div>}
-</div>
+    <div className='container-tarea'>
+      <h1 className='title-tarea'>Crear Tarea</h1>
+      <div className="input-container-tarea">
+        <input
+          type='text'
+          placeholder='Nombre'
+          value={nombre}
+          onChange={(e) => setNombre(e.target.value)}
+          className='input-nombre-tarea'
+        />
+      </div>
+      <div className="input-container-tarea">
+        <input
+          type='text'
+          placeholder='Descripción'
+          value={descripcion}
+          onChange={(e) => setDescripcion(e.target.value)}
+          className='input-descripcion-tarea'
+        />
+      </div>
+      <div className="input-container-tarea">
+        <select
+          value={estado}
+          onChange={(e) => setEstado(e.target.value)}
+          className='select-estado-tarea'
+        >
+          <option value='Sin completar'>Sin completar</option>
+          <option value='Completa'>Completada</option>
+        </select>
+      </div>
+      <div className="input-container-tarea">
+        <span className='label-fecha-limite-tarea'>Fecha limite:</span>
+        <input
+          type='date'
+          placeholder='Fecha de Limite'
+          value={fecha_limite}
+          onChange={(e) => setFecha_limite(e.target.value)}
+          className='input-fecha-limite-tarea'
+        />
+      </div>
+      <div className="input-container-tarea">
+        <input
+          type='text'
+          placeholder='ID Proyecto'
+          value={proyecto_id}
+          onChange={(e) => setProyecto_id(e.target.value)}
+          className='input-proyecto-id-tarea'
+        />
+      </div>
+      <button onClick={handleCreateTask} className='button-crear-tarea'>Crear Tarea</button>
+      {error && <div className='error-message'>{error}</div>}
+      {success && <div className='success-message'>{success}</div>}
+    </div>
   );
 }
 

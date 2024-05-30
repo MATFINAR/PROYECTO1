@@ -8,7 +8,7 @@ function CreateAcount() {
   const [formData, setFormData] = useState({
     nombre: '',
     email: '',
-    contraseña: '',
+    contrasena: '',
     confirmPassword: ''
   });
   const [error, setError] = useState('');
@@ -22,10 +22,10 @@ function CreateAcount() {
   };
 
   const handleSave = async () => {
-    const { nombre, email, contraseña, confirmPassword } = formData;
+    const { nombre, email, contrasena, confirmPassword } = formData;
 
     // Verificar si algún campo obligatorio está vacío
-    if (!nombre || !email || !contraseña) {
+    if (!nombre || !email || !contrasena) {
       setError('Campos vacíos');
       return;
     }
@@ -37,7 +37,7 @@ function CreateAcount() {
       return;
     }
 
-    if (contraseña !== confirmPassword) {
+    if (contrasena !== confirmPassword) {
       setError('Las contraseñas no coinciden');
       return;
     }
@@ -48,7 +48,7 @@ function CreateAcount() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ nombre, email, contraseña })
+        body: JSON.stringify({ nombre, email, contrasena })
       });
 
       if (!response.ok) {
@@ -103,8 +103,8 @@ function CreateAcount() {
         <input
           type="password"
           placeholder="Ingrese su contraseña"
-          name="contraseña"
-          value={formData.contraseña}
+          name="contrasena"
+          value={formData.contrasena}
           onChange={handleChange}
           className="input-agregar-usuario"
         />

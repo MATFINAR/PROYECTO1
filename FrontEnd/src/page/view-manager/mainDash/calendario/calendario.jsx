@@ -1,55 +1,60 @@
-import React, { useState, useEffect } from 'react';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import './style/calendario.css'; // Asegúrate de importar tu archivo CSS personalizado
+import React, { useEffect, useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
 import axios from 'axios';
-import './style/calendario.css';  // Importa el archivo CSS personalizado
+import Cookies from 'js-cookie'
 
 const localizer = momentLocalizer(moment);
 
-const Calendario = () => {
+const TareasCalendar = () => {
   const [events, setEvents] = useState([]);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     const fetchTasks = async () => {
+      const token = Cookies.get('token');
+      if (!token) {
+        setMessage('Token no disponible');
+        console.error('Token no disponible');
+        return;
+      }
       try {
-        const response = await axios.get('http://localhost:666/api/mostrarTareasCalendario');
+        const response = await axios.get('http://localhost:666/api/tasks', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
         const tasks = response.data.map(task => ({
+          id: task.tarea_id,
           title: task.nombre,
-          start: new Date(task.fecha_inicio),
-          end: new Date(task.fecha_final)
+          start: new Date(task.fecha_limite),
+          end: new Date(task.fecha_limite),
+          allDay: true
         }));
         setEvents(tasks);
       } catch (error) {
-        console.error("Error fetching tasks:", error);
+        setMessage('Error al obtener las tareas');
+        console.error('Error fetching tasks:', error);
       }
     };
 
     fetchTasks();
   }, []);
 
-  const handleSelect = ({ start, end }) => {
-    const title = window.prompt('Nuevo evento:');
-    if (title) {
-      const newEvent = { start, end, title };
-      setEvents([...events, newEvent]);
-      // Optionally, save the new event to the backend here.
-    }
-  };
-
   return (
-    <div className="calendar-container">
-      <h1 className="calendar-header">Calendario Grande</h1>
+    <div>
+      {message && <p>{message}</p>}
       <Calendar
-        selectable
         localizer={localizer}
         events={events}
-        defaultView="month"
+        startAccessor="start"
+        endAccessor="end"
         style={{ height: 500 }}
-        onSelectSlot={handleSelect}
       />
     </div>
   );
 };
 
-export default Calendario;
+export default TareasCalendar;

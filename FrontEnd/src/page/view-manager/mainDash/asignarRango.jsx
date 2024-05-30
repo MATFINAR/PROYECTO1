@@ -59,13 +59,13 @@ const AsignarRango = () => {
             value={formData.rol}
             onChange={handleChange}
           >
-            <option>Seleccione un rol</option>
-            <option value="usuario">Usuario</option>
-            <option value="administrador">Administrador</option>
-            <option value="manager">Manager</option>
+            <option className="option-rol" value=''>Seleccione un rol</option>
+            <option className="option-rol" value='usuario'>Usuario</option>
+            <option className="option-rol" value='administrador'>Administrador</option>
+            <option className="option-rol" value='manager'>Manager</option>
           </select>
           <button className="guardar-rol" type="submit">Guardar</button>
-          {message && <p>{message}</p>}
+          {message && <p className="mensaje">{message}</p>}
         </div>
       </form>
     </div>

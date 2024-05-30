@@ -16,7 +16,9 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.email-rol, .rol-rol, .guardar-rol {
+.email-rol,
+.rol-rol,
+.guardar-rol {
   width: 100%;
   height: 6vh;
   margin-bottom: 2vh;
@@ -28,11 +30,14 @@
   color: white;
 }
 
-.email-rol, .rol-rol {
-  background-color: transparent; /* Fondo transparente para inputs y selects */
+.email-rol,
+.rol-rol {
+  background-color: transparent;
 }
 
-.email-rol input, .rol-rol select, .guardar-rol button {
+.email-rol input,
+.rol-rol select,
+.guardar-rol button {
   width: 100%;
   height: 100%;
   border: none;
@@ -52,6 +57,10 @@
   color: gold;
 }
 
+.option-rol{
+  background-color: #1a1a1a;
+}
+
 .guardar-rol {
   background-color: gold;
   color: black;
@@ -63,4 +72,11 @@
   background-color: darkgoldenrod;
   color: white;
   transform: scale(1.05);
+}
+
+.mensaje {
+  background-color: red;
+  color: white;
+  padding: 2px;
+  border-radius: 3px;
 }

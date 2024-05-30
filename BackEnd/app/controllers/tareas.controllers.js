@@ -21,19 +21,6 @@ export const getTask = async (req, res) => {
   }
 };
 
-export const tareaCalendario = (req, res) => {
-  const query = 'SELECT nombre, fecha_inicio, fecha_final FROM tareas';
-
-  connection.query(query, (error, results) => {
-      if (error) {
-          console.error('Error fetching tasks:', error);
-          res.status(500).send('Error fetching tasks');
-          return;
-      }
-
-      res.json(results);
-  });
-};
 
 export const postTask = async (req, res) => {
   const { nombre, descripcion, estado, fecha_limite, proyecto_id } = req.body;

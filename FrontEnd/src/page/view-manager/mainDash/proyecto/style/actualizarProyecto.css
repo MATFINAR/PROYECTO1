@@ -1,4 +1,4 @@
-.container-actualizar-tarea {
+.container-actualizar-proyecto {
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
@@ -8,22 +8,22 @@
   color: #000; /* negro */
 }
 
-.heading-actualizar-tarea {
+.heading-actualizar-proyecto {
   color: #000; /* negro */
 }
 
-.form-actualizar-tarea .form-group-actualizar-tarea {
+.form-actualizar-proyecto .form-group-actualizar-proyecto {
   margin-bottom: 10px;
 }
 
-.label-actualizar-tarea {
+.label-actualizar-proyecto {
   display: block;
   font-weight: bold;
 }
 
-.input-actualizar-tarea,
-.select-actualizar-tarea,
-.textarea-actualizar-tarea {
+.input-actualizar-proyecto,
+.select-actualizar-proyecto,
+.textarea-actualizar-proyecto {
   width: 100%;
   padding: 8px;
   margin-top: 5px;
@@ -31,7 +31,7 @@
   border: 1px solid #000; /* negro */
 }
 
-.button-actualizar-tarea {
+.button-actualizar-proyecto {
   width: 100%;
   padding: 8px 16px;
   background-color: #000; /* negro */
@@ -41,12 +41,13 @@
   cursor: pointer;
 }
 
-.button-actualizar-tarea:hover {
+.button-actualizar-proyecto:hover {
   background-color: #333; /* un tono más oscuro de negro */
 }
 
-.error-actualizar-tarea {
+.error-actualizar-proyecto {
   margin-top: 10px;
-  color: #dc3545; /* rojo */
+  color: #dc3545;
+  background-color: white;
   text-align: center;
 }

@@ -12,7 +12,7 @@ function Proyectos() {
   const openModal = (content) => {
     setModalContent(content);
     setModalVisible(true);
-    setIsSidebarOpen(false); // Cierra el menú
+    setIsSidebarOpen(false);
   };
 
   const closeModal = () => {

@@ -7,6 +7,7 @@ import { deleteProyect } from './eliminarUnProyecto'; // Importa la función del
 const ShowProjects = () => {
   const [proyectos, setProyectos] = useState([]);
   const [busqueda, setBusqueda] = useState('');
+  const [error, setError] = useState(''); // State to handle error messages
 
   useEffect(() => {
     mostrarProyectos();
@@ -21,6 +22,7 @@ const ShowProjects = () => {
         },
       });
       setProyectos(response.data);
+      setError(''); // Clear error state when projects are successfully fetched
     } catch (error) {
       console.error('Error al obtener proyectos:', error);
     }
@@ -39,7 +41,14 @@ const ShowProjects = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setProyectos(response.data);
+
+      if (response.data.length === 0) {
+        setError('Proyecto no encontrado'); // Set error state if no projects are found
+        setProyectos([]); // Clear projects state
+      } else {
+        setProyectos(response.data);
+        setError(''); // Clear error state if projects are found
+      }
     
     } catch (error) {
       console.error('Error al buscar proyecto:', error);
@@ -48,6 +57,7 @@ const ShowProjects = () => {
 
   const handleChange = (event) => {
     setBusqueda(event.target.value);
+    setError(''); // Clear error state when user types
   };
 
   const handleSubmit = (event) => {
@@ -69,7 +79,7 @@ const ShowProjects = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <form className="search-form" onSubmit={handleSubmit}>
         <input
           type="text"
@@ -80,6 +90,8 @@ const ShowProjects = () => {
         />
         <button type="submit" className="search-button">Buscar</button>
       </form>
+
+      {error && <p className="error-message">{error}</p>} {/* Display error message */}
 
       <div className="cards-container">
         {proyectos.map((proyecto) => (

@@ -34,8 +34,8 @@ const UpdateTask = () => {
         setError('Tarea no encontrada');
       }
     } catch (error) {
-      setError('Error fetching task data');
-      console.error('Error fetching task data:', error);
+      setError('Error al obtener datos de la tarea');
+      console.error('Error al obtener datos de la tarea:', error);
     }
   };
 
@@ -76,11 +76,11 @@ const UpdateTask = () => {
       if (response.data.resultado === 'Tarea actualizada exitosamente') {
         window.location.reload(); // Recargar la página después de actualizar la tarea
       } else {
-        setError('Error updating task: ' + response.data.resultado);
+        setError('Error al actualizar la tarea: ' + response.data.resultado);
       }
     } catch (error) {
-      setError('Error updating task');
-      console.error('Error updating task:', error);
+      setError('Error al actualizar la tarea');
+      console.error('Error al actualizar la tarea:', error);
     }
   };
 

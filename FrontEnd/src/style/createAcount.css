@@ -43,5 +43,6 @@
   color: gold;
 }
 .error-message {
-  color: red;
+  color: white;
+  background-color: red;
 }

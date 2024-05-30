@@ -1,89 +1,142 @@
-.search-form {
+/* General styles */
+body {
+  background-color: #000; /* Black background */
+  color: #ffd700; /* Gold text color */
+  font-family: 'Arial', sans-serif;
+}
+
+.container-listar-usuario {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  padding: 20px;
+}
+
+.search-form-listar-usuario {
+  display: flex;
   justify-content: center;
   margin-bottom: 20px;
 }
 
-.search-input {
+.search-input-listar-usuario, 
+.search-button-listar-usuario {
   padding: 10px;
-  border: 1px solid #333;
+  margin: 5px;
+  border: 1px solid #ffd700; /* Gold border */
   border-radius: 5px;
-  margin-right: 10px;
-  width: 300px;
-  color: white;
-  background-color: #333;
+  background-color: #000; /* Black background */
+  color: #ffd700; /* Gold text */
 }
 
-.search-input::placeholder {
-  color: #ffd700; /* Dorado para el texto de placeholder */
+.search-input-listar-usuario::placeholder {
+  color: #ffd700; /* Gold placeholder text */
 }
 
-.search-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: #ffd700; /* Dorado para el fondo del botón */
-  color: black;
+.search-button-listar-usuario {
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
 }
 
-.search-button:hover {
-  background-color: darkgoldenrod; /* Dorado más oscuro al hacer hover */
-  color: white;
+.search-button-listar-usuario:hover {
+  background-color: #ffd700; /* Gold background on hover */
+  color: #000; /* Black text on hover */
 }
 
-.cards-container {
+.cards-container-listar-usuario {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px; /* Espacio entre las tarjetas */
-  padding: 20px;
+  gap: 20px;
+  width: 100%;
 }
 
-.card {
-  background-color: #1a1a1a; /* Fondo oscuro */
-  color: white;
-  border-radius: 10px;
+.card-listar-usuario {
+  background-color: #000; /* Black background */
+  border: 1px solid #ffd700; /* Gold border */
+  border-radius: 5px;
   padding: 20px;
-  width: calc(50% - 20px); /* Dos tarjetas por fila, restando el espacio del gap */
-  box-sizing: border-box;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para profundidad */
+  width: 23%; /* Approximately 1/4 of the screen width */
+  box-shadow: 0 0 10px #ffd700; /* Gold shadow */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative; /* Ensure positioning for delete button */
+}
+
+.card-title, 
+.card-description {
+  margin: 10px 0;
+  text-align: center; /* Center text */
+}
+
+.delete-menu {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.delete-menu-options {
+  position: absolute;
+  top: 30px;
+  background-color: #000; /* Black background */
+  border: 1px solid #ffd700; /* Gold border */
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 0 10px #ffd700; /* Gold shadow */
+}
+
+.delete-button,
+.delete-user-button {
+  background: none;
+  border: none;
+  color: #ffd700; /* Gold text */
+  cursor: pointer;
+}
+
+.delete-button:hover,
+.delete-user-button:hover {
+  color: #000; /* Black text */
+  background-color: #ffd700; /* Gold background */
+  border-radius: 5px;
+}
+
+.confirmacion-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Black transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.confirmacion-box {
+  background-color: #000; /* Black background */
+  border: 1px solid #ffd700; /* Gold border */
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 0 20px #ffd700; /* Gold shadow */
   text-align: center;
 }
 
-.card-title {
-  color: #ffd700; /* Color dorado para los títulos */
-  margin-bottom: 10px;
-  font-size: 1.5rem; /* Tamaño de fuente más pequeño */
-  font-family: 'Courier New', Courier, monospace;
-}
-
-.card-description, .card-info {
-  margin: 5px 0;
-  font-size: 1rem; /* Tamaño de fuente más pequeño */
-  font-family: 'Times New Roman', Times, serif;
-}
-
-.delete-button {
-  background-color: #ffd700; /* Fondo dorado */
-  color: black;
-  border: none;
-  border-radius: 5px;
+.confirmacion-box button {
   padding: 10px 20px;
+  margin: 10px;
+  border: 1px solid #ffd700; /* Gold border */
+  border-radius: 5px;
+  background-color: #000; /* Black background */
+  color: #ffd700; /* Gold text */
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s, transform 0.3s;
 }
 
-.delete-button:hover {
-  background-color: darkgoldenrod;
-  color: black;
-  transform: scale(1.05); /* Efecto de agrandamiento al hover */
+.confirmacion-box button:hover {
+  background-color: #ffd700; /* Gold background */
+  color: #000; /* Black text */
 }
 
-@media (max-width: 1050px) {
-  .card {
-    width: 100%; /* Una tarjeta por fila en pantallas pequeñas */
-  }
+.error-listar-usuario {
+  color: #ff0000; /* Red error text */
+  margin: 20px 0;
+  text-align: center;
 }

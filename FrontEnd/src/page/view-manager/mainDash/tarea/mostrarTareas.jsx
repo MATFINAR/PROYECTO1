@@ -21,6 +21,7 @@ const ShowTasks = () => {
         },
       });
       setTareas(response.data);
+      setError(''); // Limpiar el mensaje de error al mostrar las tareas
     } catch (error) {
       console.error('Error al obtener tareas:', error);
       setError('Error al obtener tareas');
@@ -41,6 +42,11 @@ const ShowTasks = () => {
         },
       });
       setTareas(response.data);
+      if (response.data.length === 0) {
+        setError('Tarea no encontrada');
+      } else {
+        setError('');
+      }
     } catch (error) {
       console.error('Error al buscar tarea:', error);
       setError('Error al buscar tarea');
@@ -97,7 +103,7 @@ const ShowTasks = () => {
           </div>
         ))}
       </div>
-      {error && <p className="error-actualizar-tarea">{error}</p>}
+      {error && <p className="error-message">{error}</p>}
     </div>
   );
 };
