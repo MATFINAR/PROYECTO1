@@ -7,6 +7,8 @@ const ShowTasks = () => {
   const [tareas, setTareas] = useState([]);
   const [busqueda, setBusqueda] = useState('');
   const [error, setError] = useState('');
+  const [confirmacionVisible, setConfirmacionVisible] = useState(false);
+  const [tareaAEliminar, setTareaAEliminar] = useState(null);
 
   useEffect(() => {
     mostrarTareas();
@@ -21,7 +23,7 @@ const ShowTasks = () => {
         },
       });
       setTareas(response.data);
-      setError(''); // Limpiar el mensaje de error al mostrar las tareas
+      setError('');
     } catch (error) {
       console.error('Error al obtener tareas:', error);
       setError('Error al obtener tareas');
@@ -63,16 +65,19 @@ const ShowTasks = () => {
   };
 
   const handleDelete = async (nombre) => {
-    const confirmar = window.confirm('¿Estás seguro de que quieres eliminar esta tarea?');
-    if (confirmar) {
-      const resultado = await deleteTask(nombre);
-      console.log(resultado);
-      if (resultado.resultado === 'Tarea eliminada exitosamente') {
-        mostrarTareas();
-      } else {
-        console.error('Error al eliminar tarea:', resultado.resultado);
-        setError('Error al eliminar tarea');
-      }
+    setTareaAEliminar(nombre);
+    setConfirmacionVisible(true);
+  };
+
+  const confirmarEliminar = async () => {
+    try {
+      const token = Cookies.get('token');
+      await deleteTask(tareaAEliminar, token);
+      setConfirmacionVisible(false);
+      mostrarTareas();
+    } catch (error) {
+      console.error('Error al eliminar tarea:', error);
+      setError('Error al eliminar tarea');
     }
   };
 
@@ -89,6 +94,8 @@ const ShowTasks = () => {
         <button type="submit" className="search-button">Buscar</button>
       </form>
 
+      {error && <p className="error-message">{error}</p>}
+
       <div className="cards-container">
         {tareas.map((tarea, index) => (
           <div key={tarea.id} className="card">
@@ -103,7 +110,16 @@ const ShowTasks = () => {
           </div>
         ))}
       </div>
-      {error && <p className="error-message">{error}</p>}
+
+      {confirmacionVisible && (
+        <div className="confirmacion-overlay">
+          <div className="confirmacion-box">
+            <p>{`¿Está seguro de que desea eliminar la tarea ${tareaAEliminar}?`}</p>
+            <button onClick={confirmarEliminar}>Confirmar</button>
+            <button onClick={() => setConfirmacionVisible(false)}>Cancelar</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
