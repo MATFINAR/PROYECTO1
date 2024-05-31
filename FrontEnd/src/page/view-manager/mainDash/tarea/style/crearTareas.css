@@ -21,7 +21,7 @@
 .input-descripcion-tarea,
 .select-estado-tarea,
 .input-fecha-limite-tarea,
-.input-proyecto-id-tarea {
+.input-proyecto-nombre-tarea {
   width: 100%;
   padding: 10px;
   border: 1px solid gold;

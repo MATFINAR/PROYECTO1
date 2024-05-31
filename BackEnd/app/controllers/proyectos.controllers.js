@@ -25,14 +25,14 @@ export const getProject = async (req, res) => {
 };
 
 export const postProject = async (req, res) => {
-  const { nombre, descripcion, estado, prioridad, manager_id } = req.body;
+  const { nombre, descripcion, estado, prioridad, manager_email } = req.body;
   const fecha_creacion = getCurrentDateTime();
   const fecha_actualizacion = getCurrentDateTime();
 
   try {
     const resultado = await pool.query(
-      "INSERT INTO Proyectos (nombre, descripcion, estado, prioridad, fecha_creacion, fecha_actualizacion, manager_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
-      [nombre, descripcion, estado, prioridad, fecha_creacion, fecha_actualizacion, manager_id]
+      "INSERT INTO Proyectos (nombre, descripcion, estado, prioridad, fecha_creacion, fecha_actualizacion, manager_email ) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      [nombre, descripcion, estado, prioridad, fecha_creacion, fecha_actualizacion, manager_email]
     );
 
     if (resultado[0].affectedRows > 0) {
@@ -47,7 +47,7 @@ export const postProject = async (req, res) => {
 };
 
 export const putProject = async (req, res) => {
-  const { nombreAnterior, nombre, descripcion, estado, prioridad, manager_id } = req.body;
+  const { nombreAnterior, nombre, descripcion, estado, prioridad, manager_email } = req.body;
 
   try {
     // Verificar si el nuevo nombre del proyecto ya existe (excepto el proyecto actual)
@@ -67,10 +67,10 @@ export const putProject = async (req, res) => {
       descripcion = ?, 
       estado = ?, 
       prioridad = ?, 
-      manager_id = ?,
+      manager_email = ?,
       fecha_actualizacion = ?
       WHERE nombre = ?`,
-      [nombre, descripcion, estado, prioridad, manager_id, getCurrentDateTime(), nombreAnterior]
+      [nombre, descripcion, estado, prioridad, manager_email , getCurrentDateTime(), nombreAnterior]
     );
 
     if (resultado[0].affectedRows > 0) {

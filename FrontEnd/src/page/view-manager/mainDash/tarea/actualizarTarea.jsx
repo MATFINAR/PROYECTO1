@@ -10,7 +10,7 @@ const UpdateTask = () => {
     descripcion: '',
     estado: '',
     fecha_limite: '',
-    proyecto_id: ''
+    proyecto_nombre: ''
   });
   const [error, setError] = useState('');
 
@@ -142,12 +142,12 @@ const UpdateTask = () => {
       />
     </div>
     <div className="form-group-actualizar-tarea">
-      <label className="label-actualizar-tarea">ID Proyecto:</label>
+      <label className="label-actualizar-tarea">Nombre Proyecto:</label>
       <input
         type='text'
-        placeholder='Nuevo ID de proyecto de la tarea'
-        value={tarea.proyecto_id}
-        name='proyecto_id'
+        placeholder='Nuevo nombre del proyecto de la tarea'
+        value={tarea.proyecto_nombre}
+        name='proyecto_nombre'
         onChange={handleChange}
         className="input-actualizar-tarea"
       />

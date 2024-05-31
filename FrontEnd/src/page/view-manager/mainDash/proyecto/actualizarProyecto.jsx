@@ -10,7 +10,7 @@ const UpdateProject = () => {
     descripcion: '',
     estado: '',
     prioridad: '',
-    manager_id: '',
+    manager_email: '',
   });
   const [error, setError] = useState('');
 
@@ -152,11 +152,11 @@ const UpdateProject = () => {
           </select>
         </div>
         <div className="form-group-actualizar-proyecto">
-          <label className="label-actualizar-proyecto">Manager ID:</label>
+          <label className="label-actualizar-proyecto">Email del manager:</label>
           <input
             type="text"
-            name="manager_id"
-            value={proyecto.manager_id}
+            name="manager_email"
+            value={proyecto.manager_email}
             onChange={handleChange}
             required
             className="input-actualizar-proyecto"

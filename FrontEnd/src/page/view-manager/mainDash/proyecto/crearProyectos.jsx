@@ -8,12 +8,12 @@ function CreateProject() {
   const [descripcion, setDescripcion] = useState('');
   const [estado, setEstado] = useState('');
   const [prioridad, setPrioridad] = useState('');
-  const [manager_id, setManagerId] = useState('');
+  const [manager_email, setManagerEmail] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
   const handleCreateProject = async () => {
-    if (!nombre.trim() || !descripcion.trim() || !estado.trim() || !prioridad.trim() || !manager_id.trim()) {
+    if (!nombre.trim() || !descripcion.trim() || !estado.trim() || !prioridad.trim() || !manager_email.trim()) {
       setError('Todos los campos son obligatorios');
       return;
     }
@@ -31,7 +31,7 @@ function CreateProject() {
         descripcion,
         estado,
         prioridad,
-        manager_id
+        manager_email
       }, {
         headers: {
           'Content-Type': 'application/json',
@@ -94,9 +94,9 @@ function CreateProject() {
       </select>
       <input
         type="text"
-        placeholder="Manager ID"
-        value={manager_id}
-        onChange={(e) => setManagerId(e.target.value)}
+        placeholder=" Email del manager"
+        value={manager_email}
+        onChange={(e) => setManagerEmail(e.target.value)}
         className="input-crear-proyecto"
       />
       <button onClick={handleCreateProject} className="button-crear-proyecto">Crear Proyecto</button>

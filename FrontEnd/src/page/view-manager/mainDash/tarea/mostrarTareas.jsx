@@ -103,7 +103,7 @@ const ShowTasks = () => {
             <p className="card-description">{tarea.descripcion}</p>
             <p className="card-info">Estado: {tarea.estado}</p>
             <p className="card-info">Fecha limite: {tarea.fecha_limite}</p>
-            <p className="card-info">Proyecto ID: {tarea.proyecto_id}</p>
+            <p className="card-info">Nombre del proyecto: {tarea.proyecto_nombre}</p>
             <button className="delete-button" onClick={() => handleDelete(tarea.nombre)}>
               Eliminar
             </button>

@@ -105,7 +105,7 @@ const ShowProjects = () => {
             <p className="card-description">{proyecto.descripcion}</p>
             <p className="card-info">Estado: {proyecto.estado}</p>
             <p className="card-info">Prioridad: {proyecto.prioridad}</p>
-            <p className="card-info">Manager: {proyecto.manager_id}</p>
+            <p className="card-info">Manager del proyecto: {proyecto.manager_email}</p>
             <p className="card-info">Fecha de actualización: {proyecto.fecha_actualizacion}</p>
             <button className="delete-button" onClick={() => handleDelete(proyecto.nombre)}>
               Eliminar

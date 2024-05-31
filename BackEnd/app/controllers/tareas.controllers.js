@@ -23,13 +23,13 @@ export const getTask = async (req, res) => {
 
 
 export const postTask = async (req, res) => {
-  const { nombre, descripcion, estado, fecha_limite, proyecto_id } = req.body;
+  const { nombre, descripcion, estado, fecha_limite, proyecto_nombre } = req.body;
   const date_create = getCurrentDateTime(); // Asegúrate de que esta función devuelva la fecha y hora actual en el formato adecuado
 
   try {
     const resultado = await pool.query(
-      'INSERT INTO tareas (nombre, descripcion, estado, fecha_limite, proyecto_id) VALUES (?, ?, ?, ?, ?)',
-      [nombre, descripcion, estado, fecha_limite, proyecto_id]
+      'INSERT INTO tareas (nombre, descripcion, estado, fecha_limite, proyecto_nombre) VALUES (?, ?, ?, ?, ?)',
+      [nombre, descripcion, estado, fecha_limite, proyecto_nombre]
     );
 
     if (resultado[0].affectedRows > 0) {
@@ -44,7 +44,7 @@ export const postTask = async (req, res) => {
 };
 
 export const putTask = async (req, res) => {
-  const { nombre, descripcion, estado, fecha_limite, proyecto_id, nombreAntiguo } = req.body;
+  const { nombre, descripcion, estado, fecha_limite, proyecto_nombre, nombreAntiguo } = req.body;
 
   try {
     const resultado = await pool.query(
@@ -53,9 +53,9 @@ export const putTask = async (req, res) => {
       descripcion = ?, 
       estado = ?, 
       fecha_limite = ?, 
-      proyecto_id = ?
+      proyecto_nombre = ?
       WHERE nombre = ?`,
-      [nombre, descripcion, estado, fecha_limite, proyecto_id, nombreAntiguo]
+      [nombre, descripcion, estado, fecha_limite, proyecto_nombre, nombreAntiguo]
     );
 
     if (resultado[0].affectedRows > 0) {

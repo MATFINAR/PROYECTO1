@@ -8,12 +8,12 @@ const CreateTask = () => {
   const [descripcion, setDescripcion] = useState('');
   const [estado, setEstado] = useState('Sin completar');
   const [fecha_limite, setFecha_limite] = useState('');
-  const [proyecto_id, setProyecto_id] = useState('');
+  const [proyecto_nombre, setProyecto_nombreproyecto_nombre] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
   const handleCreateTask = async () => {
-    if (!nombre.trim() || !descripcion.trim() || !fecha_limite.trim() || !proyecto_id.trim()) {
+    if (!nombre.trim() || !descripcion.trim() || !fecha_limite.trim() || !proyecto_nombre.trim()) {
       setError("Todos los campos son obligatorios");
       return;
     }
@@ -31,7 +31,7 @@ const CreateTask = () => {
         descripcion,
         estado,
         fecha_limite,
-        proyecto_id
+        proyecto_nombre
       }, {
         headers: {
           'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ const CreateTask = () => {
         setDescripcion('');
         setEstado('Sin completar');
         setFecha_limite('');
-        setProyecto_id('');
+        setProyecto_nombreproyecto_nombre('');
       } else {
         setError(response.data.resultado || 'Error al crear tarea');
         setSuccess('');
@@ -104,10 +104,10 @@ const CreateTask = () => {
       <div className="input-container-tarea">
         <input
           type='text'
-          placeholder='ID Proyecto'
-          value={proyecto_id}
-          onChange={(e) => setProyecto_id(e.target.value)}
-          className='input-proyecto-id-tarea'
+          placeholder='Nombre Proyecto'
+          value={proyecto_nombre}
+          onChange={(e) => setProyecto_nombreproyecto_nombre(e.target.value)}
+          className='input-proyecto-nombre-tarea'
         />
       </div>
       <button onClick={handleCreateTask} className='button-crear-tarea'>Crear Tarea</button>
