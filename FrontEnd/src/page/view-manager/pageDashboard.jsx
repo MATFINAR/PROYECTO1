@@ -12,6 +12,7 @@ function DashBoard() {
   const [forceRerender, setForceRerender] = useState(false);
   const [activeOption, setActiveOption] = useState("");
   const [showConfigMenu, setShowConfigMenu] = useState(false);
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false); // Estado para el mensaje de confirmación
 
   useEffect(() => {
     const pathToTitleMap = {
@@ -91,7 +92,6 @@ function DashBoard() {
       });
 
       if (response.data.resultado === 'Usuario eliminado exitosamente') {
-        alert('Usuario eliminado exitosamente');
         Cookies.remove('token');
         navigate('/');
       } else {
@@ -112,8 +112,8 @@ function DashBoard() {
           <DiAptana className="config-icon" />
           {showConfigMenu && (
             <div className="config-menu">
-              <button className="go-out-menu-button" onClick={handleLogout}>Cerrar sesion</button>
-              <button className="delete-menu-button" onClick={handleDeleteAccount}>Eliminar cuenta</button>
+              <button className="go-out-menu-button" onClick={handleLogout}>Cerrar sesión</button>
+              <button className="delete-menu-button" onClick={() => setShowConfirmDelete(true)}>Eliminar cuenta</button>
             </div>
           )}
         </div>
@@ -130,6 +130,15 @@ function DashBoard() {
       <div className="main-dashboard">
         <MainDash key={forceRerender ? 'rerender' : 'normal'} />
       </div>
+      {showConfirmDelete && (
+        <div className="confirm-delete-overlay">
+          <div className="confirm-delete-card">
+            <p>¿Estás seguro de que deseas eliminar tu cuenta?</p>
+            <button onClick={handleDeleteAccount}>Sí, eliminar</button>
+            <button onClick={() => setShowConfirmDelete(false)}>Cancelar</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
