@@ -13,6 +13,7 @@ function DashBoard() {
   const [activeOption, setActiveOption] = useState("");
   const [showConfigMenu, setShowConfigMenu] = useState(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false); // Estado para el mensaje de confirmación
+  const [countdown, setCountdown] = useState(2000000); // Tiempo de espera inicial
 
   useEffect(() => {
     const pathToTitleMap = {
@@ -28,36 +29,19 @@ function DashBoard() {
   }, [location.pathname]);
 
   useEffect(() => {
-    const interval = setInterval(async () => {
-      const token = Cookies.get('token');
-      const { usuario_id } = JSON.parse(atob(token.split('.')[1]));
-
-      if (!token) {
-        navigate('/');
-        return;
-      }
-
-      try {
-        const response = await axios.get('http://localhost:666/api/usuario/existe', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          },
-          params: { usuario_id }
-        });
-
-        if (!response.data.existe) {
-          Cookies.remove('token');
-          navigate('/');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        Cookies.remove('token');
-        navigate('/');
-      }
-    }, 200000); 
+    const interval = setInterval(() => {
+      setCountdown(prevCountdown => prevCountdown - 1000); // Resta 1 segundo al contador cada vez que se ejecuta el intervalo
+    }, 1000);
 
     return () => clearInterval(interval);
-  }, [navigate]);
+  }, []);
+
+  useEffect(() => {
+    if (countdown <= 0) {
+      Cookies.remove('token')
+      navigate('/');
+    }
+  }, [countdown, navigate]);
 
   const handleOptionClick = (path, title) => {
     if (location.pathname === path) {

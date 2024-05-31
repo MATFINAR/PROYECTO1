@@ -1,8 +1,10 @@
+import './style/listarUsuario.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { TbSquareArrowDownFilled } from "react-icons/tb";
-import './style/listarUsuario.css';
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
 const ShowUsers = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -12,6 +14,7 @@ const ShowUsers = () => {
   const [usuarioAEliminar, setUsuarioAEliminar] = useState(null);
   const [confirmacionVisible, setConfirmacionVisible] = useState(false);
   const [mensajeConfirmacion, setMensajeConfirmacion] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     mostrarUsuarios();
@@ -78,6 +81,8 @@ const ShowUsers = () => {
   const handleDeleteUser = async () => {
     try {
       const token = Cookies.get('token');
+      const usuarioLogueado = jwtDecode(token);
+
       await axios.delete(`http://localhost:666/api/usuario/${usuarioAEliminar.usuario_id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -87,6 +92,13 @@ const ShowUsers = () => {
       setEliminarVisible(null);
       setUsuarioAEliminar(null);
       setConfirmacionVisible(false);
+
+      // Si el usuario que se eliminó es el mismo que está logueado, redirigir al login
+      if (usuarioAEliminar.usuario_id === usuarioLogueado.usuario_id) {
+        Cookies.remove('token');
+        Cookies.remove('email');
+        navigate('/');
+      }
     } catch (error) {
       console.error('Error al eliminar usuario:', error);
       setError('Error al eliminar usuario');
