@@ -6,14 +6,13 @@ import axios from 'axios';
 function CreateProject() {
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
-  const [estado, setEstado] = useState('');
   const [prioridad, setPrioridad] = useState('');
   const [manager_email, setManagerEmail] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
   const handleCreateProject = async () => {
-    if (!nombre.trim() || !descripcion.trim() || !estado.trim() || !prioridad.trim() || !manager_email.trim()) {
+    if (!nombre.trim() || !descripcion.trim() || !prioridad.trim() || !manager_email.trim()) {
       setError('Todos los campos son obligatorios');
       return;
     }
@@ -29,7 +28,7 @@ function CreateProject() {
       const response = await axios.post('http://localhost:666/api/proyecto', {
         nombre,
         descripcion,
-        estado,
+        estado: 'Sin comenzar',
         prioridad,
         manager_email
       }, {
@@ -72,19 +71,9 @@ function CreateProject() {
         className="input-crear-proyecto"
       />
       <select
-        value={estado}
-        onChange={(e) => setEstado(e.target.value)}
-        className="select-crear-proyecto"
-      >
-        <option value="">Seleccionar estado</option>
-        <option value="Sin comenzar">Sin comenzar</option>
-        <option value="En proceso">En proceso</option>
-        <option value="Completo">Completo</option>
-      </select>
-      <select
         value={prioridad}
         onChange={(e) => setPrioridad(e.target.value)}
-        className="select-crear-proyecto"
+        className="select-crear-proyecto prioridad"
       >
         <option>Seleccionar importancia</option>
         <option value="No importa">No importa</option>

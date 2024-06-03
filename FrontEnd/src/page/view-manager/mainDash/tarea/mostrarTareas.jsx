@@ -1,3 +1,4 @@
+import "./style/mostrarTareas.css"
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -64,7 +65,7 @@ const ShowTasks = () => {
     buscarTarea();
   };
 
-  const handleDelete = async (nombre) => {
+  const handleDelete = (nombre) => {
     setTareaAEliminar(nombre);
     setConfirmacionVisible(true);
   };
@@ -97,8 +98,8 @@ const ShowTasks = () => {
       {error && <p className="error-message">{error}</p>}
 
       <div className="cards-container">
-        {tareas.map((tarea, index) => (
-          <div key={tarea.id} className="card">
+        {tareas.map((tarea) => (
+          <div key={tarea.id} className={`card ${tarea.estado === 'Completa' ? 'Completa' : ''}`}>
             <h3 className="card-title">{tarea.nombre}</h3>
             <p className="card-description">{tarea.descripcion}</p>
             <p className="card-info">Estado: {tarea.estado}</p>

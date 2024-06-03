@@ -13,7 +13,6 @@ const ShowUsers = () => {
   const [eliminarVisible, setEliminarVisible] = useState(null);
   const [usuarioAEliminar, setUsuarioAEliminar] = useState(null);
   const [confirmacionVisible, setConfirmacionVisible] = useState(false);
-  const [mensajeConfirmacion, setMensajeConfirmacion] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {

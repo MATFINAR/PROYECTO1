@@ -31,6 +31,11 @@
   color: #ffd700; /* Placeholder y texto dorado */
 }
 
+.select-crear-proyecto{
+  padding: 0px;
+  padding-left: 5px;
+}
+
 .button-crear-proyecto {
   background-color: #333; /* Fondo negro para el botón */
   color: #ffd700; /* Texto dorado para el botón */

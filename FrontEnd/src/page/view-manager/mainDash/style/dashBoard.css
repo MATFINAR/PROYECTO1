@@ -92,7 +92,7 @@ body, html {
   
 .aside-dashboard {
   width: 100%;
-  height: 10vh; /* Ajusta la altura de la barra lateral */
+  height: 7vh; /* Ajusta la altura de la barra lateral */
   margin-top: 2vh;
   display: flex;
   justify-content: center;
@@ -126,7 +126,7 @@ body, html {
 .main-dashboard {
   flex: 1;
   overflow-y: auto;
-  padding: 3vw;
+  padding: 1vw;
   overflow-x: hidden; /* Evitar desplazamiento lateral */
   background-color: rgb(15, 15, 15);
 }

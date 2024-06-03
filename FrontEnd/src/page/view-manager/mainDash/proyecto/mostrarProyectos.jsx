@@ -2,14 +2,14 @@ import "./style/mostrarProyectos.css"
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { deleteProyect } from './eliminarUnProyecto'; // Importa la función deleteProyect
+import { deleteProyect } from './eliminarUnProyecto'; 
 
 const ShowProjects = () => {
   const [proyectos, setProyectos] = useState([]);
   const [busqueda, setBusqueda] = useState('');
-  const [error, setError] = useState(''); // State to handle error messages
-  const [confirmacionVisible, setConfirmacionVisible] = useState(false); // State to control confirmation dialog visibility
-  const [proyectoAEliminar, setProyectoAEliminar] = useState(null); // State to store the project to delete
+  const [error, setError] = useState(''); 
+  const [confirmacionVisible, setConfirmacionVisible] = useState(false); 
+  const [proyectoAEliminar, setProyectoAEliminar] = useState(null); 
 
   useEffect(() => {
     mostrarProyectos();

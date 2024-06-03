@@ -13,7 +13,7 @@ function DashBoard() {
   const [activeOption, setActiveOption] = useState("");
   const [showConfigMenu, setShowConfigMenu] = useState(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false); // Estado para el mensaje de confirmación
-  const [countdown, setCountdown] = useState(2000000); // Tiempo de espera inicial
+  const [countdown, setCountdown] = useState(900000); // Tiempo de espera inicial
 
   useEffect(() => {
     const pathToTitleMap = {
@@ -43,7 +43,7 @@ function DashBoard() {
     }
   }, [countdown, navigate]);
 
-  const handleOptionClick = (path, title) => {
+  const handleOptionClick = (path) => {
     if (location.pathname === path) {
       setForceRerender(!forceRerender); 
     } else {

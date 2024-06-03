@@ -82,16 +82,6 @@ const CreateTask = () => {
         />
       </div>
       <div className="input-container-tarea">
-        <select
-          value={estado}
-          onChange={(e) => setEstado(e.target.value)}
-          className='select-estado-tarea'
-        >
-          <option value='Sin completar'>Sin completar</option>
-          <option value='Completa'>Completada</option>
-        </select>
-      </div>
-      <div className="input-container-tarea">
         <span className='label-fecha-limite-tarea'>Fecha limite:</span>
         <input
           type='date'

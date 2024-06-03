@@ -104,6 +104,7 @@ const UpdateProject = () => {
           <label className="label-actualizar-proyecto">Nombre:</label>
           <input
             type="text"
+            placeholder="Nombre nuevo del proyecto"
             name="nombre"
             value={proyecto.nombre}
             onChange={handleChange}
@@ -113,12 +114,13 @@ const UpdateProject = () => {
         </div>
         <div className="form-group-actualizar-proyecto">
           <label className="label-actualizar-proyecto">Descripción:</label>
-          <texproyecto
+          <input
             name="descripcion"
+            placeholder="Descripcion nueva del proyecto"
             value={proyecto.descripcion}
             onChange={handleChange}
             className="texproyecto-actualizar-proyecto"
-          ></texproyecto>
+          ></input>
         </div>
         <div className="form-group-actualizar-proyecto">
           <label className="label-actualizar-proyecto">Estado:</label>
@@ -155,6 +157,7 @@ const UpdateProject = () => {
           <label className="label-actualizar-proyecto">Email del manager:</label>
           <input
             type="text"
+            placeholder="Email del manager que pertenece el proyecto"
             name="manager_email"
             value={proyecto.manager_email}
             onChange={handleChange}
