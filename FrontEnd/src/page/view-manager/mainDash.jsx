@@ -14,7 +14,7 @@ function MainDash(){
                 <Route path="/listausuario" element={<ShowUsers />} />
                 <Route path="/asignarrol" element={<AsignarRango />} />
                 <Route path="/proyectos" element={<Proyectos />} />
-                <Route path="/tareas" element={<Tareas />} />
+                <Route path="/tareas/:proyectoNombre" element={<Tareas/>} />
             </Routes>
         </div>
     );

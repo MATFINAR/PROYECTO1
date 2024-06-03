@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { deleteProyect } from './eliminarUnProyecto'; 
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const ShowProjects = () => {
   const [proyectos, setProyectos] = useState([]);
@@ -10,6 +11,7 @@ const ShowProjects = () => {
   const [error, setError] = useState(''); 
   const [confirmacionVisible, setConfirmacionVisible] = useState(false); 
   const [proyectoAEliminar, setProyectoAEliminar] = useState(null); 
+  const navigate = useNavigate(); // Use useNavigate hook
 
   useEffect(() => {
     mostrarProyectos();
@@ -83,6 +85,10 @@ const ShowProjects = () => {
     }
   };
 
+  const mostrarTareasProyecto = (proyectoNombre) => {
+    navigate(`/dash-manager/tareas/${proyectoNombre}`); // Navigate to the tasks page for the selected project
+  };
+
   return (
     <div className="container">
       <form className="search-form" onSubmit={handleSubmit}>
@@ -90,7 +96,7 @@ const ShowProjects = () => {
           type="text"
           value={busqueda}
           onChange={handleChange}
-          placeholder="Buscar tarea..."
+          placeholder="Buscar proyecto..."
           className="search-input"
         />
         <button type="submit" className="search-button">Buscar</button>
@@ -107,6 +113,9 @@ const ShowProjects = () => {
             <p className="card-info">Prioridad: {proyecto.prioridad}</p>
             <p className="card-info">Manager del proyecto: {proyecto.manager_email}</p>
             <p className="card-info">Fecha de actualización: {proyecto.fecha_actualizacion}</p>
+            <button className="task-button" onClick={() => mostrarTareasProyecto(proyecto.nombre)}>
+              Tareas
+            </button>
             <button className="delete-button" onClick={() => handleDelete(proyecto.nombre)}>
               Eliminar
             </button>

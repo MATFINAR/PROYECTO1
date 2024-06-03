@@ -103,7 +103,7 @@ body, html {
   width: 80%;
   height: 100%; /* Ajusta la altura de las opciones */
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 1vw;
 }
 

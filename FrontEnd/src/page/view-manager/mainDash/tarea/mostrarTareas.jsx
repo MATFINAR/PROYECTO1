@@ -1,8 +1,9 @@
-import "./style/mostrarTareas.css"
+import './style/mostrarTareas.css'
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { deleteTask } from './eliminarUnTarea';
+import { useParams } from 'react-router-dom';
 
 const ShowTasks = () => {
   const [tareas, setTareas] = useState([]);
@@ -10,15 +11,20 @@ const ShowTasks = () => {
   const [error, setError] = useState('');
   const [confirmacionVisible, setConfirmacionVisible] = useState(false);
   const [tareaAEliminar, setTareaAEliminar] = useState(null);
+  const { proyectoNombre } = useParams();
 
   useEffect(() => {
     mostrarTareas();
-  }, []);
+  }, [proyectoNombre]);
 
   const mostrarTareas = async () => {
     try {
       const token = Cookies.get('token');
-      const response = await axios.get('http://localhost:666/api/tasks', {
+      let url = 'http://localhost:666/api/tasks';
+      if (proyectoNombre) {
+        url += `?proyecto_nombre=${proyectoNombre}`;
+      }
+      const response = await axios.get(url, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -31,13 +37,17 @@ const ShowTasks = () => {
     }
   };
 
+  const handleChange = (event) => {
+    setBusqueda(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    buscarTarea();
+  };
+
   const buscarTarea = async () => {
     try {
-      if (busqueda.trim() === '') {
-        mostrarTareas();
-        return;
-      }
-
       const token = Cookies.get('token');
       const response = await axios.get(`http://localhost:666/api/task/${busqueda}`, {
         headers: {
@@ -54,15 +64,6 @@ const ShowTasks = () => {
       console.error('Error al buscar tarea:', error);
       setError('Error al buscar tarea');
     }
-  };
-
-  const handleChange = (event) => {
-    setBusqueda(event.target.value);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    buscarTarea();
   };
 
   const handleDelete = (nombre) => {
@@ -105,9 +106,7 @@ const ShowTasks = () => {
             <p className="card-info">Estado: {tarea.estado}</p>
             <p className="card-info">Fecha limite: {tarea.fecha_limite}</p>
             <p className="card-info">Nombre del proyecto: {tarea.proyecto_nombre}</p>
-            <button className="delete-button" onClick={() => handleDelete(tarea.nombre)}>
-              Eliminar
-            </button>
+            <button className="delete-button" onClick={() => handleDelete(tarea.nombre)}>Eliminar</button>
           </div>
         ))}
       </div>

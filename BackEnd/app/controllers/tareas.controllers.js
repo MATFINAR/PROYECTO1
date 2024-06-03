@@ -2,8 +2,17 @@ import { pool } from '../config/bd-mysql.js';
 import { getCurrentDateTime } from '../util/dateHelper.js';
 
 export const showTasks = async (req, res) => {
+  const { proyecto_nombre } = req.query;
+
   try {
-    const resultado = await pool.query('SELECT * FROM tareas');
+    let resultado;
+
+    if (proyecto_nombre) {
+      resultado = await pool.query('SELECT * FROM tareas WHERE proyecto_nombre = ?', [proyecto_nombre]);
+    } else {
+      resultado = await pool.query('SELECT * FROM tareas');
+    }
+
     res.json(resultado[0]);
   } catch (error) {
     res.status(500).json({ error: error.message, resultado: 'Error en la consulta Get de tareas' });

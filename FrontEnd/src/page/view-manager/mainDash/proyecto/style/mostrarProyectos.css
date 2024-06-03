@@ -82,8 +82,12 @@
   font-family: 'Times New Roman', Times, serif;
 }
 
+.task-button{
+  margin-right: 5px;
+}
+
 /* Estilos para el botón de eliminar */
-.delete-button {
+.task-button, .delete-button {
   background-color: #ffd700; /* Fondo dorado */
   color: black;
   border: none;
@@ -94,6 +98,12 @@
 }
 
 .delete-button:hover {
+  background-color: darkgoldenrod;
+  color: black;
+  transform: scale(1.05); /* Efecto de agrandamiento al hacer hover */
+}
+
+.task-button:hover {
   background-color: darkgoldenrod;
   color: black;
   transform: scale(1.05); /* Efecto de agrandamiento al hacer hover */

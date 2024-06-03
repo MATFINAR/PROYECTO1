@@ -21,7 +21,6 @@ function DashBoard() {
       "/dash-manager/listausuario": "Lista usuario",
       "/dash-manager/asignarrol": "Asignar el rol",
       "/dash-manager/proyectos": "Proyectos",
-      "/dash-manager/tareas": "Tareas",
     };
     const currentTitle = pathToTitleMap[location.pathname] || "Inicio";
     setActiveOption(currentTitle);
@@ -108,7 +107,6 @@ function DashBoard() {
           <button onClick={() => handleOptionClick("/dash-manager/listausuario", "Lista usuario")}>Lista de usuario</button>
           <button onClick={() => handleOptionClick("/dash-manager/asignarrol", "Asignar el rol")}>Asignar el rol</button>
           <button onClick={() => handleOptionClick("/dash-manager/proyectos", "Proyectos")}>Proyectos</button>
-          <button onClick={() => handleOptionClick("/dash-manager/tareas", "Tareas")}>Tareas</button>
         </div>
       </div>
       <div className="main-dashboard">
