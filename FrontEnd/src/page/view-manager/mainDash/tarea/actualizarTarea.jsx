@@ -1,4 +1,4 @@
-import "./style/actualizarTarea.css"
+import "./style/actualizarTarea.css";
 import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
@@ -52,7 +52,6 @@ const UpdateTask = () => {
     const token = Cookies.get('token');
 
     try {
-      // Verificar si el nombre de la tarea ya existe
       const verifyResponse = await axios.get(`http://localhost:666/api/task/${tarea.nombre}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -86,76 +85,65 @@ const UpdateTask = () => {
 
   return (
     <div className="container-actualizar-tarea">
-  <h1 className="heading-actualizar-tarea">Actualizar Tarea</h1>
-  <input
-    type='text'
-    placeholder='Nombre de la tarea'
-    value={tarea.nombreAntiguo}
-    name='nombreAntiguo'
-    onChange={handleChange}
-    className="input-actualizar-tarea"
-  />
-  <button onClick={handleBuscarTarea} className="button-actualizar-tarea">Buscar Tarea</button>
-  <form onSubmit={handleSubmit}>
-    <div className="form-group-actualizar-tarea">
-      <label className="label-actualizar-tarea">Nombre:</label>
+      <h1 className="heading-actualizar-tarea">Actualizar Tarea</h1>
       <input
         type='text'
-        placeholder='Nuevo nombre de la tarea'
-        value={tarea.nombre}
-        name='nombre'
+        placeholder='Nombre de la tarea'
+        value={tarea.nombreAntiguo}
+        name='nombreAntiguo'
         onChange={handleChange}
         className="input-actualizar-tarea"
       />
+      <button onClick={handleBuscarTarea} className="button-actualizar-tarea">Buscar Tarea</button>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group-actualizar-tarea">
+          <label className="label-actualizar-tarea">Nombre:</label>
+          <input
+            type='text'
+            placeholder='Nuevo nombre de la tarea'
+            value={tarea.nombre}
+            name='nombre'
+            onChange={handleChange}
+            className="input-actualizar-tarea"
+          />
+        </div>
+        <div className="form-group-actualizar-tarea">
+          <label className="label-actualizar-tarea">Descripción:</label>
+          <textarea
+            placeholder='Nueva descripción de la tarea'
+            value={tarea.descripcion}
+            name='descripcion'
+            onChange={handleChange}
+            className="textarea-actualizar-tarea"
+          ></textarea>
+        </div>
+        <div className="form-group-actualizar-tarea">
+          <label className="label-actualizar-tarea">Estado:</label>
+          <select
+            value={tarea.estado}
+            name='estado'
+            onChange={handleChange}
+            className="select-actualizar-tarea"
+          >
+            <option value='Sin completar'>Sin completar</option>
+            <option value='Completa'>Completa</option>
+          </select>
+        </div>
+        <div className="form-group-actualizar-tarea">
+          <label className="label-actualizar-tarea">Fecha Limite:</label>
+          <input
+            type='date'
+            placeholder='Nueva fecha límite de la tarea'
+            value={tarea.fecha_limite}
+            name='fecha_limite'
+            onChange={handleChange}
+            className="input-actualizar-tarea"
+          />
+        </div>
+        <button type='submit' className="button-actualizar-tarea">Actualizar Tarea</button>
+      </form>
+      {error && <div className='error-actualizar-tarea'>{error}</div>}
     </div>
-    <div className="form-group-actualizar-tarea">
-      <label className="label-actualizar-tarea">Descripción:</label>
-      <textarea
-        placeholder='Nueva descripción de la tarea'
-        value={tarea.descripcion}
-        name='descripcion'
-        onChange={handleChange}
-        className="textarea-actualizar-tarea"
-      ></textarea>
-    </div>
-    <div className="form-group-actualizar-tarea">
-      <label className="label-actualizar-tarea">Estado:</label>
-      <select
-        value={tarea.estado}
-        name='estado'
-        onChange={handleChange}
-        className="select-actualizar-tarea"
-      >
-        <option value='Sin completar'>Sin completar</option>
-        <option value='Completa'>Completa</option>
-      </select>
-    </div>
-    <div className="form-group-actualizar-tarea">
-      <label className="label-actualizar-tarea">Fecha Limite:</label>
-      <input
-        type='date'
-        placeholder='Nueva fecha límite de la tarea'
-        value={tarea.fecha_limite}
-        name='fecha_limite'
-        onChange={handleChange}
-        className="input-actualizar-tarea"
-      />
-    </div>
-    <div className="form-group-actualizar-tarea">
-      <label className="label-actualizar-tarea">Nombre Proyecto:</label>
-      <input
-        type='text'
-        placeholder='Nuevo nombre del proyecto de la tarea'
-        value={tarea.proyecto_nombre}
-        name='proyecto_nombre'
-        onChange={handleChange}
-        className="input-actualizar-tarea"
-      />
-    </div>
-    <button type='submit' className="button-actualizar-tarea">Actualizar Tarea</button>
-  </form>
-  {error && <div className='error-actualizar-tarea'>{error}</div>}
-</div>
   );
 };
 

@@ -1,16 +1,24 @@
 import "./style/crearTareas.css"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 
 const CreateTask = () => {
+  const { proyectoNombre } = useParams(); // Obtener el nombre del proyecto desde la URL
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [estado, setEstado] = useState('Sin completar');
   const [fecha_limite, setFecha_limite] = useState('');
-  const [proyecto_nombre, setProyecto_nombreproyecto_nombre] = useState('');
+  const [proyecto_nombre, setProyecto_nombre] = useState(proyectoNombre || ''); // Usar el nombre del proyecto obtenido
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
+  useEffect(() => {
+    if (proyectoNombre) {
+      setProyecto_nombre(proyectoNombre); // Establecer el nombre del proyecto en el estado si está disponible
+    }
+  }, [proyectoNombre]);
 
   const handleCreateTask = async () => {
     if (!nombre.trim() || !descripcion.trim() || !fecha_limite.trim() || !proyecto_nombre.trim()) {
@@ -48,7 +56,7 @@ const CreateTask = () => {
         setDescripcion('');
         setEstado('Sin completar');
         setFecha_limite('');
-        setProyecto_nombreproyecto_nombre('');
+        setProyecto_nombre(proyectoNombre || ''); // Mantener el nombre del proyecto al restablecer
       } else {
         setError(response.data.resultado || 'Error al crear tarea');
         setSuccess('');
@@ -96,8 +104,9 @@ const CreateTask = () => {
           type='text'
           placeholder='Nombre Proyecto'
           value={proyecto_nombre}
-          onChange={(e) => setProyecto_nombreproyecto_nombre(e.target.value)}
+          onChange={(e) => setProyecto_nombre(e.target.value)}
           className='input-proyecto-nombre-tarea'
+          readOnly // Hacer que el campo sea de solo lectura
         />
       </div>
       <button onClick={handleCreateTask} className='button-crear-tarea'>Crear Tarea</button>

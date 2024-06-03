@@ -39,6 +39,9 @@ const ShowTasks = () => {
 
   const handleChange = (event) => {
     setBusqueda(event.target.value);
+    if (event.target.value.trim() === '') {
+      mostrarTareas();
+    }
   };
 
   const handleSubmit = (event) => {

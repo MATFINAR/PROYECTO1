@@ -62,6 +62,10 @@ const ShowProjects = () => {
   const handleChange = (event) => {
     setBusqueda(event.target.value);
     setError(''); // Clear error state when user types
+
+    if (event.target.value.trim() === '') {
+      mostrarProyectos();
+    }
   };
 
   const handleSubmit = (event) => {
@@ -102,7 +106,7 @@ const ShowProjects = () => {
         <button type="submit" className="search-button">Buscar</button>
       </form>
 
-      {error && <p className="error-message">{error}</p>} {/* Display error message */}
+      {error && <p className="error-message">{error}</p>}
 
       <div className="cards-container">
         {proyectos.map((proyecto) => (

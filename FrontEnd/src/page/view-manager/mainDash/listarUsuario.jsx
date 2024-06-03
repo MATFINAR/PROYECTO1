@@ -28,6 +28,7 @@ const ShowUsers = () => {
         },
       });
       setUsuarios(response.data);
+      setError(''); // Clear error state when users are successfully fetched
     } catch (error) {
       console.error('Error al obtener usuarios:', error);
       setError('Error al obtener usuarios');
@@ -48,8 +49,13 @@ const ShowUsers = () => {
         },
       });
 
-      setUsuarios(response.data);
-    
+      if (response.data.length === 0) {
+        setError('Usuario no encontrado');
+        setUsuarios([]);
+      } else {
+        setUsuarios(response.data);
+        setError('');
+      }
     } catch (error) {
       console.error('Error al buscar usuario:', error);
       setError('Usuario no encontrado');
@@ -59,6 +65,10 @@ const ShowUsers = () => {
   const handleChange = (event) => {
     setBusqueda(event.target.value);
     setError(''); // Clear error when user types
+
+    if (event.target.value.trim() === '') {
+      mostrarUsuarios();
+    }
   };
 
   const handleSubmit = (event) => {
