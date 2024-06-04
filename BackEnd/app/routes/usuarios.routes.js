@@ -1,18 +1,18 @@
 import { Router } from "express";
 import { loginUser, UserList, getUser, postUser, putUser, putRolle, deleteUser, deleteMyUser, getExistUser } from "../controllers/usuarios.controllers.js";
 import { validarPermiso } from "../middlewares/usuarios.middlewares.js";
-const routerUser = Router();
+const routerUsers = Router();
 
-routerUser.post("/login", loginUser);
+routerUsers.post("/login", loginUser);
 
-routerUser.get("/usuarios", validarPermiso, UserList);
-routerUser.get("/usuario/:nombre", validarPermiso, getUser);
-routerUser.get("/usuario/existe", validarPermiso, getExistUser)
-routerUser.post("/usuario", postUser);
-routerUser.put("/usuario", validarPermiso, putUser);
-routerUser.put("/usuario/rol", validarPermiso,putRolle);
-routerUser.delete("/usuario/:usuario_id", validarPermiso, deleteUser);
-routerUser.delete("/usuario", validarPermiso, deleteMyUser);
+routerUsers.get("/usuarios", validarPermiso, UserList);
+routerUsers.get("/usuario/:nombre", validarPermiso, getUser);
+routerUsers.get("/usuario/existe", validarPermiso, getExistUser)
+routerUsers.post("/usuario", postUser);
+routerUsers.put("/usuario", validarPermiso, putUser);
+routerUsers.put("/usuario/rol", validarPermiso,putRolle);
+routerUsers.delete("/usuario/:usuario_id", validarPermiso, deleteUser);
+routerUsers.delete("/usuario", validarPermiso, deleteMyUser);
 
 
-export default routerUser;
+export default routerUsers;

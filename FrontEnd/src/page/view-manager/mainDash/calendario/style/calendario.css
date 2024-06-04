@@ -63,7 +63,14 @@
   background-color: #444444;
   border: 1px solid #d4af37;
   color: #d4af37;
-  padding: 5px;
+  padding: 1px 10px;
+}
+
+.rbc-event.meeting {
+  background-color: lightgreen;
+  color: black;
+  border: 1px solid lightgreen;
+  padding: 1px 1px;
 }
 
 .rbc-event:hover {
@@ -73,4 +80,10 @@
 .rbc-selected {
   background-color: #666666;
   color: #d4af37;
+}
+
+.rbc-event.task {
+  background-color: lightblue;
+  color: black;
+  border: 1px solid lightblue;
 }

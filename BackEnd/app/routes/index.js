@@ -5,21 +5,20 @@ import cookieParser from 'cookie-parser';
 /**
  * !Importaciones de las rutas de los Usuarios
  */
-import routerUser from './usuarios.routes.js';
+import routerUsers from './usuarios.routes.js';
 import routerProjects from './proyectos.routes.js';
-import routerTareas from './tareas.routes.js';
-import routerAsignaciones from './asignaciones.routes.js';
-import routerToken from './token.routes.js';
+import routerTasks from './tareas.routes.js';
+import routerMeeting from './reuniones.routes.js';
 
 const app = express();
 const route = Router(); // Crea una instancia de Router
 
 // Configura cookie-parser
 app.use(cookieParser());
-route.use("/api", routerTareas)
-route.use("/api", routerUser);
+
+route.use("/api", routerTasks)
+route.use("/api", routerUsers);
 route.use("/api", routerProjects);
-route.use("/api", routerAsignaciones);
-route.use("/api", routerToken)
+route.use("/api", routerMeeting)
 
 export default route;
