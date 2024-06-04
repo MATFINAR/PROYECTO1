@@ -9,6 +9,6 @@ routerMeeting.get("/meetings", validarPermiso, showReuniones);
 routerMeeting.get("/meeting/:nombre", validarPermiso, getReunion);
 routerMeeting.post("/meeting", validarPermiso, postReunion);
 routerMeeting.put("/meeting", validarPermiso, putReunion);
-routerMeeting.delete("/meeting/:nombre", validarPermiso, delReunion);
+routerMeeting.delete("/meeting/:reunion_id", validarPermiso, delReunion);
 
 export default routerMeeting;

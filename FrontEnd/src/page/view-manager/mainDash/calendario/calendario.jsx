@@ -13,66 +13,63 @@ const TareasCalendar = () => {
   const [reuniones, setReuniones] = useState([]);
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    const fetchTareas = async () => {
-      const token = Cookies.get('token');
-      if (!token) {
-        setMessage('Token no disponible');
-        console.error('Token no disponible');
-        return;
-      }
-      try {
-        const response = await axios.get('http://localhost:666/api/tasks', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        const tasks = response.data.map(task => ({
-          id: task.tarea_id,
-          title: task.nombre,
-          start: new Date(task.fecha_limite),
-          end: new Date(task.fecha_limite),
-          allDay: true,
-          type: 'task' // Agregar un atributo 'type' para identificar las tareas
-        }));
-        setTareas(tasks);
-      } catch (error) {
-        setMessage('Error al obtener las tareas');
-        console.error('Error fetching tasks:', error);
-      }
-    };
+  const fetchTareas = async () => {
+    const token = Cookies.get('token');
+    if (!token) {
+      setMessage('Token no disponible');
+      console.error('Token no disponible');
+      return;
+    }
+    try {
+      const response = await axios.get('http://localhost:666/api/tasks', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      const tasks = response.data.map(task => ({
+        id: task.tarea_id,
+        title: task.nombre,
+        start: new Date(task.fecha_limite),
+        end: new Date(task.fecha_limite),
+        allDay: true,
+        type: 'task' // Agregar un atributo 'type' para identificar las tareas
+      }));
+      setTareas(tasks);
+    } catch (error) {
+      setMessage('Error al obtener las tareas');
+      console.error('Error fetching tasks:', error);
+    }
+  };
 
+  const fetchReuniones = async () => {
+    const token = Cookies.get('token');
+    if (!token) {
+      setMessage('Token no disponible');
+      console.error('Token no disponible');
+      return;
+    }
+    try {
+      const response = await axios.get('http://localhost:666/api/meetings', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      const reuniones = response.data.map(reunion => ({
+        id: reunion.reunion_id,
+        title: reunion.nombre,
+        start: new Date(reunion.fecha_inicio),
+        end: new Date(reunion.fecha_fin),
+        type: 'meeting' // Agregar un atributo 'type' para identificar las reuniones
+      }));
+      setReuniones(reuniones);
+    } catch (error) {
+      setMessage('Error al obtener las reuniones');
+      console.error('Error fetching reuniones:', error);
+    }
+  };
+
+  useEffect(() => {
     fetchTareas();
-  }, []);
-
-  useEffect(() => {
-    const fetchReuniones = async () => {
-      const token = Cookies.get('token');
-      if (!token) {
-        setMessage('Token no disponible');
-        console.error('Token no disponible');
-        return;
-      }
-      try {
-        const response = await axios.get('http://localhost:666/api/meetings', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        const reuniones = response.data.map(reunion => ({
-          id: reunion.reunion_id,
-          title: reunion.nombre,
-          start: new Date(reunion.fecha_inicio),
-          end: new Date(reunion.fecha_fin),
-          type: 'meeting' // Agregar un atributo 'type' para identificar las reuniones
-        }));
-        setReuniones(reuniones);
-      } catch (error) {
-        setMessage('Error al obtener las reuniones');
-        console.error('Error fetching reuniones:', error);
-      }
-    };
-
     fetchReuniones();
   }, []);
 
@@ -94,6 +91,8 @@ const TareasCalendar = () => {
         }
       });
       setMessage('Reunión creada exitosamente');
+      // Actualiza las reuniones después de crear una nueva
+      fetchReuniones();
     } catch (error) {
       setMessage('Error al crear la reunión');
       console.error('Error creating meeting:', error);
@@ -101,16 +100,19 @@ const TareasCalendar = () => {
   };
 
   const handleDelete = async (event) => {
+    if (event.type !== 'meeting') return; // Solo elimina reuniones
     const confirmDelete = window.confirm(`¿Está seguro de eliminar la reunión "${event.title}"?`);
     if (!confirmDelete) return;
     const token = Cookies.get('token');
     try {
-      await axios.delete(`http://localhost:666/api/meeting/${event.title}`, {
+      await axios.delete(`http://localhost:666/api/meeting/${event.id}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
       setMessage('Reunión eliminada exitosamente');
+      // Actualiza las reuniones después de eliminar una
+      fetchReuniones();
     } catch (error) {
       setMessage('Error al eliminar la reunión');
       console.error('Error deleting meeting:', error);
@@ -149,11 +151,11 @@ const TareasCalendar = () => {
         onSelectSlot={handleSelect}
         onSelectEvent={handleDelete}
         components={{
-        event: EventComponent // Usar el componente personalizado para renderizar los eventos
+          event: EventComponent // Usar el componente personalizado para renderizar los eventos
         }}
       />
     </div>
   );
 };
-        
+
 export default TareasCalendar;
