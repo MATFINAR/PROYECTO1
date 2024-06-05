@@ -1,5 +1,5 @@
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import './style/calendario.css'; // Asegúrate de importar tu archivo CSS personalizado
+import './style/calendario.css';
 import React, { useEffect, useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
@@ -45,7 +45,7 @@ const Calendario = () => {
         start: new Date(task.fecha_limite),
         end: new Date(task.fecha_limite),
         allDay: true,
-        type: 'task' // Agregar un atributo 'type' para identificar las tareas
+        type: 'task'
       }));
       setTareas(tasks);
     } catch (error) {
@@ -68,12 +68,12 @@ const Calendario = () => {
         }
       });
       const reuniones = response.data.map(reunion => ({
-        id: reunion.reunion_id,
+        id: reunion.id,
         title: reunion.nombre,
         start: new Date(reunion.fecha_inicio),
         end: new Date(reunion.fecha_fin),
-        descripcion: reunion.descripcion, // Incluir la descripción
-        type: 'meeting' // Agregar un atributo 'type' para identificar las reuniones
+        descripcion: reunion.descripcion,
+        type: 'meeting'
       }));
       setReuniones(reuniones);
     } catch (error) {
@@ -110,7 +110,7 @@ const Calendario = () => {
     try {
       if (isEdit) {
         await axios.put('http://localhost:666/api/meeting', {
-          reunion_id: newMeeting.id,
+          id: newMeeting.id,
           nombre: newMeeting.title,
           descripcion: newMeeting.descripcion,
           fecha_inicio: moment(newMeeting.start).format('YYYY-MM-DD HH:mm:ss'),
@@ -135,7 +135,7 @@ const Calendario = () => {
         setMessage('Reunión creada exitosamente');
       }
       fetchReuniones();
-      closeModal(); // Cierra el modal al confirmar la creación o edición
+      closeModal();
     } catch (error) {
       setMessage('Error al crear/editar la reunión');
       console.error('Error creating/editing meeting:', error);
@@ -143,7 +143,13 @@ const Calendario = () => {
   };
 
   const handleDelete = () => {
+    if (!selectedMeeting) {
+      console.error('selectedMeeting is null');
+      return;
+    }
+  
     const { id, title } = selectedMeeting;
+  
     setConfirmationMessage(`¿Está seguro de eliminar la reunión "${title}"?`);
     setConfirmationCallback(async () => {
       const token = Cookies.get('token');
@@ -163,7 +169,7 @@ const Calendario = () => {
     });
     setIsConfirmationOpen(true); // Abre el modal de confirmación
   };
-
+      
   const handleEdit = (event) => {
     setIsEdit(true);
     const { id, title, descripcion, start, end } = event;
@@ -176,12 +182,12 @@ const Calendario = () => {
     });
     setModalIsOpen(true);
   };
-  
+
   const handleSelectEvent = (event) => {
-    if (event.type !== 'meeting') return; // Solo abre el modal para reuniones
-    handleEdit(event); // Llama a la función handleEdit en lugar de setSelectedMeeting
+    if (event.type !== 'meeting') return;
+    handleEdit(event);
   };
-  
+
   const closeModal = () => {
     setModalIsOpen(false);
     setSelectedMeeting(null);
@@ -214,11 +220,12 @@ const Calendario = () => {
       padding: '1px 10px', // Ajustar el padding para que sea más visible
       cursor: 'pointer'
     };
-  
-  
-    return (
-      <div style={eventStyle} onClick={() => handleEdit(event)}>
-        {event.title}
+
+    const eventTitle = event.title || ''; 
+
+      return (
+        <div style={eventStyle} onClick={() => handleEdit(event)}>
+        {eventTitle}
       </div>
     );
   };
@@ -227,88 +234,90 @@ const Calendario = () => {
     <div>
       {message && <p>{message}</p>}
       <Calendar
-  localizer={localizer}
-  events={[...tareas, ...reuniones]}
-  startAccessor="start"
-  endAccessor="end"
-  style={{ minHeight: 440, position: 'relative', zIndex: 999 }} // Asegura que el calendario esté detrás del modal
-  views={['month', 'week', 'day']}
-  step={15}
-  selectable
-  onSelectSlot={handleSelect}
-  onSelectEvent={handleSelectEvent}
-  components={{
-    event: EventComponent
-  }}
-/>
-<Modal
-  isOpen={modalIsOpen}
-  onRequestClose={closeModal}
-  contentLabel="Detalles de la reunión"
-  ariaHideApp={false}
-  style={{
-    overlay: {
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      zIndex: 1000
-    },
-    content: {
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      transform: 'translate(-50%, -50%)',
-      backgroundColor: '#333',
-      color: '#d4af37',
-      borderRadius: '10px',
-      padding: '20px',
-      zIndex: 1001
-    }
-  }}
->
-  <h2 style={{ color: '#d4af37', textAlign: 'center', marginBottom: '20px' }}>{isEdit ? 'Editar Reunión' : 'Crear Reunión'}</h2>
-  <form onSubmit={handleCreateOrEdit} style={{ display: 'flex', flexDirection: 'column' }}>
-    <label htmlFor="title" style={{ color: '#d4af37', marginBottom: '10px' }}>Título:</label>
-    <input
-      type="text"
-      id="title"
-      value={newMeeting.title}
-      onChange={(e) => setNewMeeting({ ...newMeeting, title: e.target.value })}
-      required
-      style={{ marginBottom: '10px', padding: '5px', borderRadius: '5px', border: '1px solid #d4af37', backgroundColor: '#444' }}
-    />
-    <label htmlFor="descripcion" style={{ color: '#d4af37', marginBottom: '10px' }}>Descripción:</label>
-    <textarea
-      id="descripcion"
-      value={newMeeting.descripcion}
-      onChange={(e) => setNewMeeting({ ...newMeeting, descripcion: e.target.value })}
-      required
-      style={{ marginBottom: '10px', padding: '5px', borderRadius: '5px', border: '1px solid #d4af37', backgroundColor: '#444' }}
-    />
-    <label htmlFor="start" style={{ color: '#d4af37', marginBottom: '10px' }}>Inicio:</label>
-    <input
-      type="datetime-local"
-      id="start"
-      value={newMeeting.start ? moment(newMeeting.start).format('YYYY-MM-DDTHH:mm') : ''}
-      onChange={(e) => setNewMeeting({ ...newMeeting, start: e.target.value })}
-      required
-      style={{ marginBottom: '10px', padding: '5px', borderRadius: '5px', border: '1px solid #d4af37', backgroundColor: '#444' }}
-    />
-    <label htmlFor="end" style={{ color: '#d4af37', marginBottom: '10px' }}>Fin:</label>
-    <input
-      type="datetime-local"
-      id="end"
-      value={newMeeting.end ? moment(newMeeting.end).format('YYYY-MM-DDTHH:mm') : ''}
-      onChange={(e) => setNewMeeting({ ...newMeeting, end: e.target.value })}
-      required
-      style={{ marginBottom: '10px', padding: '5px', borderRadius: '5px', border: '1px solid #d4af37', backgroundColor: '#444' }}
-    />
-    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-      <button type="submit" style={{ padding: '5px', borderRadius: '5px', border: 'none', backgroundColor: '#d4af37', color: '#333', cursor: 'pointer' }}>{isEdit ? 'Guardar Cambios' : 'Crear'}</button>
-      <button type="button" onClick={closeModal} style={{ padding: '5px', borderRadius: '5px', border: 'none', backgroundColor: '#d4af37', color: '#333', cursor: 'pointer' }}>Cancelar</button>
-    </div>
-  </form>
-</Modal>      <Modal
+        localizer={localizer}
+        events={[...tareas, ...reuniones]}
+        startAccessor="start"
+        endAccessor="end"
+        style={{ minHeight: 440, position: 'relative', zIndex: 999 }}
+        views={['month', 'week', 'day']}
+        step={15}
+        selectable
+        onSelectSlot={handleSelect}
+        onSelectEvent={handleSelectEvent}
+        components={{
+          event: EventComponent
+        }}
+      />
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Detalles de la reunión"
+        ariaHideApp={false}
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            zIndex: 1000
+          },
+          content: {
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            transform: 'translate(-50%, -50%)',
+            backgroundColor: '#333',
+            color: '#d4af37',
+            borderRadius: '10px',
+            padding: '20px',
+            zIndex: 1001
+          }
+        }}
+      >
+        <h2 style={{ color: '#d4af37', textAlign: 'center', marginBottom: '20px' }}>{isEdit ? 'Editar Reunión' : 'Crear Reunión'}</h2>
+        <form onSubmit={handleCreateOrEdit} style={{ display: 'flex', flexDirection: 'column' }}>
+          <label htmlFor="title" style={{ color: '#d4af37', marginBottom: '10px' }}>Título:</label>
+          <input
+            type="text"
+            id="title"
+            value={newMeeting.title}
+            onChange={(e) => setNewMeeting({ ...newMeeting, title: e.target.value })}
+            required
+            style={{ marginBottom: '10px', padding: '5px', borderRadius: '5px', border: '1px solid #d4af37', backgroundColor: '#444' }}
+          />
+          <label htmlFor="descripcion" style={{ color: '#d4af37', marginBottom: '10px' }}>Descripción:</label>
+          <textarea
+            id="descripcion"
+            value={newMeeting.descripcion}
+            onChange={(e) => setNewMeeting({ ...newMeeting, descripcion: e.target.value })}
+            required
+            style={{ marginBottom: '10px', padding: '5px', borderRadius: '5px', border: '1px solid #d4af37', backgroundColor: '#444' }}
+          />
+          <label htmlFor="start" style={{ color: '#d4af37', marginBottom: '10px' }}>Inicio:</label>
+          <input
+            type="datetime-local"
+            id="start"
+            value={newMeeting.start ? moment(newMeeting.start).format('YYYY-MM-DDTHH:mm') : ''}
+            onChange={(e) => setNewMeeting({ ...newMeeting, start: e.target.value })}
+            required
+            style={{ marginBottom: '10px', padding: '5px', borderRadius: '5px', border: '1px solid #d4af37', backgroundColor: '#444' }}
+          />
+          <label htmlFor="end" style={{ color: '#d4af37', marginBottom: '10px' }}>Fin:</label>
+          <input
+            type="datetime-local"
+            id="end"
+            value={newMeeting.end ? moment(newMeeting.end).format('YYYY-MM-DDTHH:mm') : ''}
+            onChange={(e) => setNewMeeting({ ...newMeeting, end: e.target.value })}
+            required
+            style={{ marginBottom: '10px', padding: '5px', borderRadius: '5px', border: '1px solid #d4af37', backgroundColor: '#444' }}
+          />
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <button type="submit" style={{ padding: '5px', borderRadius: '5px', border: 'none', backgroundColor: '#d4af37', color: '#333', cursor: 'pointer' }}>{isEdit ? 'Guardar Cambios' : 'Crear'}</button>
+            <button type="button" onClick={closeModal} style={{ padding: '5px', borderRadius: '5px', border: 'none', backgroundColor: '#d4af37', color: '#333', cursor: 'pointer' }}>Cancelar</button>
+            {isEdit && <button type="button" onClick={handleDelete} style={{ padding: '5px', borderRadius: '5px', border: 'none', backgroundColor: '#d4af37', color: '#333', cursor: 'pointer' }}>Eliminar</button>}
+          </div>
+        </form>
+      </Modal>
+      <Modal
         isOpen={isConfirmationOpen}
         onRequestClose={() => setIsConfirmationOpen(false)}
         contentLabel="Confirmación"
