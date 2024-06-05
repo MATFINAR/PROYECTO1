@@ -1,5 +1,5 @@
 import React from 'react';
-import Calendario from './calendario/calendario';
+import Calendario from './calendario';
 
 function MostrarCalendario() {
 
