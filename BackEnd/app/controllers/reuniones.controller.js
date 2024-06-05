@@ -41,7 +41,8 @@ export const postReunion = async (req, res) => {
 };
 
 export const putReunion = async (req, res) => {
-  const { nombre, descripcion, fecha_inicio, fecha_fin, reunion_id } = req.body;
+  const { reunion_id } = req.params;
+  const { nombre, descripcion, fecha_inicio, fecha_fin } = req.body;
 
   try {
     const resultado = await pool.query(

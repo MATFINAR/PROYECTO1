@@ -68,7 +68,7 @@ const Calendario = () => {
         }
       });
       const reuniones = response.data.map(reunion => ({
-        id: reunion.id,
+        id: reunion.reunion_id,
         title: reunion.nombre,
         start: new Date(reunion.fecha_inicio),
         end: new Date(reunion.fecha_fin),
@@ -108,9 +108,9 @@ const Calendario = () => {
     e.preventDefault();
     const token = Cookies.get('token');
     try {
+      let resultado;
       if (isEdit) {
-        await axios.put('http://localhost:666/api/meeting', {
-          id: newMeeting.id,
+        resultado = await axios.put(`http://localhost:666/api/meeting/${newMeeting.id}`, {
           nombre: newMeeting.title,
           descripcion: newMeeting.descripcion,
           fecha_inicio: moment(newMeeting.start).format('YYYY-MM-DD HH:mm:ss'),
@@ -122,7 +122,7 @@ const Calendario = () => {
         });
         setMessage('Reunión editada exitosamente');
       } else {
-        await axios.post('http://localhost:666/api/meeting', {
+        resultado = await axios.post('http://localhost:666/api/meeting', {
           nombre: newMeeting.title,
           descripcion: newMeeting.descripcion,
           fecha_inicio: moment(newMeeting.start).format('YYYY-MM-DD HH:mm:ss'),
@@ -134,14 +134,18 @@ const Calendario = () => {
         });
         setMessage('Reunión creada exitosamente');
       }
-      fetchReuniones();
-      closeModal();
+      if (resultado.data.resultado === 'Reunión actualizada exitosamente' || resultado.data.resultado === 'Reunión creada exitosamente') {
+        fetchReuniones();
+        closeModal();
+      } else {
+        setMessage('Error al crear/editar la reunión');
+      }
     } catch (error) {
       setMessage('Error al crear/editar la reunión');
       console.error('Error creating/editing meeting:', error);
     }
   };
-
+    
   const handleDelete = () => {
     if (!selectedMeeting) {
       console.error('selectedMeeting is null');
@@ -171,6 +175,7 @@ const Calendario = () => {
   };
       
   const handleEdit = (event) => {
+    if (event.type !== 'meeting') return;
     setIsEdit(true);
     const { id, title, descripcion, start, end } = event;
     setNewMeeting({
@@ -182,12 +187,13 @@ const Calendario = () => {
     });
     setModalIsOpen(true);
   };
-
+  
   const handleSelectEvent = (event) => {
     if (event.type !== 'meeting') return;
+    setSelectedMeeting(event); // Set selectedMeeting here
     handleEdit(event);
   };
-
+  
   const closeModal = () => {
     setModalIsOpen(false);
     setSelectedMeeting(null);
