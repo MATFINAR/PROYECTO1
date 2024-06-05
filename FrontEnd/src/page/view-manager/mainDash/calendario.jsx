@@ -145,17 +145,16 @@ const Calendario = () => {
       console.error('Error creating/editing meeting:', error);
     }
   };
-    
-  const handleDelete = () => {
+
+  const handleDelete = (event) => {
     if (!selectedMeeting) {
       console.error('selectedMeeting is null');
       return;
     }
-  
+
     const { id, title } = selectedMeeting;
-  
-    setConfirmationMessage(`¿Está seguro de eliminar la reunión "${title}"?`);
-    setConfirmationCallback(async () => {
+
+    openConfirmation(`¿Está seguro de eliminar la reunión "${title}"?`, async () => {
       const token = Cookies.get('token');
       try {
         await axios.delete(`http://localhost:666/api/meeting/${id}`, {
@@ -171,9 +170,17 @@ const Calendario = () => {
         console.error('Error deleting meeting:', error);
       }
     });
-    setIsConfirmationOpen(true); // Abre el modal de confirmación
   };
-      
+
+  const handleCancelDelete = () => {
+    setIsConfirmationOpen(false);
+  };
+
+  const handleConfirmDelete = () => {
+    if (confirmationCallback) confirmationCallback();
+    setIsConfirmationOpen(false);
+  };
+
   const handleEdit = (event) => {
     if (event.type !== 'meeting') return;
     setIsEdit(true);
@@ -187,13 +194,13 @@ const Calendario = () => {
     });
     setModalIsOpen(true);
   };
-  
+
   const handleSelectEvent = (event) => {
     if (event.type !== 'meeting') return;
     setSelectedMeeting(event); // Set selectedMeeting here
     handleEdit(event);
   };
-  
+
   const closeModal = () => {
     setModalIsOpen(false);
     setSelectedMeeting(null);
@@ -207,11 +214,13 @@ const Calendario = () => {
 
   const ConfirmationCard = ({ message, onConfirm, onCancel }) => {
     return (
-      <div className="confirmation-card">
-        <div className="confirmation-message">{message}</div>
-        <div className="confirmation-buttons">
-          <button className="confirm-button" onClick={onConfirm}>Confirmar</button>
-          <button className="cancel-button" onClick={onCancel}>Cancelar</button>
+      <div className="confirmation-overlay">
+        <div className="confirmation-card">
+          <div className="confirmation-message">{message}</div>
+          <div className="confirmation-buttons">
+            <button className="confirm-button" onClick={onConfirm}>Confirmar</button>
+            <button className="cancel-button" onClick={onCancel}>Cancelar</button>
+          </div>
         </div>
       </div>
     );
@@ -227,15 +236,15 @@ const Calendario = () => {
       cursor: 'pointer'
     };
 
-    const eventTitle = event.title || ''; 
+    const eventTitle = event.title || '';
 
-      return (
-        <div style={eventStyle} onClick={() => handleEdit(event)}>
+    return (
+      <div style={eventStyle} onClick={() => handleDelete(event)}>
         {eventTitle}
       </div>
     );
   };
-  
+
   return (
     <div>
       {message && <p>{message}</p>}
@@ -323,36 +332,13 @@ const Calendario = () => {
           </div>
         </form>
       </Modal>
-      <Modal
-        isOpen={isConfirmationOpen}
-        onRequestClose={() => setIsConfirmationOpen(false)}
-        contentLabel="Confirmación"
-        ariaHideApp={false}
-        style={{
-          content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)',
-            backgroundColor: '#333',
-            color: '#d4af37',
-            borderRadius: '10px',
-            padding: '20px',
-            width: '300px'
-          }
-        }}
-      >
+      {isConfirmationOpen && (
         <ConfirmationCard
           message={confirmationMessage}
-          onConfirm={() => {
-            if (confirmationCallback) confirmationCallback();
-            setIsConfirmationOpen(false);
-          }}
-          onCancel={() => setIsConfirmationOpen(false)}
+          onConfirm={handleConfirmDelete}
+          onCancel={handleCancelDelete}
         />
-      </Modal>
+      )}
     </div>
   );
 };

@@ -88,3 +88,46 @@
   background-color: #666666;
   color: #d4af37;
 }
+.confirmation-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.confirmation-card {
+  background-color: #333;
+  color: #d4af37;
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+}
+
+.confirmation-message {
+  margin-bottom: 10px;
+}
+
+.confirmation-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.confirm-button,
+.cancel-button {
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  background-color: #d4af37;
+  color: #333;
+  cursor: pointer;
+}
+
+.cancel-button {
+  margin-left: 10px;
+}
