@@ -67,10 +67,10 @@
 }
 
 .rbc-event.meeting {
-  background-color: lightgreen;
-  color: black;
-  border: 1px solid lightgreen;
-  padding: 1px 1px;
+  background-color: #006400;
+  color: #d4af37;
+  border: 1px solid #d4af37;
+  padding: 1px 10px;
 }
 
 .rbc-event:hover {
@@ -83,7 +83,92 @@
 }
 
 .rbc-event.task {
-  background-color: lightblue;
-  color: black;
-  border: 1px solid lightblue;
+  background-color: #1e90ff;
+  color: #d4af37;
+  border: 1px solid #d4af37;
+}
+
+/* Estilos para el modal */
+.ReactModal__Overlay {
+  background-color: rgba(0, 0, 0, 0.75) !important;
+  z-index: 1000 !important; /* Asegúrate de que el overlay esté en la parte superior */
+}
+
+.ReactModal__Content {
+  background-color: #1c1c1c !important;
+  border: 1px solid #d4af37 !important;
+  border-radius: 10px !important;
+  color: #d4af37 !important;
+  padding: 20px !important;
+  width: 400px !important;
+  max-width: 90% !important;
+  margin: auto !important;
+  z-index: 1001 !important; /* Asegúrate de que el contenido del modal esté en la parte superior */
+}
+
+.ReactModal__Content h2 {
+  border-bottom: 1px solid #d4af37;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+.ReactModal__Content p {
+  margin: 10px 0;
+}
+
+.ReactModal__Content button {
+  background-color: #444444;
+  border: 1px solid #d4af37;
+  color: #d4af37;
+  padding: 10px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.ReactModal__Content button:hover {
+  background-color: #555555;
+}
+
+.ReactModal__Content button:focus {
+  outline: none;
+  background-color: #666666;
+}
+.confirmation-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #1c1c1c;
+  border: 1px solid #d4af37;
+  border-radius: 10px;
+  padding: 20px;
+  color: #d4af37;
+  z-index: 1000; /* Asegúrate de que la tarjeta esté en la parte superior */
+}
+
+.confirmation-message {
+  margin-bottom: 20px;
+}
+
+.confirmation-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.confirm-button, .cancel-button {
+  background-color: #444444;
+  border: 1px solid #d4af37;
+  color: #d4af37;
+  padding: 10px 20px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.confirm-button:hover, .cancel-button:hover {
+  background-color: #555555;
+}
+
+.confirm-button:focus, .cancel-button:focus {
+  outline: none;
+  background-color: #666666;
 }

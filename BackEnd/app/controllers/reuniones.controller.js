@@ -19,25 +19,14 @@ export const showReuniones = async (req, res) => {
   }
 };
 
-export const getReunion = async (req, res) => {
-  const { reunion_id } = req.params;
-
-  try {
-    const resultado = await pool.query('SELECT * FROM reuniones WHERE reunion_id = ?', [reunion_id]);
-    res.json(resultado[0]);
-  } catch (error) {
-    res.status(500).json({ error: error.message, type: 'Get' });
-  }
-};
-
 export const postReunion = async (req, res) => {
-  const { nombre, fecha_inicio, fecha_fin } = req.body;
+  const { nombre, descripcion, fecha_inicio, fecha_fin } = req.body;
   const date_create = getCurrentDateTime(); // Asegúrate de que esta función devuelva la fecha y hora actual en el formato adecuado
 
   try {
     const resultado = await pool.query(
-      'INSERT INTO reuniones (nombre, fecha_inicio, fecha_fin) VALUES (?, ?, ?)',
-      [nombre, fecha_inicio, fecha_fin]
+      'INSERT INTO reuniones (nombre, descripcion, fecha_inicio, fecha_fin) VALUES (?, ?, ?, ?)',
+      [nombre, descripcion, fecha_inicio, fecha_fin]
     );
 
     if (resultado[0].affectedRows > 0) {
@@ -52,16 +41,17 @@ export const postReunion = async (req, res) => {
 };
 
 export const putReunion = async (req, res) => {
-  const { nombre, fecha_inicio, fecha_fin, reunion_id } = req.body;
+  const { nombre, descripcion, fecha_inicio, fecha_fin, reunion_id } = req.body;
 
   try {
     const resultado = await pool.query(
       `UPDATE reuniones SET 
-      nombre = ?, 
+      nombre = ?,
+      descripcion =?,
       fecha_inicio = ?, 
       fecha_fin = ?
       WHERE reunion_id = ?`,
-      [nombre, fecha_inicio, fecha_fin, reunion_id]
+      [nombre, descripcion, fecha_inicio, fecha_fin, reunion_id]
     );
 
     if (resultado[0].affectedRows > 0) {
