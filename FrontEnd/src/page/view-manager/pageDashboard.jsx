@@ -58,19 +58,19 @@ function DashBoard() {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.altKey && event.key === 'w') {
-        toggleConfigMenu();
-      } else if (event.altKey && event.key === 'q') {
+      if (event.altKey && event.key === 'q') {
         handleLogout();
-      } else if (event.altKey && event.key === 'c'){
+      } else if (event.altKey && event.key === 'w') {
+        toggleConfigMenu();
+      } else if (event.altKey && event.key === 'a'){
         toggleTheme();
-      }else if (event.key === 'a') {
+      }else if (event.altKey && event.key === 's') {
         navigate("/dash-manager/calendario");
-      } else if (event.key === 's') {
+      } else if (event.altKey && event.key === 'z') {
         navigate("/dash-manager/listausuario");
-      } else if (event.key === 'z') {
+      } else if (event.altKey && event.key === 'x') {
         navigate("/dash-manager/asignarrol");
-      } else if (event.key === 'x') {
+      } else if (event.altKey && event.key === 'c') {
         navigate("/dash-manager/proyectos");
       }
     };
