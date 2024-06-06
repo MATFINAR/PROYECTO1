@@ -12,8 +12,18 @@ function DashBoard() {
   const [forceRerender, setForceRerender] = useState(false);
   const [activeOption, setActiveOption] = useState("");
   const [showConfigMenu, setShowConfigMenu] = useState(false);
-  const [showConfirmDelete, setShowConfirmDelete] = useState(false); // Estado para el mensaje de confirmación
-  const [countdown, setCountdown] = useState(900000); // Tiempo de espera inicial
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [countdown, setCountdown] = useState(900000);
+  const [theme, setTheme] = useState("dark-mode");
+
+  const toggleConfigMenu = () => {
+    setShowConfigMenu(!showConfigMenu);
+  };
+
+  const handleLogout = () => {
+    Cookies.remove('token');
+    navigate('/');
+  };
 
   useEffect(() => {
     const pathToTitleMap = {
@@ -29,7 +39,7 @@ function DashBoard() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCountdown(prevCountdown => prevCountdown - 1000); // Resta 1 segundo al contador cada vez que se ejecuta el intervalo
+      setCountdown(prevCountdown => prevCountdown - 1000);
     }, 1000);
 
     return () => clearInterval(interval);
@@ -37,27 +47,48 @@ function DashBoard() {
 
   useEffect(() => {
     if (countdown <= 0) {
-      Cookies.remove('token')
+      Cookies.remove('token');
       navigate('/');
     }
   }, [countdown, navigate]);
 
+  useEffect(() => {
+    document.body.className = theme;
+  }, [theme]);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.altKey && event.key === 'w') {
+        toggleConfigMenu();
+      } else if (event.altKey && event.key === 'q') {
+        handleLogout();
+      } else if (event.altKey && event.key === 'c'){
+        toggleTheme();
+      }else if (event.key === 'a') {
+        navigate("/dash-manager/calendario");
+      } else if (event.key === 's') {
+        navigate("/dash-manager/listausuario");
+      } else if (event.key === 'z') {
+        navigate("/dash-manager/asignarrol");
+      } else if (event.key === 'x') {
+        navigate("/dash-manager/proyectos");
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [toggleConfigMenu, handleLogout, navigate]);
+
   const handleOptionClick = (path) => {
     if (location.pathname === path) {
-      setForceRerender(!forceRerender); 
+      setForceRerender(!forceRerender);
     } else {
       navigate(path);
     }
   };
-
-  const toggleConfigMenu = () => {
-    setShowConfigMenu(!showConfigMenu); 
-  };
-
-  const handleLogout = () => {
-    Cookies.remove('token');
-    navigate('/');
-  };  
 
   const handleDeleteAccount = async () => {
     const token = Cookies.get('token');
@@ -86,6 +117,10 @@ function DashBoard() {
     }
   };
 
+  const toggleTheme = () => {
+    setTheme(theme === "dark-mode" ? "light-mode" : "dark-mode");
+  };
+
   return (
     <div className="content-dashboard">
       <div className="header-dashboard">
@@ -97,16 +132,19 @@ function DashBoard() {
             <div className="config-menu">
               <button className="go-out-menu-button" onClick={handleLogout}>Cerrar sesión</button>
               <button className="delete-menu-button" onClick={() => setShowConfirmDelete(true)}>Eliminar cuenta</button>
+              <button className="toggle-theme-button" onClick={toggleTheme}>
+                {theme === "dark-mode" ? 'Modo Claro' : 'Modo Oscuro'}
+              </button>
             </div>
           )}
         </div>
       </div>
       <div className="aside-dashboard">
         <div className="options-dashboard">
-          <button onClick={() => handleOptionClick("/dash-manager/calendario", "Calendario")}>Calendario</button>
-          <button onClick={() => handleOptionClick("/dash-manager/listausuario", "Lista usuario")}>Lista de usuario</button>
-          <button onClick={() => handleOptionClick("/dash-manager/asignarrol", "Asignar el rol")}>Asignar el rol</button>
-          <button onClick={() => handleOptionClick("/dash-manager/proyectos", "Proyectos")}>Proyectos</button>
+          <button onClick={() => handleOptionClick("/dash-manager/calendario")}>Calendario</button>
+          <button onClick={() => handleOptionClick("/dash-manager/listausuario")}>Lista de usuario</button>
+          <button onClick={() => handleOptionClick("/dash-manager/asignarrol")}>Asignar el rol</button>
+          <button onClick={() => handleOptionClick("/dash-manager/proyectos")}>Proyectos</button>
         </div>
       </div>
       <div className="main-dashboard">
