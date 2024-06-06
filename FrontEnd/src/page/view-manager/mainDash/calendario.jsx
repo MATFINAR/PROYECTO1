@@ -25,6 +25,9 @@ const Calendario = () => {
     end: null
   });
   const [isEdit, setIsEdit] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [updatedDate, setUpdatedDate] = useState(new Date());
+
 
   const fetchTareas = async () => {
     const token = Cookies.get('token');
@@ -229,10 +232,11 @@ const Calendario = () => {
   const EventComponent = ({ event }) => {
     const isTask = event.type === 'task';
     const eventStyle = {
+      minHeight: '5px',
       backgroundColor: isTask ? '#f0ad4e' : '#5bc0de',
       color: '#fff',
       borderRadius: '5px',
-      padding: '1px 10px', // Ajustar el padding para que sea más visible
+      padding: '0px 5px',
       cursor: 'pointer'
     };
 
@@ -245,15 +249,53 @@ const Calendario = () => {
     );
   };
 
+  const handleDateChange = (e) => {
+    const value = e.target.value;
+    // Validar que el valor no sea '0' y que sea una fecha válida
+    if (value !== '0' && isValidDate(value)) {
+      setSelectedDate(new Date(value));
+    }
+  };
+  
+  const isValidDate = (dateString) => {
+    const regEx = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dateString.match(regEx)) return false;  // Invalid format
+    const d = new Date(dateString);
+    if (Number.isNaN(d.getTime())) return false; // Invalid date
+    return d.toISOString().slice(0, 10) === dateString;
+  };
+
+  const handleUpdateCalendar = () => {
+    if (selectedDate !== '0') {
+      const newDate = new Date(selectedDate);
+      newDate.setDate(newDate.getDate() + 1);
+      setUpdatedDate(newDate);
+    }
+  };
+  
+  const handleNavigate = (date, view) => {
+    setUpdatedDate(date);
+  };
+  
+  
   return (
     <div>
       {message && <p>{message}</p>}
+      <input
+      type="date"
+      onChange={handleDateChange}
+      value={selectedDate.toISOString().split('T')[0]}
+      className="date-input"
+      min="1900-01-01" // Establecer un mínimo para evitar fechas anteriores a 1900
+    />
+    <button onClick={handleUpdateCalendar} className="update-button">Clic para ir a la fecha</button>
+
       <Calendar
         localizer={localizer}
         events={[...tareas, ...reuniones]}
         startAccessor="start"
         endAccessor="end"
-        style={{ minHeight: 420, position: 'relative', zIndex: 999 }}
+        style={{ minHeight: 390, position: 'relative', zIndex: 999 }}
         views={['month', 'week', 'day']}
         step={15}
         selectable
@@ -262,6 +304,8 @@ const Calendario = () => {
         components={{
           event: EventComponent
         }}
+        date={updatedDate}
+        onNavigate={handleNavigate}
       />
       <Modal
         isOpen={modalIsOpen}
