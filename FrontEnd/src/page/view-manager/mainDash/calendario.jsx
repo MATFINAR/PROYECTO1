@@ -253,7 +253,7 @@ const Calendario = () => {
         events={[...tareas, ...reuniones]}
         startAccessor="start"
         endAccessor="end"
-        style={{ minHeight: 440, position: 'relative', zIndex: 999 }}
+        style={{ minHeight: 420, position: 'relative', zIndex: 999 }}
         views={['month', 'week', 'day']}
         step={15}
         selectable
