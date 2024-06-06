@@ -121,11 +121,16 @@ function DashBoard() {
     setTheme(theme === "dark-mode" ? "light-mode" : "dark-mode");
   };
 
+  const toggleAside = () => {
+    const aside = document.querySelector(".aside-dashboard");
+    aside.classList.toggle("active");
+  };
+  
   return (
     <div className="content-dashboard">
       <div className="header-dashboard">
         <div className="logo1-dashboard"></div>
-        <div className="ubicacion-dashboard">{activeOption}</div>
+        <div className="ubicacion-dashboard" onClick={toggleAside}>{activeOption}</div>
         <div className="config-dashboard" onClick={toggleConfigMenu}>
           <DiAptana className="config-icon" />
           {showConfigMenu && (
@@ -139,7 +144,7 @@ function DashBoard() {
           )}
         </div>
       </div>
-      <div className="aside-dashboard">
+      <div className="aside-dashboard hidden">
         <div className="options-dashboard">
           <button onClick={() => handleOptionClick("/dash-manager/calendario")}>Calendario</button>
           <button onClick={() => handleOptionClick("/dash-manager/listausuario")}>Lista de usuario</button>

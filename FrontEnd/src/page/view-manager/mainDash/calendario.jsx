@@ -232,11 +232,12 @@ const Calendario = () => {
   const EventComponent = ({ event }) => {
     const isTask = event.type === 'task';
     const eventStyle = {
-      minHeight: '5px',
+      height: '12px',
+      fontSize: '13px' ,
       backgroundColor: isTask ? '#f0ad4e' : '#5bc0de',
       color: '#fff',
       borderRadius: '5px',
-      padding: '0px 5px',
+      padding: '0px',
       cursor: 'pointer'
     };
 

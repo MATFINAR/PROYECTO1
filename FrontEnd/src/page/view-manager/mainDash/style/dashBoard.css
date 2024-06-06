@@ -9,6 +9,7 @@ body, html {
   height: 100%;
 }
 
+
 /* Modo oscuro (por defecto) */
 .content-dashboard {
   display: flex;
@@ -47,6 +48,7 @@ body, html {
   color: gold;
   font-size: 3vw;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  cursor: pointer; /* Añade esta línea para que el cursor cambie a pointer al hacer hover */
 }
 
 .config-dashboard {
@@ -70,7 +72,7 @@ body, html {
   border-radius: 0.5vw;
   padding: 1vh 2vw;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  z-index: 1;
+  z-index: 9999; /* Incrementar z-index */
   display: flex;
   flex-direction: column;
 }
@@ -98,9 +100,14 @@ body, html {
   display: flex;
   justify-content: center;
   align-items: center;
+  display: none;
+  }
+  
+.aside-dashboard.active {
+  display: flex; /* Muestra el aside cuando tiene la clase active */
 }
 
-.options-dashboard {
+  .options-dashboard {
   width: 80%;
   height: 100%;
   display: grid;
