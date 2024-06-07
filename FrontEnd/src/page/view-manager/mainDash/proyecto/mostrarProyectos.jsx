@@ -12,7 +12,7 @@ const ShowProjects = () => {
   const [error, setError] = useState(''); 
   const [confirmacionVisible, setConfirmacionVisible] = useState(false); 
   const [proyectoAEliminar, setProyectoAEliminar] = useState(null); 
-  const [userRole, setUserRole] = useState(null); // Add state for user role
+  const [userRole, setUserRole] = useState(null); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -127,7 +127,7 @@ const ShowProjects = () => {
             <button className="task-button" onClick={() => mostrarTareasProyecto(proyecto.nombre)}>
               Tareas
             </button>
-            {userRole === 'Manager' && ( // Conditionally render the delete button
+            {userRole === 'Manager' && (
               <button className="delete-button" onClick={() => handleDelete(proyecto.nombre)}>
                 Eliminar
               </button>

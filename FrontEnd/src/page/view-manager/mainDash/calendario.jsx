@@ -167,7 +167,7 @@ const Calendario = () => {
         });
         setMessage('Reunión eliminada exitosamente');
         fetchReuniones();
-        closeModal(); // Cierra el modal al confirmar la eliminación
+        closeModal();
       } catch (error) {
         setMessage('Error al eliminar la reunión');
         console.error('Error deleting meeting:', error);
@@ -200,7 +200,7 @@ const Calendario = () => {
 
   const handleSelectEvent = (event) => {
     if (event.type !== 'meeting') return;
-    setSelectedMeeting(event); // Set selectedMeeting here
+    setSelectedMeeting(event);
     handleEdit(event);
   };
 
@@ -252,7 +252,6 @@ const Calendario = () => {
 
   const handleDateChange = (e) => {
     const value = e.target.value;
-    // Validar que el valor no sea '0' y que sea una fecha válida
     if (value !== '0' && isValidDate(value)) {
       setSelectedDate(new Date(value));
     }
@@ -260,9 +259,9 @@ const Calendario = () => {
   
   const isValidDate = (dateString) => {
     const regEx = /^\d{4}-\d{2}-\d{2}$/;
-    if (!dateString.match(regEx)) return false;  // Invalid format
+    if (!dateString.match(regEx)) return false; 
     const d = new Date(dateString);
-    if (Number.isNaN(d.getTime())) return false; // Invalid date
+    if (Number.isNaN(d.getTime())) return false; 
     return d.toISOString().slice(0, 10) === dateString;
   };
 
@@ -287,7 +286,7 @@ const Calendario = () => {
       onChange={handleDateChange}
       value={selectedDate.toISOString().split('T')[0]}
       className="date-input"
-      min="1900-01-01" // Establecer un mínimo para evitar fechas anteriores a 1900
+      min="1900-01-01"
     />
     <button onClick={handleUpdateCalendar} className="update-button">Clic para ir a la fecha</button>
 

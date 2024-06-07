@@ -137,10 +137,9 @@
   border: 1px solid #d4af37;
   background-color: #444;
   color: #d4af37;
-  margin-right: 10px; /* Ajusta el margen derecho según sea necesario */
+  margin-right: 10px;
 }
 
-/* Estilos para el botón de actualizar calendario */
 .update-button {
   padding: 5px;
   border-radius: 5px;

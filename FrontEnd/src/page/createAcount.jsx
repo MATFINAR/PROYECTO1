@@ -24,13 +24,11 @@ function CreateAcount() {
   const handleSave = async () => {
     const { nombre, email, contrasena, confirmPassword } = formData;
 
-    // Verificar si algún campo obligatorio está vacío
     if (!nombre || !email || !contrasena) {
       setError('Campos vacíos');
       return;
     }
 
-    // Verificar que el email contenga "@" y al menos un carácter después del "@"
     const emailPattern = /^[^@]+@[^@]+\.[^@]+$/;
     if (!emailPattern.test(email)) {
       setError('Correo inválido');

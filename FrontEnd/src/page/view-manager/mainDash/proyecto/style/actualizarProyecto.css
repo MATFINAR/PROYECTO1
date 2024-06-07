@@ -4,12 +4,12 @@
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  background-color: #ffd700; /* dorado */
-  color: #000; /* negro */
+  background-color: #ffd700;
+  color: #000;
 }
 
 .heading-actualizar-proyecto {
-  color: #000; /* negro */
+  color: #000;
 }
 
 .form-actualizar-proyecto .form-group-actualizar-proyecto {
@@ -29,21 +29,21 @@
   padding: 8px;
   margin-top: 5px;
   border-radius: 5px;
-  border: 1px solid #000; /* negro */
+  border: 1px solid #000;
 }
 
 .button-actualizar-proyecto {
   width: 100%;
   padding: 8px 16px;
-  background-color: #000; /* negro */
-  color: #ffd700; /* dorado */
+  background-color: #000;
+  color: #ffd700;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .button-actualizar-proyecto:hover {
-  background-color: #333; /* un tono más oscuro de negro */
+  background-color: #333;
 }
 
 .error-actualizar-proyecto {

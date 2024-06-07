@@ -52,7 +52,6 @@ const UpdateProject = () => {
     const token = Cookies.get('token');
 
     try {
-      // Verificar si el nombre del proyecto ya existe
       const verifyResponse = await axios.get(`http://localhost:666/api/proyecto/${proyecto.nombre}`, {
         headers: {  
           Authorization: `Bearer ${token}`,
@@ -65,7 +64,6 @@ const UpdateProject = () => {
         return;
       }
 
-      // Actualizar el proyecto
       const response = await axios.put('http://localhost:666/api/proyecto', proyecto, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -74,7 +72,7 @@ const UpdateProject = () => {
       });
 
       if (response.data.resultado === "Proyecto actualizado exitosamente") {
-        window.location.reload(); // Navegar a la página de proyectos
+        window.location.reload();
       } else {
         setError('Error al actualizar proyecto: ' + response.data.resultado);
       }

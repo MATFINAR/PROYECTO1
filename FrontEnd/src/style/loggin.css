@@ -32,7 +32,7 @@
   .info-loggin {
     width: 75%;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 2vw; /* Ajusta el tamaño de fuente al porcentaje de zoom */
+    font-size: 2vw;
     font-weight: bold;
     text-align: center;
     margin-top: 20px;

@@ -4,7 +4,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { TbSquareArrowDownFilled } from "react-icons/tb";
 import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode'; 
 
 const ShowUsers = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -13,10 +13,16 @@ const ShowUsers = () => {
   const [eliminarVisible, setEliminarVisible] = useState(null);
   const [usuarioAEliminar, setUsuarioAEliminar] = useState(null);
   const [confirmacionVisible, setConfirmacionVisible] = useState(false);
+  const [userRole, setUserRole] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     mostrarUsuarios();
+    const token = Cookies.get('token');
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUserRole(decodedToken.rol);
+    }
   }, []);
 
   const mostrarUsuarios = async () => {
@@ -28,7 +34,7 @@ const ShowUsers = () => {
         },
       });
       setUsuarios(response.data);
-      setError(''); // Clear error state when users are successfully fetched
+      setError(''); 
     } catch (error) {
       console.error('Error al obtener usuarios:', error);
       setError('Error al obtener usuarios');
@@ -64,7 +70,7 @@ const ShowUsers = () => {
 
   const handleChange = (event) => {
     setBusqueda(event.target.value);
-    setError(''); // Clear error when user types
+    setError(''); 
 
     if (event.target.value.trim() === '') {
       mostrarUsuarios();
@@ -83,7 +89,7 @@ const ShowUsers = () => {
     } else {
       setEliminarVisible(usuario.usuario_id);
       setUsuarioAEliminar(usuario);
-      setConfirmacionVisible(false); // Ocultar confirmación al abrir el menú de eliminación
+      setConfirmacionVisible(false); 
     }
   };
 
@@ -102,7 +108,6 @@ const ShowUsers = () => {
       setUsuarioAEliminar(null);
       setConfirmacionVisible(false);
 
-      // Si el usuario que se eliminó es el mismo que está logueado, redirigir al login
       if (usuarioAEliminar.usuario_id === usuarioLogueado.usuario_id) {
         Cookies.remove('token');
         Cookies.remove('email');
@@ -134,16 +139,18 @@ const ShowUsers = () => {
           <div key={usuario.usuario_id} className="card-listar-usuario">
             <div className="card-header">
               <h3 className="card-title">{usuario.nombre}</h3>
-              <div className="delete-menu">
-                {eliminarVisible === usuario.usuario_id && (
-                  <div className="delete-menu-options">
-                    <button className="delete-user-button" onClick={() => setConfirmacionVisible(true)}>Eliminar usuario</button>
-                  </div>
-                )}
-                <button className="delete-button" onClick={() => handleDeleteClick(usuario)}>
-                  <TbSquareArrowDownFilled />
-                </button>
-              </div>
+              {userRole === 'Manager' && ( 
+                <div className="delete-menu">
+                  {eliminarVisible === usuario.usuario_id && (
+                    <div className="delete-menu-options">
+                      <button className="delete-user-button" onClick={() => setConfirmacionVisible(true)}>Eliminar usuario</button>
+                    </div>
+                  )}
+                  <button className="delete-button" onClick={() => handleDeleteClick(usuario)}>
+                    <TbSquareArrowDownFilled />
+                  </button>
+                </div>
+              )}
             </div>
             <p className="card-description">{usuario.email}</p>
             <p className="card-description">{usuario.rol}</p>

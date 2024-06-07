@@ -5,18 +5,15 @@
   border-radius: 5px;
 }
 
-/* Estilos para los títulos */
 .title-tarea {
   color: gold;
   margin-bottom: 20px;
 }
 
-/* Estilos para los contenedores de los inputs y select */
 .input-container-tarea {
   margin-bottom: 10px;
 }
 
-/* Estilos para los inputs y select */
 .input-nombre-tarea,
 .input-descripcion-tarea,
 .select-estado-tarea,
@@ -30,7 +27,6 @@
   color: gold;
 }
 
-/* Estilos para los botones */
 .button-crear-tarea {
   padding: 10px 20px;
   background-color: gold;
@@ -42,10 +38,9 @@
 }
 
 .button-crear-tarea:hover {
-  background-color: #ffd700; /* Color dorado más claro al hacer hover */
+  background-color: #ffd700;
 }
 
-/* Estilos para los mensajes de error y éxito */
 .error-message,
 .success-message {
   padding: 10px;
@@ -54,9 +49,9 @@
 }
 
 .error-message {
-  background-color: #c00; /* Color rojo para errores */
+  background-color: #c00;
 }
 
 .success-message {
-  background-color: #0c0; /* Color verde para éxito */
+  background-color: #0c0;
 }

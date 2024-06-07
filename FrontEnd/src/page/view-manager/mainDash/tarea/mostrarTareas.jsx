@@ -1,9 +1,10 @@
-import './style/mostrarTareas.css'
+import './style/mostrarTareas.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { deleteTask } from './eliminarUnTarea';
 import { useParams } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
 const ShowTasks = () => {
   const [tareas, setTareas] = useState([]);
@@ -11,10 +12,16 @@ const ShowTasks = () => {
   const [error, setError] = useState('');
   const [confirmacionVisible, setConfirmacionVisible] = useState(false);
   const [tareaAEliminar, setTareaAEliminar] = useState(null);
+  const [userRole, setUserRole] = useState(null); // Add state for user role
   const { proyectoNombre } = useParams();
 
   useEffect(() => {
     mostrarTareas();
+    const token = Cookies.get('token');
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUserRole(decodedToken.rol);
+    }
   }, [proyectoNombre]);
 
   const mostrarTareas = async () => {
@@ -109,7 +116,9 @@ const ShowTasks = () => {
             <p className="card-info">Estado: {tarea.estado}</p>
             <p className="card-info">Fecha limite: {tarea.fecha_limite}</p>
             <p className="card-info">Nombre del proyecto: {tarea.proyecto_nombre}</p>
-            <button className="delete-button" onClick={() => handleDelete(tarea.nombre)}>Eliminar</button>
+            {(userRole === 'Manager' || userRole === 'Administrador') && (
+              <button className="delete-button" onClick={() => handleDelete(tarea.nombre)}>Eliminar</button>
+            )}
           </div>
         ))}
       </div>
