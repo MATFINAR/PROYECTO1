@@ -16,28 +16,32 @@ function CreateProject() {
       setError('Todos los campos son obligatorios');
       return;
     }
-
+  
     const token = Cookies.get('token');
-
+  
     if (!token) {
       setError('No tiene permiso para acceder');
       return;
     }
-
+  
+    const projectData = {
+      nombre,
+      descripcion,
+      estado: 'Sin comenzar',
+      prioridad,
+      manager_email
+    };
+  
+    console.log('Sending project data:', projectData);
+  
     try {
-      const response = await axios.post('http://localhost:666/api/proyecto', {
-        nombre,
-        descripcion,
-        estado: 'Sin comenzar',
-        prioridad,
-        manager_email
-      }, {
+      const response = await axios.post('https://backendkurogestor.onrender.com/api/proyecto', projectData, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         }
       });
-
+  
       if (response.data.resultado === "Proyecto creado exitosamente") {
         setSuccess(response.data.resultado);
         setError('');
@@ -52,7 +56,7 @@ function CreateProject() {
       setSuccess('');
     }
   };
-
+  
   return (
     <div className='contenedor-crear-proyecto'>
       <h1 className='titulo-crear-proyecto'>Crear Proyecto</h1>

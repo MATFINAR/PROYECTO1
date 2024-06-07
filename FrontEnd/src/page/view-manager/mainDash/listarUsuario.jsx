@@ -28,7 +28,7 @@ const ShowUsers = () => {
   const mostrarUsuarios = async () => {
     try {
       const token = Cookies.get('token');
-      const response = await axios.get('http://localhost:666/api/usuarios', {
+      const response = await axios.get('https://backendkurogestor.onrender.com/api/usuarios', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -49,7 +49,7 @@ const ShowUsers = () => {
       }
 
       const token = Cookies.get('token');
-      const response = await axios.get(`http://localhost:666/api/usuario/${busqueda}`, {
+      const response = await axios.get(`https://backendkurogestor.onrender.com/api/usuario/${busqueda}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -98,7 +98,7 @@ const ShowUsers = () => {
       const token = Cookies.get('token');
       const usuarioLogueado = jwtDecode(token);
 
-      await axios.delete(`http://localhost:666/api/usuario/${usuarioAEliminar.usuario_id}`, {
+      await axios.delete(`https://backendkurogestor.onrender.com/api/usuario/${usuarioAEliminar.usuario_id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

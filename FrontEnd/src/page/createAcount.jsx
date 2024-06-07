@@ -41,7 +41,7 @@ function CreateAcount() {
     }
 
     try {
-      const response = await fetch('http://localhost:666/api/usuario', {
+      const response = await fetch('https://backendkurogestor.onrender.com/api/usuario', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -18,7 +18,7 @@ const UpdateProject = () => {
     const token = Cookies.get('token');
 
     try {
-      const response = await axios.get(`http://localhost:666/api/proyecto/${proyecto.nombreAnterior}`, {
+      const response = await axios.get(`https://backendkurogestor.onrender.com/api/proyecto/${proyecto.nombreAnterior}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ const UpdateProject = () => {
     const token = Cookies.get('token');
 
     try {
-      const verifyResponse = await axios.get(`http://localhost:666/api/proyecto/${proyecto.nombre}`, {
+      const verifyResponse = await axios.get(`https://backendkurogestor.onrender.com/api/proyecto/${proyecto.nombre}`, {
         headers: {  
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ const UpdateProject = () => {
         return;
       }
 
-      const response = await axios.put('http://localhost:666/api/proyecto', proyecto, {
+      const response = await axios.put('https://backendkurogestor.onrender.com/api/proyecto', proyecto, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',

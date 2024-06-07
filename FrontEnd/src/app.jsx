@@ -7,7 +7,6 @@ import DashBoard from './page/view-manager/pageDashboard.jsx';
 import CreateAcount from './page/createAcount';
 import { jwtDecode } from 'jwt-decode';
 
-
 export const isAuthenticated = () => {
   const token = Cookies.get('token');
   return !!token;

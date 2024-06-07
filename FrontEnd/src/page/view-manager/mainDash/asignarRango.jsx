@@ -21,7 +21,7 @@ const AsignarRango = () => {
       return;
     }
     try {
-      const response = await axios.put('http://localhost:666/api/usuario/rol/', {
+      const response = await axios.put('https://backendkurogestor.onrender.com/api/usuario/rol/', {
         email: formData.email,
         rol: formData.rol,
       }, {
@@ -59,9 +59,10 @@ const AsignarRango = () => {
             value={formData.rol}
             onChange={handleChange}
           >
-            <option className="option-rol" value='usuario'>Usuario</option>
-            <option className="option-rol" value='administrador'>Administrador</option>
-            <option className="option-rol" value='manager'>Manager</option>
+            <option className="option-rol" value=''>Seleccione el rol</option>
+            <option className="option-rol" value='Usuario'>Usuario</option>
+            <option className="option-rol" value='Administrador'>Administrador</option>
+            <option className="option-rol" value='Manager'>Manager</option>
           </select>
           <button className="guardar-rol" type="submit">Guardar</button>
           {message && <p className="mensaje">{message}</p>}

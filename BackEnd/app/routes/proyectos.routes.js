@@ -8,6 +8,6 @@ routerProjects.get("/proyectos", validarPermiso, showProject);
 routerProjects.get("/proyecto/:nombre", validarPermiso, getProject);
 routerProjects.post("/proyecto", validarPermiso, postProject);
 routerProjects.put("/proyecto", validarPermiso, putProject);
-routerProjects.delete("/proyecto/:nombre",  validarPermiso, delProject);
+routerProjects.delete("/proyecto/:nombre", validarPermiso, delProject);
 
 export default routerProjects;

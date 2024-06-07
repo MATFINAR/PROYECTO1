@@ -12,7 +12,7 @@ function Loggin() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:666/api/login', { email, contrasena: password });
+      const response = await axios.post('https://backendkurogestor.onrender.com/api/login', { email, contrasena: password });
       
       if (!response.data.token) {
         throw new Error('No token generated');

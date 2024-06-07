@@ -27,7 +27,7 @@ const ShowProjects = () => {
   const mostrarProyectos = async () => {
     try {
       const token = Cookies.get('token');
-      const response = await axios.get('http://localhost:666/api/proyectos', {
+      const response = await axios.get('https://backendkurogestor.onrender.com/api/proyectos', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -47,7 +47,7 @@ const ShowProjects = () => {
       }
 
       const token = Cookies.get('token');
-      const response = await axios.get(`http://localhost:666/api/proyecto/${busqueda}`, {
+      const response = await axios.get(`https://backendkurogestor.onrender.com/api/proyecto/${busqueda}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

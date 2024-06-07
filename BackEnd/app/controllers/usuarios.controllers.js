@@ -5,7 +5,7 @@ import { getCurrentDateTime } from "../util/dateHelper.js";
 // Listar todos los usuarios
 export const UserList = async (req, res) => {
   try {
-    const resultado = await pool.query("SELECT * FROM Usuarios");
+    const resultado = await pool.query("SELECT * FROM usuarios");
     res.json(resultado[0]);
   } catch (error) {
     res.json({ error: error.message, type: "Get" });
@@ -16,7 +16,7 @@ export const getUser = async (req, res) => {
   const { nombre } = req.params;
 
   try {
-    const resultado = await pool.query(`SELECT * FROM Usuarios WHERE nombre = ?`, [nombre]);
+    const resultado = await pool.query(`SELECT * FROM usuarios WHERE nombre = ?`, [nombre]);
     res.json(resultado[0]);
   } catch (error) {
     res.json({ error: error.message, type: "Get" });
@@ -47,7 +47,7 @@ export const postUser = async (req, res) => {
 
   try {
     const [resultado] = await pool.query(
-      "INSERT INTO Usuarios (nombre, email, contrasena, rol) VALUES (?, ?, ?, ?)",
+      "INSERT INTO usuarios (nombre, email, contrasena, rol) VALUES (?, ?, ?, ?)",
       [nombre, email, contrasena, rol]
     );
 
@@ -68,7 +68,7 @@ export const putUser = async (req, res) => {
 
   try {
     const [resultado] = await pool.query(
-      "UPDATE Usuarios SET nombre = ?, email = ?, contrasena = ?, rol_id = ? WHERE usuario_id = ?",
+      "UPDATE usuarios SET nombre = ?, email = ?, contrasena = ?, rol_id = ? WHERE usuario_id = ?",
       [nombre, email, contrasena, rol_id, usuario_id]
     );
 
@@ -88,7 +88,7 @@ export const putRolle = async (req, res) => {
 
   try {
     const [resultado] = await pool.query(
-      "UPDATE Usuarios SET rol = ? WHERE email = ?",
+      "UPDATE usuarios SET rol = ? WHERE email = ?",
       [rol, email]
     );
 
@@ -106,7 +106,7 @@ export const deleteMyUser = async (req, res) => {
   const { email } = req.user;
 
   try {
-    const [resultado] = await pool.query("DELETE FROM Usuarios WHERE email = ?", [email]);
+    const [resultado] = await pool.query("DELETE FROM usuarios WHERE email = ?", [email]);
 
     if (resultado.affectedRows > 0) {
       res.json({ resultado: "Usuario eliminado exitosamente" });
@@ -123,7 +123,7 @@ export const deleteUser = async (req, res) => {
   const { usuario_id } = req.params;
 
   try {
-    const [resultado] = await pool.query("DELETE FROM Usuarios WHERE usuario_id = ?", [usuario_id]);
+    const [resultado] = await pool.query("DELETE FROM usuarios WHERE usuario_id = ?", [usuario_id]);
 
     if (resultado.affectedRows > 0) {
       res.json({ resultado: "Usuario eliminado exitosamente" });
@@ -140,7 +140,7 @@ export const loginUser = async (req, res) => {
   const { email, contrasena } = req.body;
 
   try {
-    const [resultado] = await pool.query("SELECT * FROM Usuarios WHERE email = ? AND contrasena = ?", [email, contrasena]);
+    const [resultado] = await pool.query("SELECT * FROM usuarios WHERE email = ? AND contrasena = ?", [email, contrasena]);
     const usuario = resultado[0];
 
     if (!usuario) {

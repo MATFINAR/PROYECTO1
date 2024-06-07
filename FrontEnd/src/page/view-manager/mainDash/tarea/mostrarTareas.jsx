@@ -27,7 +27,7 @@ const ShowTasks = () => {
   const mostrarTareas = async () => {
     try {
       const token = Cookies.get('token');
-      let url = 'http://localhost:666/api/tasks';
+      let url = 'https://backendkurogestor.onrender.com/api/tasks';
       if (proyectoNombre) {
         url += `?proyecto_nombre=${proyectoNombre}`;
       }
@@ -59,7 +59,7 @@ const ShowTasks = () => {
   const buscarTarea = async () => {
     try {
       const token = Cookies.get('token');
-      const response = await axios.get(`http://localhost:666/api/task/${busqueda}`, {
+      const response = await axios.get(`https://backendkurogestor.onrender.com/api/task/${busqueda}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

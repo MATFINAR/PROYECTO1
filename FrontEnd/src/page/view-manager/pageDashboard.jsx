@@ -109,7 +109,7 @@ function DashBoard() {
     }
 
     try {
-      const response = await axios.delete('http://localhost:666/api/usuario', {
+        const response = await axios.delete('https://backendkurogestor.onrender.com/api/usuario', {
         headers: {
           'Authorization': `Bearer ${token}`
         }

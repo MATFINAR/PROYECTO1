@@ -18,7 +18,7 @@ const UpdateTask = () => {
     const token = Cookies.get('token');
 
     try {
-      const response = await axios.get(`http://localhost:666/api/task/${tarea.nombreAntiguo}`, {
+      const response = await axios.get(`https://back-kuro-gestor-1.onrender.com/api/task/${tarea.nombreAntiguo}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ const UpdateTask = () => {
     const token = Cookies.get('token');
 
     try {
-      const verifyResponse = await axios.get(`http://localhost:666/api/task/${tarea.nombre}`, {
+      const verifyResponse = await axios.get(`https://back-kuro-gestor-1.onrender.com/api/task/${tarea.nombre}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ const UpdateTask = () => {
       }
 
       // Actualizar la tarea
-      const response = await axios.put('http://localhost:666/api/task', tarea, {
+      const response = await axios.put('https://back-kuro-gestor-1.onrender.com/api/task', tarea, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',

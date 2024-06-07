@@ -34,7 +34,7 @@ const CreateTask = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:666/api/task', {
+      const response = await axios.post('https://backendkurogestor.onrender.com/api/task', {
         nombre,
         descripcion,
         estado,

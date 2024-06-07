@@ -37,7 +37,7 @@ const Calendario = () => {
       return;
     }
     try {
-      const response = await axios.get('http://localhost:666/api/tasks', {
+      const response = await axios.get('https://back-kuro-gestor-1.onrender.com/api/tasks', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -65,7 +65,7 @@ const Calendario = () => {
       return;
     }
     try {
-      const response = await axios.get('http://localhost:666/api/meetings', {
+      const response = await axios.get('https://back-kuro-gestor-1.onrender.com/api/meetings', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -113,7 +113,7 @@ const Calendario = () => {
     try {
       let resultado;
       if (isEdit) {
-        resultado = await axios.put(`http://localhost:666/api/meeting/${newMeeting.id}`, {
+        resultado = await axios.put(`https://back-kuro-gestor-1.onrender.com/api/meeting/${newMeeting.id}`, {
           nombre: newMeeting.title,
           descripcion: newMeeting.descripcion,
           fecha_inicio: moment(newMeeting.start).format('YYYY-MM-DD HH:mm:ss'),
@@ -125,7 +125,7 @@ const Calendario = () => {
         });
         setMessage('Reunión editada exitosamente');
       } else {
-        resultado = await axios.post('http://localhost:666/api/meeting', {
+        resultado = await axios.post('https://back-kuro-gestor-1.onrender.com/api/meeting', {
           nombre: newMeeting.title,
           descripcion: newMeeting.descripcion,
           fecha_inicio: moment(newMeeting.start).format('YYYY-MM-DD HH:mm:ss'),
@@ -160,7 +160,7 @@ const Calendario = () => {
     openConfirmation(`¿Está seguro de eliminar la reunión "${title}"?`, async () => {
       const token = Cookies.get('token');
       try {
-        await axios.delete(`http://localhost:666/api/meeting/${id}`, {
+        await axios.delete(`https://back-kuro-gestor-1.onrender.com/api/meeting/${id}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
