@@ -144,11 +144,16 @@ export const loginUser = async (req, res) => {
     const usuario = resultado[0];
 
     if (!usuario) {
-      res.status(401).json({ respuesta: "Usuario o contrasena incorrecto", estado: false });
-    } else {
-      const token = tokenSign({ email, usuario_id: usuario.usuario_id });
-      res.json({ respuesta: "Login correcto", estado: true, token, usuario_id: usuario.usuario_id });
+      return res.status(401).json({ respuesta: "Usuario o contrasena incorrecto", estado: false });
     }
+
+    const token = tokenSign({
+      usuario_id: usuario.usuario_id,
+      email: usuario.email,
+      rol: usuario.rol  // Incluye el rol en el token
+    });
+
+    res.json({ respuesta: "Login correcto", estado: true, token, usuario_id: usuario.usuario_id });
   } catch (error) {
     res.status(500).json({ error: error.message || 'Error en el login', resultado: "Error en el login" });
   }

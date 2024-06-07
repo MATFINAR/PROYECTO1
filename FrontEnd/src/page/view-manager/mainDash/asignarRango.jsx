@@ -59,7 +59,6 @@ const AsignarRango = () => {
             value={formData.rol}
             onChange={handleChange}
           >
-            <option className="option-rol" value=''>Seleccione un rol</option>
             <option className="option-rol" value='usuario'>Usuario</option>
             <option className="option-rol" value='administrador'>Administrador</option>
             <option className="option-rol" value='manager'>Manager</option>

@@ -1,9 +1,10 @@
-import "./style/mostrarProyectos.css"
+import "./style/mostrarProyectos.css";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { deleteProyect } from './eliminarUnProyecto'; 
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
 const ShowProjects = () => {
   const [proyectos, setProyectos] = useState([]);
@@ -11,10 +12,16 @@ const ShowProjects = () => {
   const [error, setError] = useState(''); 
   const [confirmacionVisible, setConfirmacionVisible] = useState(false); 
   const [proyectoAEliminar, setProyectoAEliminar] = useState(null); 
-  const navigate = useNavigate(); // Use useNavigate hook
+  const [userRole, setUserRole] = useState(null); // Add state for user role
+  const navigate = useNavigate();
 
   useEffect(() => {
     mostrarProyectos();
+    const token = Cookies.get('token');
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUserRole(decodedToken.rol);
+    }
   }, []);
 
   const mostrarProyectos = async () => {
@@ -26,7 +33,7 @@ const ShowProjects = () => {
         },
       });
       setProyectos(response.data);
-      setError(''); // Clear error state when projects are successfully fetched
+      setError('');
     } catch (error) {
       console.error('Error al obtener proyectos:', error);
     }
@@ -47,11 +54,11 @@ const ShowProjects = () => {
       });
 
       if (response.data.length === 0) {
-        setError('Proyecto no encontrado'); // Set error state if no projects are found
-        setProyectos([]); // Clear projects state
+        setError('Proyecto no encontrado');
+        setProyectos([]);
       } else {
         setProyectos(response.data);
-        setError(''); // Clear error state if projects are found
+        setError('');
       }
     
     } catch (error) {
@@ -61,7 +68,7 @@ const ShowProjects = () => {
 
   const handleChange = (event) => {
     setBusqueda(event.target.value);
-    setError(''); // Clear error state when user types
+    setError('');
 
     if (event.target.value.trim() === '') {
       mostrarProyectos();
@@ -75,22 +82,22 @@ const ShowProjects = () => {
 
   const handleDelete = async (nombre) => {
     setProyectoAEliminar(nombre);
-    setConfirmacionVisible(true); // Show confirmation dialog
+    setConfirmacionVisible(true);
   };
 
   const confirmarEliminar = async () => {
     try {
       const token = Cookies.get('token');
       await deleteProyect(proyectoAEliminar, token);
-      setConfirmacionVisible(false); // Hide confirmation dialog
-      mostrarProyectos(); // Refresh projects list
+      setConfirmacionVisible(false);
+      mostrarProyectos();
     } catch (error) {
       console.error('Error al eliminar proyecto:', error);
     }
   };
 
   const mostrarTareasProyecto = (proyectoNombre) => {
-    navigate(`/dash-manager/tareas/${proyectoNombre}`); // Navigate to the tasks page for the selected project
+    navigate(`/dash-manager/tareas/${proyectoNombre}`);
   };
 
   return (
@@ -120,9 +127,11 @@ const ShowProjects = () => {
             <button className="task-button" onClick={() => mostrarTareasProyecto(proyecto.nombre)}>
               Tareas
             </button>
-            <button className="delete-button" onClick={() => handleDelete(proyecto.nombre)}>
-              Eliminar
-            </button>
+            {userRole === 'Manager' && ( // Conditionally render the delete button
+              <button className="delete-button" onClick={() => handleDelete(proyecto.nombre)}>
+                Eliminar
+              </button>
+            )}
           </div>
         ))}
       </div>

@@ -5,6 +5,7 @@ import Page404 from './page/pageCallback';
 import Loggin from './page/pageLoggin';
 import DashBoard from './page/view-manager/pageDashboard.jsx';
 import CreateAcount from './page/createAcount';
+import { jwtDecode } from 'jwt-decode';
 
 
 export const isAuthenticated = () => {
@@ -12,9 +13,22 @@ export const isAuthenticated = () => {
   return !!token;
 };
 
-export const ProtectedRoute = ({ children }) => {
-  return isAuthenticated() ? children : <Navigate to="/" />;
-};  
+export const ProtectedRoute = ({ children, requiredRole }) => {
+  const token = Cookies.get('token');
+
+  if (!token) {
+    return <Navigate to="/" />;
+  }
+
+  const decodedToken = jwtDecode(token);
+  const userRole = decodedToken.rol;
+
+  if (requiredRole && userRole !== requiredRole) {
+    return <Navigate to="/" />;
+  }
+
+  return children;
+};
 
 function App() {
   return (

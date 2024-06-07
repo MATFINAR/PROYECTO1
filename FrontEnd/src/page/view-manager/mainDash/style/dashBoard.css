@@ -110,13 +110,14 @@ body, html {
   .options-dashboard {
   width: 80%;
   height: 100%;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1vw;
+  display: flex;
+  justify-content: center;
 }
 
 .options-dashboard > button {
   height: 6vh;
+  width: 20vw;
+  margin: 0vh 1vw;
   color: black;
   background-color: white;
   border-radius: 1vw;

@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import MainDash from "./mainDash";
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import {jwtDecode} from 'jwt-decode';
 
 function DashBoard() {
   const location = useLocation();
@@ -15,6 +16,7 @@ function DashBoard() {
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [countdown, setCountdown] = useState(900000);
   const [theme, setTheme] = useState("dark-mode");
+  const [userRole, setUserRole] = useState(null);
 
   const toggleConfigMenu = () => {
     setShowConfigMenu(!showConfigMenu);
@@ -24,6 +26,14 @@ function DashBoard() {
     Cookies.remove('token');
     navigate('/');
   };
+
+  useEffect(() => {
+    const token = Cookies.get('token');
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUserRole(decodedToken.rol);
+    }
+  }, []); 
 
   useEffect(() => {
     const pathToTitleMap = {
@@ -68,7 +78,7 @@ function DashBoard() {
         navigate("/dash-manager/calendario");
       } else if (event.altKey && event.key === 'z') {
         navigate("/dash-manager/listausuario");
-      } else if (event.altKey && event.key === 'x') {
+      } else if (event.altKey && event.key === 'x' && userRole === 'Manager') {
         navigate("/dash-manager/asignarrol");
       } else if (event.altKey && event.key === 'c') {
         navigate("/dash-manager/proyectos");
@@ -80,7 +90,7 @@ function DashBoard() {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [toggleConfigMenu, handleLogout, navigate]);
+  }, [toggleConfigMenu, handleLogout, navigate, userRole]);
 
   const handleOptionClick = (path) => {
     if (location.pathname === path) {
@@ -148,7 +158,9 @@ function DashBoard() {
         <div className="options-dashboard">
           <button onClick={() => handleOptionClick("/dash-manager/calendario")}>Calendario</button>
           <button onClick={() => handleOptionClick("/dash-manager/listausuario")}>Lista de usuario</button>
+          {userRole === 'Manager' && (
           <button onClick={() => handleOptionClick("/dash-manager/asignarrol")}>Asignar el rol</button>
+          )}
           <button onClick={() => handleOptionClick("/dash-manager/proyectos")}>Proyectos</button>
         </div>
       </div>
